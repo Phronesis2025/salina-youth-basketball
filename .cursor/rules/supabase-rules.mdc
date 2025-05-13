@@ -1,0 +1,12 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Supabase Rules for Cursor
+- Initialize Supabase client in `/lib/supabase.ts`.
+- Fetch data server-side with `getServerSideProps` for SEO.
+- Use Supabase Auth for Parent Portal and coach dashboard.
+- Log errors for failed queries (e.g., console.log) but don’t display to users.
+
+- Cache frequent queries (e.g., team list) with Next.js `revalidate`.

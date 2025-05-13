@@ -1,0 +1,12 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# General Rules for Cursor
+- Use TypeScript for all files (`*.tsx`).
+- Name components in PascalCase (e.g., `TeamCard.tsx`).
+- Use functional components with React hooks (e.g., `useState`, `useEffect`).
+- Handle errors with try-catch for Supabase/Stripe API calls.
+
+- Write unit tests for components using Jest.
