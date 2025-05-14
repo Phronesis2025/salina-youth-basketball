@@ -2,9 +2,10 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import Image from "next/image";
+
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
 
@@ -52,7 +53,7 @@ export default function Navbar() {
               )}
             >
               <Image
-                src="/images/WCS Logo-transparentBG.png"
+                src="/images/WCS-Logo-transparentBG.png" // Updated path
                 alt="Salina Youth Basketball Club Logo"
                 fill
                 className="object-contain"

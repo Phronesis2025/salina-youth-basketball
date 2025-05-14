@@ -1,5 +1,7 @@
 import { Rubik, Inter } from "next/font/google";
 import "./global.css";
+import Navbar from "@/components/common/Navbar";
+import Footer from "@/components/common/Footer";
 
 // Define Rubik font with subsets and weights
 const rubik = Rubik({
@@ -22,7 +24,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${rubik.variable} ${inter.variable}`}>{children}</body>
+      <body className={`${rubik.variable} ${inter.variable}`}>
+        <Navbar />
+        <main>{children}</main>
+        <Footer />
+      </body>
     </html>
   );
 }
