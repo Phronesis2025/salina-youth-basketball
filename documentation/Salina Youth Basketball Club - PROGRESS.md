@@ -34,7 +34,7 @@
 - **Phase 4 (Testing and Deployment)**: Not started.
 - **Phase 5 (Polish and Iteration)**: Not started.
 
-**Key Milestones**: Defined project goals, planned website structure, set up color scheme and design guidelines, prepared placeholder content (20-team dataset, Coaches Corner articles, t-shirt designs), built Homepage Hero section with functional CTAs, added News Carousel, Team Preview, Schedule Preview, and Values sections, created the Team Hub with filtering by age group.
+**Key Milestones**: Defined project goals, planned website structure, set up color scheme and design guidelines, prepared placeholder content (20-team dataset, Coaches Corner articles, t-shirt designs), built Homepage Hero section with functional CTAs, added News Carousel, Team Preview, Schedule Preview, and Values sections, created the Team Hub with filtering by age group, built the Team Sub-Page for detailed team information.
 
 ## Files for Review
 
@@ -46,6 +46,7 @@
 - `src/components/homepage/ValuesSection.tsx` (added values section)
 - `src/app/page.tsx` (updated to include Hero, NewsCarousel, TeamPreview, SchedulePreview, and ValuesSection)
 - `app/teams/page.tsx` (added Team Hub with team list and age group filter)
+- `app/teams/[id]/page.tsx` (added Team Sub-Page with detailed team information)
 
 ## Current State
 
@@ -101,6 +102,11 @@
 - **Blockers**: None
 - **Environment**: Local folder (`/salina-youth-basketball`); GitHub (`https://github.com/your-username/salina-youth-basketball`); Supabase (to be created); Vercel (to be deployed); Cursor (paid plan assumed).
 - **Errors**: None
+- **Date**: May 14, 2025
+- **Progress**: Built the Team Sub-Page in `app/teams/[id]/page.tsx`. Added a dynamic page to display detailed team information (name, age group, coach, roster, schedule, coach bio, gallery) using static data. Included sections for team overview, coach bio, roster, schedule, and gallery, with a "Back to Team Hub" button. Styled the page to match the project’s design (navy background `#002C51`, dark cards `#01182B`, white text `#FFFFFF`, Rubik for headings, Inter for body text, uppercase titles). Added error handling for invalid team IDs. Next task: Deploy updates to Vercel.
+- **Blockers**: None
+- **Environment**: Local folder (`/salina-youth-basketball`); GitHub (`https://github.com/your-username/salina-youth-basketball`); Supabase (to be created); Vercel (to be deployed); Cursor (paid plan assumed).
+- **Errors**: None
 
 ## To-Do List
 
@@ -110,7 +116,7 @@
   - [x] Add News Carousel with modals
   - [x] Add team/schedule previews and other sections
 - [x] Build Team Hub
-- [ ] Build Team Sub-Page
+- [x] Build Team Sub-Page
 - [ ] Deploy updates to Vercel
 - [ ] Commit changes to GitHub
 - [ ] Update `PROGRESS.md` with Phase 3 status
@@ -140,7 +146,7 @@
   - [x] Add News Carousel with modals
   - [x] Add team/schedule previews and other sections
 - [x] Build Team Hub
-- [ ] Build Team Sub-Page
+- [x] Build Team Sub-Page
 - [ ] Deploy updates to Vercel
 - [ ] Commit changes to GitHub
 - [ ] Update `PROGRESS.md` with Phase 3 status
