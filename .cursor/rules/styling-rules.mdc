@@ -5,8 +5,10 @@ alwaysApply: true
 ---
 # Styling Rules for Cursor
 - Use Tailwind CSS for all styling (no inline CSS or other frameworks).
-- Color scheme: navy (`#1C2526`), white (`#FFFFFF`), red (`#D91E18`).
-- Typography: Montserrat (body), Bebas Neue (headings).
+- Color scheme: navy (`#002C51`), white (`#FFFFFF`), red (`#F11A20`).
+- Typography: Inter (body), Rubik (headings).
 - Mobile-first design with Tailwind breakpoints (e.g., `sm:`, `md:`).
+
+
 
 - Hover effects: Use red accents (e.g., `hover:border-red-600`).

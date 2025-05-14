@@ -1,26 +1,71 @@
+@import url("https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&family=Inter:wght@400;500&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Define fallback variables */
+/* Project color variables */
 :root {
-  --background: #1c2526; /* Navy */
-  --foreground: #ffffff; /* White */
+  --project-background: #0a0f15;
+  --project-foreground: #ffffff;
+  --project-primary: #f11a20;
+  --project-dark-btn: #01182b;
 }
 
-/* Fallback styles for body */
+/* shadcn/ui variables (isolated) */
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 47.4% 11.2%;
+    --primary: 0 72% 51%;
+  }
+  .dark {
+    --background: 224 71% 4%;
+    --foreground: 213 31% 91%;
+    --primary: 0 72% 51%;
+  }
+}
+
+/* Body styles */
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: "Montserrat", sans-serif;
+  color: var(--project-foreground);
+  background: var(--project-background);
+  font-family: "Inter", sans-serif;
+  font-size: clamp(1rem, 2vw, 1.125rem);
+  font-weight: 400;
+  line-height: 1.5;
 }
 
-/* Fallback for headings */
+/* Headings */
 h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
-  font-family: "Bebas Neue", sans-serif;
+  font-family: "Rubik", sans-serif;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -1px;
+}
+
+/* Custom heading sizes */
+h1 {
+  font-size: clamp(2.648rem, 6vw, 4.241rem);
+}
+h2 {
+  font-size: clamp(2.179rem, 5vw, 3.176rem);
+}
+h3 {
+  font-size: clamp(1.794rem, 4vw, 2.379rem);
+}
+
+/* Custom font class for Rubik */
+.font-rubik {
+  font-family: "Rubik", sans-serif;
+}
+
+/* Custom font class for Inter */
+.font-inter {
+  font-family: "Inter", sans-serif;
 }
