@@ -49,14 +49,15 @@ export default function Navbar() {
             <div
               className={cn(
                 "relative transition-all duration-300",
-                scrolled ? "h-[45px]" : "h-[60px]"
+                scrolled ? "h-[45px] w-[112.5px]" : "h-[60px] w-[150px]" // Adjusted width to maintain aspect ratio (150 * 45 / 60 = 112.5)
               )}
             >
               <Image
-                src="/images/WCS-Logo-transparentBG.png" // Updated path
+                src="/images/WCS Logo-transparentBG.png"
                 alt="Salina Youth Basketball Club Logo"
-                fill
-                className="object-contain"
+                width={150}
+                height={40}
+                className="object-contain w-full h-full"
               />
             </div>
           </Link>
