@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -234,15 +235,18 @@ export default function TeamSubPage() {
           <p className="text-[#FFFFFF] text-lg font-inter mb-4">
             {team.ageGroup} | Coach: {team.coach}
           </p>
-          <img
-            src={team.image}
-            alt={team.name}
-            className="w-full max-w-md mx-auto h-64 object-cover rounded-[1rem] mb-6"
-            onError={(e) =>
-              ((e.target as HTMLImageElement).src =
-                "/images/placeholder-team-default.jpg")
-            }
-          />
+          <div className="relative w-full max-w-md mx-auto h-64">
+            <Image
+              src={team.image}
+              alt={team.name}
+              fill
+              className="object-cover rounded-[1rem] mb-6"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.src = "/images/placeholder-team-default.jpg";
+              }}
+            />
+          </div>
         </div>
 
         {/* Coach Bio */}
@@ -322,15 +326,18 @@ export default function TeamSubPage() {
                   "transform transition-all duration-300 hover:scale-105 hover:shadow-[0_6px_12px_-2px_rgba(0,0,0,0.2),0_4px_8px_-2px_rgba(0,0,0,0.12)]"
                 )}
               >
-                <img
-                  src={image}
-                  alt={`${team.name} gallery image ${index + 1}`}
-                  className="w-full h-48 object-cover"
-                  onError={(e) =>
-                    ((e.target as HTMLImageElement).src =
-                      "/images/placeholder-gallery-default.jpg")
-                  }
-                />
+                <div className="relative w-full h-48">
+                  <Image
+                    src={image}
+                    alt={`${team.name} gallery image ${index + 1}`}
+                    fill
+                    className="object-cover"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.src = "/images/placeholder-gallery-default.jpg";
+                    }}
+                  />
+                </div>
               </div>
             ))}
           </div>

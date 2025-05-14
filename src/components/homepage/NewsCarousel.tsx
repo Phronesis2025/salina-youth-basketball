@@ -5,7 +5,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-
+import Image from "next/image";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
@@ -94,15 +94,18 @@ export default function NewsCarousel() {
                   "h-full flex flex-col"
                 )}
               >
-                <img
-                  src={item.image}
-                  alt={item.title}
-                  className="w-full h-48 object-cover"
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    target.src = "/images/placeholder-news-1.png";
-                  }}
-                />
+                <div className="relative w-full h-48">
+                  <Image
+                    src={item.image}
+                    alt={item.title}
+                    fill
+                    className="object-cover"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.src = "/images/placeholder-news-1.png";
+                    }}
+                  />
+                </div>
                 <div className="p-6 flex flex-col flex-grow">
                   <h3 className="text-[#FFFFFF] text-lg font-rubik font-semibold mb-2 uppercase">
                     {item.title}
@@ -150,15 +153,18 @@ export default function NewsCarousel() {
               <h3 className="font-rubik text-xl mb-4 uppercase">
                 {selectedNews.title}
               </h3>
-              <img
-                src={selectedNews.image}
-                alt={selectedNews.title}
-                className="w-full h-48 object-cover rounded-lg mb-4"
-                onError={(e) => {
-                  const target = e.target as HTMLImageElement;
-                  target.src = "/images/placeholder-news-3.png";
-                }}
-              />
+              <div className="relative w-full h-48">
+                <Image
+                  src={selectedNews.image}
+                  alt={selectedNews.title}
+                  fill
+                  className="object-cover rounded-lg mb-4"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.src = "/images/placeholder-news-3.png";
+                  }}
+                />
+              </div>
               <p className="text-sm font-inter mb-2">{selectedNews.date}</p>
               <p className="text-sm font-inter">{selectedNews.details}</p>
             </div>

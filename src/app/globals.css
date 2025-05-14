@@ -63,10 +63,9 @@ h3 {
 
 /* Custom font class for Rubik */
 .font-rubik {
-  font-family: "Rubik", sans-serif;
+  font-family: var(--font-rubik);
 }
 
-/* Custom font class for Inter */
 .font-inter {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-inter);
 }

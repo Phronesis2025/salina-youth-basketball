@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 interface Team {
   id: number;
@@ -118,15 +119,18 @@ export default function TeamHub() {
                   "transform transition-all duration-300 hover:scale-105 hover:shadow-[0_6px_12px_-2px_rgba(0,0,0,0.2),0_4px_8px_-2px_rgba(0,0,0,0.12)]"
                 )}
               >
-                <img
-                  src={team.image}
-                  alt={team.name}
-                  className="w-full h-48 object-cover"
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    target.src = "/images/placeholder-team-default.jpg";
-                  }}
-                />
+                <div className="relative w-full h-48">
+                  <Image
+                    src={team.image}
+                    alt={team.name}
+                    fill
+                    className="object-cover"
+                    onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
+                      const target = e.target as HTMLImageElement;
+                      target.src = "/images/placeholder-team-default.jpg";
+                    }}
+                  />
+                </div>
                 <div className="p-6">
                   <h2 className="text-[#FFFFFF] text-lg font-rubik font-semibold mb-2 uppercase">
                     {team.name}

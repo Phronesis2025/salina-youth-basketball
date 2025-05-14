@@ -34,7 +34,7 @@
 - **Phase 4 (Testing and Deployment)**: Not started.
 - **Phase 5 (Polish and Iteration)**: Not started.
 
-**Key Milestones**: Defined project goals, planned website structure, set up color scheme and design guidelines, prepared placeholder content (20-team dataset, Coaches Corner articles, t-shirt designs), built Homepage Hero section with functional CTAs, added News Carousel, Team Preview, Schedule Preview, and Values sections, created the Team Hub with filtering by age group, built the Team Sub-Page for detailed team information.
+**Key Milestones**: Defined project goals, planned website structure, set up color scheme and design guidelines, prepared placeholder content (20-team dataset, Coaches Corner articles, t-shirt designs), built Homepage Hero section with functional CTAs, added News Carousel, Team Preview, Schedule Preview, and Values sections, created the Team Hub with filtering by age group, built the Team Sub-Page for detailed team information, deployed the site to Vercel, resolved build warnings and errors for optimized deployment.
 
 ## Files for Review
 
@@ -105,7 +105,22 @@
 - **Date**: May 14, 2025
 - **Progress**: Built the Team Sub-Page in `app/teams/[id]/page.tsx`. Added a dynamic page to display detailed team information (name, age group, coach, roster, schedule, coach bio, gallery) using static data. Included sections for team overview, coach bio, roster, schedule, and gallery, with a "Back to Team Hub" button. Styled the page to match the project’s design (navy background `#002C51`, dark cards `#01182B`, white text `#FFFFFF`, Rubik for headings, Inter for body text, uppercase titles). Added error handling for invalid team IDs. Next task: Deploy updates to Vercel.
 - **Blockers**: None
-- **Environment**: Local folder (`/salina-youth-basketball`); GitHub (`https://github.com/your-username/salina-youth-basketball`); Supabase (to be created); Vercel (to be deployed); Cursor (paid plan assumed).
+- **Environment**: Local folder (`/salina-youth-basketball`); GitHub (`https://github.com/your-username/salina-youth-basketball`); Supabase (to be created); Vercel (deployed); Cursor (paid plan assumed).
+- **Errors**: None
+- **Date**: May 14, 2025
+- **Progress**: Deployed the Salina Youth Basketball Club website to Vercel. Pushed the project to a GitHub repository (`salina-youth-basketball`), imported it into Vercel, and deployed it successfully. The site is now live at a Vercel-provided URL (e.g., `https://salina-youth-basketball.vercel.app`). Configured automatic deployments for future updates via Git. Tested key features (Homepage, Team Hub, Team Sub-Page) to ensure they work as expected. Next task: Commit changes to GitHub and update `PROGRESS.md` with Phase 3 status.
+- **Blockers**: None
+- **Environment**: Local folder (`/salina-youth-basketball`); GitHub (`https://github.com/your-username/salina-youth-basketball`); Supabase (to be created); Vercel (deployed); Cursor (paid plan assumed).
+- **Errors**: None
+- **Date**: May 14, 2025
+- **Progress**: Resolved build warnings and errors identified during `npm run build`. Fixed custom font loading by preloading fonts in `layout.tsx` with `<link>` tags to prevent FOUT. Replaced all `<img>` tags with `<Image />` from `next/image` in `Navbar.tsx`, `NewsCarousel.tsx`, `TeamPreview.tsx`, `app/teams/page.tsx`, and `app/teams/[id]/page.tsx` to optimize image loading and improve LCP. Removed unused `colors` variable in `Navbar.tsx` to fix TypeScript error (`@typescript-eslint/no-unused-vars`). Successfully built the project with no warnings or errors. Next task: Commit changes to GitHub and update `PROGRESS.md` with Phase 3 status.
+- **Blockers**: None
+- **Environment**: Local folder (`/salina-youth-basketball`); GitHub (`https://github.com/your-username/salina-youth-basketball`); Supabase (to be created); Vercel (deployed); Cursor (paid plan assumed).
+- **Errors**: None
+- **Date**: May 14, 2025
+- **Progress**: Fixed additional build errors and warnings identified during `npm run build`. Resolved custom font warning by switching to `next/font/google` in `layout.tsx` to load Rubik and Inter fonts, ensuring global font application and eliminating FOUT. Updated `global.css` to remove Google Fonts import and use CSS variables for font classes. Fixed JSX syntax errors in `app/teams/[id]/page.tsx` by replacing unescaped single quotes with curly quotes in the "Team Not Found" message. Successfully built the project with no errors. Next task: Commit changes to GitHub and update `PROGRESS.md` with Phase 3 status.
+- **Blockers**: None
+- **Environment**: Local folder (`/salina-youth-basketball`); GitHub (`https://github.com/your-username/salina-youth-basketball`); Supabase (to be created); Vercel (deployed); Cursor (paid plan assumed).
 - **Errors**: None
 
 ## To-Do List
@@ -117,7 +132,7 @@
   - [x] Add team/schedule previews and other sections
 - [x] Build Team Hub
 - [x] Build Team Sub-Page
-- [ ] Deploy updates to Vercel
+- [x] Deploy updates to Vercel
 - [ ] Commit changes to GitHub
 - [ ] Update `PROGRESS.md` with Phase 3 status
 
@@ -147,7 +162,7 @@
   - [x] Add team/schedule previews and other sections
 - [x] Build Team Hub
 - [x] Build Team Sub-Page
-- [ ] Deploy updates to Vercel
+- [x] Deploy updates to Vercel
 - [ ] Commit changes to GitHub
 - [ ] Update `PROGRESS.md` with Phase 3 status
 

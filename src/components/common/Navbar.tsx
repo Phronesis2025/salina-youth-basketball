@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-
+import Image from "next/image";
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
 
@@ -28,14 +28,6 @@ export default function Navbar() {
     { name: "Join the Team", href: "/join" },
   ];
 
-  // Consistent design variables
-  const colors = {
-    primary: "#002C51", // Dark blue
-    light: "#FFFFFF", // White
-    text: "#0A0F15", // Dark text
-    hover: "#E6ECEF", // Light gray hover
-  };
-
   return (
     <header
       className={cn(
@@ -53,14 +45,19 @@ export default function Navbar() {
         {/* Logo */}
         <div className="flex items-center">
           <Link href="/">
-            <img
-              src="/images/WCS Logo-transparentBG.png"
-              alt="Salina Youth Basketball Club Logo"
+            <div
               className={cn(
-                "transition-all duration-300",
+                "relative transition-all duration-300",
                 scrolled ? "h-[45px]" : "h-[60px]"
               )}
-            />
+            >
+              <Image
+                src="/images/WCS Logo-transparentBG.png"
+                alt="Salina Youth Basketball Club Logo"
+                fill
+                className="object-contain"
+              />
+            </div>
           </Link>
         </div>
 

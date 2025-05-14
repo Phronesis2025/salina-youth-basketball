@@ -1,13 +1,18 @@
-import type { Metadata } from "next";
-import "./globals.css";
-import Navbar from "../components/common/Navbar";
-import Footer from "../components/common/Footer";
-import { ThemeProvider } from "next-themes";
+import { Rubik, Inter } from "next/font/google";
 
-export const metadata: Metadata = {
-  title: "Salina Youth Basketball Club",
-  description: "Website for managing youth basketball teams in Salina, Kansas",
-};
+// Define Rubik font with subsets and weights
+const rubik = Rubik({
+  subsets: ["latin"],
+  weight: ["400", "500", "700"],
+  variable: "--font-rubik",
+});
+
+// Define Inter font with subsets and weights
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  variable: "--font-inter",
+});
 
 export default function RootLayout({
   children,
@@ -15,30 +20,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&family=Inter:wght@400;500&display=swap"
-          rel="stylesheet"
-        />
-      </head>
-      <body className="bg-[var(--project-background)] text-[var(--project-foreground)]">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem={false}
-        >
-          <Navbar />
-          {children}
-          <Footer />
-        </ThemeProvider>
-      </body>
+    <html lang="en">
+      <body className={`${rubik.variable} ${inter.variable}`}>{children}</body>
     </html>
   );
 }
