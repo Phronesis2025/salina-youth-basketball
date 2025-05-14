@@ -20,18 +20,18 @@ export default function Hero() {
       </video>
 
       {/* Dark Overlay */}
-      <div className="absolute top-0 left-0 w-full h-full bg-[#01182B] opacity-70"></div>
+      <div className="absolute top-0 left-0 w-full h-full bg-[black] opacity-[70%]"></div>
 
       {/* Content */}
       <div className="relative z-10 container max-w-[75rem] mx-auto px-5 py-24 md:py-32">
         <div className="flex flex-col items-start max-w-3xl animate-fadeIn">
           {/* Title */}
-          <h1 className="text-[#FFFFFF] text-[clamp(2.648rem,6vw,4.241rem)] font-bold leading-[1.15] mb-4 font-rubik">
+          <h1 className="text-[#FFFFFF] text-[clamp(4rem,5vw,4rem)] font-bold leading-[1.15] mb-4 font-rubik">
             World Class Sports
           </h1>
 
           {/* Subtitle */}
-          <p className="text-[#FFFFFF] text-[clamp(1rem,2vw,1.125rem)] mb-8 max-w-xl font-inter">
+          <p className="text-[#FFFFFF] text-[clamp(1.5rem,2vw,15rem)] mb-[8px] max-w-xl font-inter">
             Empowering Youth to Dominate and Inspire
           </p>
 

@@ -34,12 +34,18 @@
 - **Phase 4 (Testing and Deployment)**: Not started.
 - **Phase 5 (Polish and Iteration)**: Not started.
 
-**Key Milestones**: Defined project goals, planned website structure, set up color scheme and design guidelines, prepared placeholder content (20-team dataset, Coaches Corner articles, t-shirt designs), built Homepage Hero section with functional CTAs.
+**Key Milestones**: Defined project goals, planned website structure, set up color scheme and design guidelines, prepared placeholder content (20-team dataset, Coaches Corner articles, t-shirt designs), built Homepage Hero section with functional CTAs, added News Carousel, Team Preview, Schedule Preview, and Values sections, created the Team Hub with filtering by age group.
 
 ## Files for Review
 
 - `src/components/homepage/Hero.tsx` (completed with video background, CTAs, and styling)
 - `src/components/common/Navbar.tsx` (updated with logo, right-aligned links, and styling)
+- `src/components/homepage/NewsCarousel.tsx` (added carousel with static data and modals)
+- `src/components/homepage/TeamPreview.tsx` (added team previews with links)
+- `src/components/homepage/SchedulePreview.tsx` (added schedule previews with links)
+- `src/components/homepage/ValuesSection.tsx` (added values section)
+- `src/app/page.tsx` (updated to include Hero, NewsCarousel, TeamPreview, SchedulePreview, and ValuesSection)
+- `app/teams/page.tsx` (added Team Hub with team list and age group filter)
 
 ## Current State
 
@@ -70,11 +76,44 @@
 - **Blockers**: None
 - **Environment**: Local folder (`/salina-youth-basketball`); GitHub (`https://github.com/your-username/salina-youth-basketball`); Supabase (to be created); Vercel (to be deployed); Cursor (paid plan assumed).
 - **Errors**: None
+- **Date**: May 13, 2025
+- **Progress**: Built the Homepage News Carousel in `NewsCarousel.tsx` using Swiper.js. Added static news items with titles, dates, images, descriptions, and detailed content. Each news item is displayed as a card in a responsive carousel (1 slide on mobile, 2 on tablet, 3 on desktop) with navigation arrows and pagination. Added a "Read More" button to open a custom modal (using state and Tailwind) with full details, as the shadcn/ui `Dialog` component was not confirmed to be installed. Styled the carousel to match the Hero section (navy background `#002C51`, white text `#FFFFFF`, Rubik font for headings, Inter font for body text). Integrated `NewsCarousel` into `page.tsx` below the Hero section. Next task: Add team/schedule previews and other Homepage sections.
+- **Blockers**: None
+- **Environment**: Local folder (`/salina-youth-basketball`); GitHub (`https://github.com/your-username/salina-youth-basketball`); Supabase (to be created); Vercel (to be deployed); Cursor (paid plan assumed).
+- **Errors**: None
+- **Date**: May 14, 2025
+- **Progress**: Refined the styling of news cards in `NewsCarousel.tsx` to align with the project’s sporty, minimalistic design. Updated cards to have a dark background (`#01182B`), rounded corners, subtle shadow, and a hover effect (scale up and enhanced shadow). Styled the title as uppercase with Rubik font, date and description with Inter font, and the "Read More" button to match the Hero section’s CTAs (`bg-[#FFFFFF] text-[#0A0F15] uppercase`). Ensured consistency with the project’s dark theme and typography. Next task: Add team/schedule previews and other Homepage sections.
+- **Blockers**: None
+- **Environment**: Local folder (`/salina-youth-basketball`); GitHub (`https://github.com/your-username/salina-youth-basketball`); Supabase (to be created); Vercel (to be deployed); Cursor (paid plan assumed).
+- **Errors**: None
+- **Date**: May 14, 2025
+- **Progress**: Updated `Hero.tsx` to adjust the overlay color to `bg-[black] opacity-[70%]`, matching the navbar’s background. Modified the title’s size to `text-[clamp(4rem,5vw,4rem)]` for consistency across devices, and the subtitle’s size to `text-[clamp(1.5rem,2vw,15rem)]` (noting the max value may be a typo, possibly intended as `1.5rem`). Tightened subtitle spacing with `mb-[8px]`. Updated `NewsCarousel.tsx` to add TypeScript interfaces for news items, improving type safety. Adjusted the modal overlay to `bg-[black]`, increased container padding to `px-16`, and refined card spacing and layout with `flex` for consistent height and button positioning. Fixed shadcn/ui components by ensuring Tailwind CSS is properly included in `global.css`. Next task: Add team/schedule previews and other Homepage sections.
+- **Blockers**: None
+- **Environment**: Local folder (`/salina-youth-basketball`); GitHub (`https://github.com/your-username/salina-youth-basketball`); Supabase (to be created); Vercel (to be deployed); Cursor (paid plan assumed).
+- **Errors**: None
+- **Date**: May 14, 2025
+- **Progress**: Added team and schedule preview sections to the Homepage. Created `TeamPreview.tsx` to display three teams (Thunderhawks, Firebolts, Stingers) with images, names, age groups, and a "Learn More" button linking to individual team pages. Created `SchedulePreview.tsx` to show upcoming games (Thunderhawks vs. Eagles, Firebolts vs. Tigers, Stingers vs. Wolves) with dates, teams, locations, and a "View Details" button linking to the full schedule. Added `ValuesSection.tsx` to highlight the club’s core values (Teamwork, Excellence, Inspiration). Styled all sections to match the project’s design (navy background `#002C51`, dark cards `#01182B`, white text `#FFFFFF`, Rubik for headings, Inter for body text, uppercase titles). Integrated sections into `page.tsx` below the News Carousel. Homepage sections are now complete.
+- **Blockers**: None
+- **Environment**: Local folder (`/salina-youth-basketball`); GitHub (`https://github.com/your-username/salina-youth-basketball`); Supabase (to be created); Vercel (to be deployed); Cursor (paid plan assumed).
+- **Errors**: None
+- **Date**: May 14, 2025
+- **Progress**: Built the Team Hub in `app/teams/page.tsx`. Added a list of all teams with details (name, age group, coach, image) using static data. Implemented a filter dropdown to sort teams by age group (All, U-10, U-12, U-14, U-16). Each team card links to an individual Team Sub-Page (to be built). Styled the Team Hub to match the project’s design (navy background `#002C51`, dark cards `#01182B`, white text `#FFFFFF`, Rubik for headings, Inter for body text, uppercase titles). Added a "Back to Homepage" button. Next task: Build the Team Sub-Page.
+- **Blockers**: None
+- **Environment**: Local folder (`/salina-youth-basketball`); GitHub (`https://github.com/your-username/salina-youth-basketball`); Supabase (to be created); Vercel (to be deployed); Cursor (paid plan assumed).
+- **Errors**: None
 
 ## To-Do List
 
-- Build Homepage News Carousel with static data and modals.
-- Continue adding Homepage sections (Values, Teams Preview, etc.).
+- [x] Build Homepage
+  - [x] Create Hero section with video and CTAs
+  - [x] Fix shadcn/ui Button rendering issue in Hero section
+  - [x] Add News Carousel with modals
+  - [x] Add team/schedule previews and other sections
+- [x] Build Team Hub
+- [ ] Build Team Sub-Page
+- [ ] Deploy updates to Vercel
+- [ ] Commit changes to GitHub
+- [ ] Update `PROGRESS.md` with Phase 3 status
 
 ### Phase 3: Build Website
 
@@ -98,9 +137,9 @@
 - [x] Build Homepage
   - [x] Create Hero section with video and CTAs
   - [x] Fix shadcn/ui Button rendering issue in Hero section
-  - [ ] Add News Carousel with modals
-  - [ ] Add team/schedule previews and other sections
-- [ ] Build Team Hub
+  - [x] Add News Carousel with modals
+  - [x] Add team/schedule previews and other sections
+- [x] Build Team Hub
 - [ ] Build Team Sub-Page
 - [ ] Deploy updates to Vercel
 - [ ] Commit changes to GitHub
