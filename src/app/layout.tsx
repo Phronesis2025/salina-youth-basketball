@@ -1,4 +1,5 @@
 import { Rubik, Inter } from "next/font/google";
+import "./global.css";
 
 // Define Rubik font with subsets and weights
 const rubik = Rubik({
