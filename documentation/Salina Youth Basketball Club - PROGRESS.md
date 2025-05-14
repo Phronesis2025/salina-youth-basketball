@@ -30,11 +30,11 @@
 
 - **Phase 1 (Define Goal and Audience)**: Completed. Defined purpose, audience (parents, external teams), goals (streamline registrations, showcase teams), and design (dark theme, navy/white/red).
 - **Phase 2 (Plan Content and Structure)**: Completed. Created sitemap, navigation, and page content (Homepage, Team Hub, Coaches Corner, etc.), with placeholder content (values, articles, t-shirt designs).
-- **Phase 3 (Build Website)**: In progress.
+- **Phase 3 (Build Website)**: Completed.
 - **Phase 4 (Testing and Deployment)**: Not started.
 - **Phase 5 (Polish and Iteration)**: Not started.
 
-**Key Milestones**: Defined project goals, planned website structure, set up color scheme and design guidelines, prepared placeholder content (20-team dataset, Coaches Corner articles, t-shirt designs), built Homepage Hero section with functional CTAs, added News Carousel, Team Preview, Schedule Preview, and Values sections, created the Team Hub with filtering by age group, built the Team Sub-Page for detailed team information, deployed the site to Vercel, resolved build warnings and errors for optimized deployment.
+**Key Milestones**: Defined project goals, planned website structure, set up color scheme and design guidelines, prepared placeholder content (20-team dataset, Coaches Corner articles, t-shirt designs), built Homepage Hero section with functional CTAs, added News Carousel, Team Preview, Schedule Preview, and Values sections, created the Team Hub with filtering by age group, built the Team Sub-Page for detailed team information, deployed the site to Vercel, resolved build warnings and errors, fixed styling issues on Vercel, resolved permission issues during builds, added placeholder pages for routes, fixed logo and footer display issues, implemented logo shrinking on scroll.
 
 ## Files for Review
 
@@ -47,6 +47,11 @@
 - `src/app/page.tsx` (updated to include Hero, NewsCarousel, TeamPreview, SchedulePreview, and ValuesSection)
 - `app/teams/page.tsx` (added Team Hub with team list and age group filter)
 - `app/teams/[id]/page.tsx` (added Team Sub-Page with detailed team information)
+- `app/signup/page.tsx` (added placeholder page)
+- `app/schedules/page.tsx` (added placeholder page)
+- `app/shop/page.tsx` (added placeholder page)
+- `app/tournaments/page.tsx` (added placeholder page)
+- `app/join/page.tsx` (added placeholder page)
 
 ## Current State
 
@@ -122,6 +127,36 @@
 - **Blockers**: None
 - **Environment**: Local folder (`/salina-youth-basketball`); GitHub (`https://github.com/your-username/salina-youth-basketball`); Supabase (to be created); Vercel (deployed); Cursor (paid plan assumed).
 - **Errors**: None
+- **Date**: May 14, 2025
+- **Progress**: Fixed styling issue on Vercel deployment where no styles were applied. Identified the root cause as a missing `import './global.css'` in `layout.tsx`, which prevented Tailwind CSS styles from being included in the build. Added the import and redeployed to Vercel with a cleared build cache. Verified that styling is now applied correctly (navbar, Hero section, cards, fonts). Ensured `tailwind.config.js` and `postcss.config.js` are correctly configured to process Tailwind styles. Next task: Commit changes to GitHub and update `PROGRESS.md` with Phase 3 status.
+- **Blockers**: None
+- **Environment**: Local folder (`/salina-youth-basketball`); GitHub (`https://github.com/your-username/salina-youth-basketball`); Supabase (to be created); Vercel (deployed); Cursor (paid plan assumed).
+- **Errors**: None
+- **Date**: May 14, 2025
+- **Progress**: Resolved build failure due to missing `global.css` and permission issues. Fixed `Module not found: Can't resolve './global.css'` by ensuring `global.css` exists in `src/app/` and is correctly imported in `layout.tsx`. Resolved `EPERM: operation not permitted` error by moving the project out of OneDrive to `C:\Users\phron\Documents\salina-youth-basketball`, preventing file locking during builds. Successfully built the project locally and redeployed to Vercel. Confirmed that styles are now applied correctly on Vercel by verifying the presence of a CSS file in the Network tab. Next task: Commit changes to GitHub and update `PROGRESS.md` with Phase 3 status.
+- **Blockers**: None
+- **Environment**: Local folder (`C:\Users\phron\Documents\salina-youth-basketball`); GitHub (`https://github.com/your-username/salina-youth-basketball`); Supabase (to be created); Vercel (deployed); Cursor (paid plan assumed).
+- **Errors**: None
+- **Date**: May 14, 2025
+- **Progress**: Fixed PostCSS configuration errors during `npm run build`. Installed `@tailwindcss/postcss` as required by Tailwind CSS 4 and updated `postcss.config.js` to use the new plugin. Ensured `postcss.config.js` exports a `plugins` key to resolve the "Your custom PostCSS configuration must export a `plugins` key" error. Successfully built the project locally after moving it out of OneDrive to prevent permission issues. Redeployed to Vercel and confirmed that styles are now applied. Next task: Commit changes to GitHub and update `PROGRESS.md` with Phase 3 status.
+- **Blockers**: None
+- **Environment**: Local folder (`C:\Users\phron\Documents\salina-youth-basketball`); GitHub (`https://github.com/your-username/salina-youth-basketball`); Supabase (to be created); Vercel (deployed); Cursor (paid plan assumed).
+- **Errors**: None
+- **Date**: May 14, 2025
+- **Progress**: Resolved TypeScript module error in `join/page.tsx` during `npm run build`. Ensured all placeholder pages (`signup`, `schedules`, `shop`, `tournaments`, `join`) correctly export default components, making them recognizable as modules. Cleaned the build cache and verified `tsconfig.json` settings for proper module resolution. Successfully built the project locally and redeployed to Vercel. Confirmed that styles are applied and 404 errors for routes are resolved. Next task: Commit changes to GitHub and update `PROGRESS.md` with Phase 3 status.
+- **Blockers**: None
+- **Environment**: Local folder (`C:\Users\phron\Documents\salina-youth-basketball`); GitHub (`https://github.com/your-username/salina-youth-basketball`); Supabase (to be created); Vercel (deployed); Cursor (paid plan assumed).
+- **Errors**: None
+- **Date**: May 14, 2025
+- **Progress**: Successfully deployed to Vercel with styles applied. Resolved 404 errors for routes `/signup`, `/schedules`, `/shop`, `/tournaments`, and `/join` by adding placeholder pages. Fixed logo and footer not displaying by updating the logo path in `Navbar.tsx` to `/images/WCS-Logo-transparentBG.png` (removing spaces) and ensuring `Footer.tsx` is included in `layout.tsx`. Verified that the logo, footer, and all styles (navy background `#002C51`, white text `#FFFFFF`, Rubik/Inter fonts) are correctly displayed on Vercel. Next task: Proceed to Phase 4 (testing and deployment refinements).
+- **Blockers**: None
+- **Environment**: Local folder (`C:\Users\phron\OneDrive\Documents\HTML CSS JS Projects\World Class Sports\salina-youth-basketball`); GitHub (`https://github.com/your-username/salina-youth-basketball`); Supabase (to be created); Vercel (deployed); Cursor (paid plan assumed).
+- **Errors**: None
+- **Date**: May 14, 2025
+- **Progress**: Fixed logo shrinking issue in `Navbar.tsx`. The logo was not resizing on scroll due to fixed `width` and `height` props in the `Image` component. Implemented an alternative solution by using CSS (`w-full h-full`) to scale the image within a parent `div` that adjusts its dimensions (`h-[60px] w-[150px]` to `h-[45px] w-[112.5px]`) based on the `scrolled` state, maintaining the aspect ratio. Redeployed to Vercel and confirmed that the logo now shrinks correctly when the user scrolls. Phase 3 is fully complete. Next task: Proceed to Phase 4 (testing and deployment refinements).
+- **Blockers**: None
+- **Environment**: Local folder (`C:\Users\phron\OneDrive\Documents\HTML CSS JS Projects\World Class Sports\salina-youth-basketball`); GitHub (`https://github.com/your-username/salina-youth-basketball`); Supabase (to be created); Vercel (deployed); Cursor (paid plan assumed).
+- **Errors**: None
 
 ## To-Do List
 
@@ -133,8 +168,8 @@
 - [x] Build Team Hub
 - [x] Build Team Sub-Page
 - [x] Deploy updates to Vercel
-- [ ] Commit changes to GitHub
-- [ ] Update `PROGRESS.md` with Phase 3 status
+- [x] Commit changes to GitHub
+- [x] Update `PROGRESS.md` with Phase 3 status
 
 ### Phase 3: Build Website
 
@@ -163,8 +198,8 @@
 - [x] Build Team Hub
 - [x] Build Team Sub-Page
 - [x] Deploy updates to Vercel
-- [ ] Commit changes to GitHub
-- [ ] Update `PROGRESS.md` with Phase 3 status
+- [x] Commit changes to GitHub
+- [x] Update `PROGRESS.md` with Phase 3 status
 
 ### Phase 4: Testing and Deployment
 
