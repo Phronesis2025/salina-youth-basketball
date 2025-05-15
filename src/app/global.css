@@ -68,3 +68,46 @@ h3 {
 .font-inter {
   font-family: var(--font-inter);
 }
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Optional: Ensure bounce animation for scroll indicator is included */
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-bounce {
+  animation: bounce 2s infinite;
+}
+/* Swiper Styles */
+.news-swiper .swiper-button-next,
+.news-swiper .swiper-button-prev {
+  color: #ffffff;
+}
+
+.news-swiper .swiper-pagination-bullet {
+  background: #ffffff;
+  opacity: 0.5;
+}
+
+.news-swiper .swiper-pagination-bullet-active {
+  opacity: 1;
+}

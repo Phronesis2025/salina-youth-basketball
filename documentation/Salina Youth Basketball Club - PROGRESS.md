@@ -72,10 +72,10 @@
 ## To-Do List
 
 - [x] Build Homepage
-- [x] Create Hero section with video and CTAs
-- [x] Fix shadcn/ui Button rendering issue in Hero section
-- [x] Add News Carousel with modals
-- [x] Add team/schedule previews and other sections
+  - [x] Create Hero section with video and CTAs
+  - [x] Fix shadcn/ui Button rendering issue in Hero section
+  - [x] Add News Carousel with modals
+  - [x] Add team/schedule previews and other sections
 - [x] Build Team Hub
 - [x] Build Team Sub-Page
 - [x] Build Join Page
@@ -94,12 +94,12 @@
 - [x] Set up GitHub repository
 - [x] Create public repository salina-youth-basketball
 - [x] Add .gitignore (Node template)
-- [x] Clone to local
+  - [x] Clone to local
 - [x] Add initial documentation (PROGRESS.md, FUTURE_IMPROVEMENTS.md)
 - [x] Initialize Next.js project with Cursor
-- [x] Create project structure
-- [x] Install dependencies (Tailwind CSS, Supabase, Stripe)
-- [x] Test locally
+  - [x] Create project structure
+  - [x] Install dependencies (Tailwind CSS, Supabase, Stripe)
+  - [x] Test locally
 - [x] Create .cursor/rules directory
 - [x] Add general-rules.mdc, styling-rules.mdc, supabase-rules.mdc
 - [x] Build Homepage Layout
@@ -107,10 +107,10 @@
 - [x] Create Footer.tsx with logo, Newsletter Signup, and links
 - [x] Update layout.tsx to include Navbar and Footer
 - [x] Build Homepage
-- [x] Create Hero section with video and CTAs
-- [x] Fix shadcn/ui Button rendering issue in Hero section
-- [x] Add News Carousel with modals
-- [x] Add team/schedule previews and other sections
+  - [x] Create Hero section with video and CTAs
+  - [x] Fix shadcn/ui Button rendering issue in Hero section
+  - [x] Add News Carousel with modals
+  - [x] Add team/schedule previews and other sections
 - [x] Build Team Hub
 - [x] Build Team Sub-Page
 - [x] Build Join Page

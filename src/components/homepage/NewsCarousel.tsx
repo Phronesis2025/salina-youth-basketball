@@ -1,17 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
-// Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
-// Define an interface for the news item structure
 interface NewsItem {
   id: number;
   title: string;
@@ -22,7 +20,6 @@ interface NewsItem {
 }
 
 export default function NewsCarousel() {
-  // Static news data
   const newsItems: NewsItem[] = [
     {
       id: 1,
@@ -55,6 +52,8 @@ export default function NewsCarousel() {
 
   const [selectedNews, setSelectedNews] = useState<NewsItem | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const modalRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
 
   const openModal = (item: NewsItem) => {
     setSelectedNews(item);
@@ -66,10 +65,49 @@ export default function NewsCarousel() {
     setIsModalOpen(false);
   };
 
+  // Focus trap and ESC key handling for modal
+  useEffect(() => {
+    if (isModalOpen && modalRef.current && closeButtonRef.current) {
+      const focusableElements = modalRef.current.querySelectorAll(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      );
+      const firstElement = focusableElements[0] as HTMLElement;
+      const lastElement = focusableElements[
+        focusableElements.length - 1
+      ] as HTMLElement;
+
+      const handleKeyDown = (e: KeyboardEvent) => {
+        if (e.key === "Escape") {
+          closeModal();
+          return;
+        }
+        if (e.key === "Tab") {
+          if (e.shiftKey && document.activeElement === firstElement) {
+            e.preventDefault();
+            lastElement.focus();
+          } else if (!e.shiftKey && document.activeElement === lastElement) {
+            e.preventDefault();
+            firstElement.focus();
+          }
+        }
+      };
+
+      document.addEventListener("keydown", handleKeyDown);
+      closeButtonRef.current.focus();
+
+      return () => {
+        document.removeEventListener("keydown", handleKeyDown);
+      };
+    }
+  }, [isModalOpen]);
+
   return (
-    <section className="py-16 bg-[#002C51]">
-      <div className="container max-w-[75rem] mx-auto px-16">
-        <h2 className="text-[#FFFFFF] text-[clamp(2rem,4vw,3rem)] font-bold font-rubik mb-10 text-center">
+    <section className="bg-[#002C51] py-12" aria-label="Latest News">
+      <div className="container max-w-[75rem] mx-auto px-4 sm:px-6 lg:px-8">
+        <h2
+          className="text-white text-[clamp(2.25rem,5vw,3rem)] font-bold font-rubik mb-8 text-center animate-fadeIn"
+          style={{ animationDelay: "0.2s" }}
+        >
           Latest News
         </h2>
 
@@ -80,44 +118,47 @@ export default function NewsCarousel() {
           navigation
           pagination={{ clickable: true }}
           breakpoints={{
-            640: { slidesPerView: 2 },
-            1024: { slidesPerView: 3 },
+            480: { slidesPerView: 1.5, spaceBetween: 16 },
+            640: { slidesPerView: 2, spaceBetween: 20 },
+            1024: { slidesPerView: 3, spaceBetween: 24 },
           }}
           className="news-swiper"
+          aria-label="News carousel"
         >
           {newsItems.map((item) => (
             <SwiperSlide key={item.id}>
               <div
                 className={cn(
-                  "bg-[#01182B] rounded-[1rem] shadow-[0, 4px, 6px, -1px, rgba(0,0,0,0.1),0, 2px, 4px, -1px, rgba(0,0,0,0.06)] overflow-hidden",
-                  "transform transition-all duration-[300ms] rounded-[1rem] hover:scale-105 hover:shadow-[0, 6px, 12px, -2px, rgba(0,0,0,0.2),0, 4px, 8px, -2px, rgba(0,0,0,0.12)]",
-                  "h-full flex flex-col"
+                  "bg-gray-900 rounded-lg shadow-md overflow-hidden w-full h-[28rem]",
+                  "transform transition-all duration-300 hover:scale-105 hover:shadow-lg",
+                  "flex flex-col min-h-0"
                 )}
               >
-                <div className="relative w-full h-48">
+                <div className="relative w-full h-48 overflow-hidden">
                   <Image
                     src={item.image}
                     alt={item.title}
                     fill
-                    className="object-cover"
+                    priority={item.id === 1}
+                    className="object-cover object-top"
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
-                      target.src = "/images/placeholder-news-1.png";
+                      target.src = "/images/placeholder-news.png";
                     }}
                   />
                 </div>
-                <div className="p-6 flex flex-col flex-grow">
-                  <h3 className="text-[#FFFFFF] text-lg font-rubik font-semibold mb-2 uppercase">
+                <div className="p-6 flex flex-col flex-grow min-h-0">
+                  <h3 className="text-white text-2xl font-rubik font-semibold mb-2 uppercase line-clamp-2">
                     {item.title}
                   </h3>
-                  <p className="text-[#FFFFFF] text-sm font-inter mb-[2px]">
+                  <p className="text-white text-base font-inter mb-2">
                     {item.date}
                   </p>
-                  <p className="text-[#FFFFFF] text-sm font-inter mb-[4px] line-clamp-2 flex-grow">
+                  <p className="text-white text-base font-inter mb-4 line-clamp-2 flex-grow">
                     {item.description}
                   </p>
                   <Button
-                    className="bg-[#FFFFFF] text-[#0A0F15] font-medium font-inter hover:bg-[#E6ECEF] rounded-[0.25rem] shadow-[0, 4px, 6px, -1px, rgba(0,0,0,0.1),0, 2px, 4px, -1px, rgba(0,0,0,0.06)] text-sm py-[2px] px-[4px] uppercase mt-auto"
+                    className="bg-blue-600 text-white font-medium font-inter rounded-md hover:bg-blue-700 hover:scale-105 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-300 text-base px-4 py-2 uppercase mt-auto"
                     onClick={() => openModal(item)}
                   >
                     Read More
@@ -128,13 +169,24 @@ export default function NewsCarousel() {
           ))}
         </Swiper>
 
-        {/* Custom Modal */}
+        {/* Modal */}
         {isModalOpen && selectedNews && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-            <div className="bg-[#01182B] text-[#FFFFFF] rounded-lg max-w-lg w-full mx-4 p-6 relative">
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 animate-fadeIn"
+            role="dialog"
+            aria-labelledby="modal-title"
+            aria-modal="true"
+          >
+            <div
+              ref={modalRef}
+              className="bg-gray-900 text-white rounded-lg max-w-xl w-full mx-4 p-6 relative"
+            >
               <button
+                ref={closeButtonRef}
                 onClick={closeModal}
-                className="absolute top-4 right-4 text-[#FFFFFF] hover:text-[#E6ECEF]"
+                onKeyDown={(e) => e.key === "Enter" && closeModal()}
+                className="absolute top-4 right-4 text-white hover:text-gray-200 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded-sm transition-colors duration-300"
+                aria-label="Close modal"
               >
                 <svg
                   className="w-6 h-6"
@@ -150,41 +202,29 @@ export default function NewsCarousel() {
                   />
                 </svg>
               </button>
-              <h3 className="font-rubik text-xl mb-4 uppercase">
+              <h3
+                id="modal-title"
+                className="font-rubik text-3xl font-semibold mb-4 uppercase"
+              >
                 {selectedNews.title}
               </h3>
-              <div className="relative w-full h-48">
+              <div className="relative w-full h-48 overflow-hidden">
                 <Image
                   src={selectedNews.image}
                   alt={selectedNews.title}
                   fill
-                  className="object-cover rounded-lg mb-4"
+                  className="object-cover object-top rounded-lg mb-4"
                   onError={(e) => {
                     const target = e.target as HTMLImageElement;
-                    target.src = "/images/placeholder-news-3.png";
+                    target.src = "/images/placeholder-news.png";
                   }}
                 />
               </div>
-              <p className="text-sm font-inter mb-2">{selectedNews.date}</p>
-              <p className="text-sm font-inter">{selectedNews.details}</p>
+              <p className="text-base font-inter mb-2">{selectedNews.date}</p>
+              <p className="text-base font-inter">{selectedNews.details}</p>
             </div>
           </div>
         )}
-
-        {/* Custom Swiper Styles */}
-        <style jsx global>{`
-          .news-swiper .swiper-button-next,
-          .news-swiper .swiper-button-prev {
-            color: #ffffff;
-          }
-          .news-swiper .swiper-pagination-bullet {
-            background: #ffffff;
-            opacity: 0.5;
-          }
-          .news-swiper .swiper-pagination-bullet-active {
-            opacity: 1;
-          }
-        `}</style>
       </div>
     </section>
   );

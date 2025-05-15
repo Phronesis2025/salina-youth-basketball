@@ -1,4 +1,3 @@
-import Navbar from "@/components/common/Navbar";
 import Hero from "@/components/homepage/Hero";
 import NewsCarousel from "@/components/homepage/NewsCarousel";
 import TeamPreview from "@/components/homepage/TeamPreview";
@@ -8,14 +7,21 @@ import ValuesSection from "@/components/homepage/ValuesSection";
 export default function Home() {
   return (
     <div className="min-h-screen">
-      <Navbar />
       <main className="pt-24 px-4">
         <div className="mx-auto max-w-[75rem]">
           <Hero />
-          <NewsCarousel />
-          <TeamPreview />
-          <SchedulePreview />
-          <ValuesSection />
+          <div className="animate-fadeIn" style={{ animationDelay: "0.2s" }}>
+            <NewsCarousel />
+          </div>
+          <div className="animate-fadeIn" style={{ animationDelay: "0.4s" }}>
+            <TeamPreview />
+          </div>
+          <div className="animate-fadeIn" style={{ animationDelay: "0.6s" }}>
+            <SchedulePreview />
+          </div>
+          <div className="animate-fadeIn" style={{ animationDelay: "0.8s" }}>
+            <ValuesSection />
+          </div>
         </div>
       </main>
     </div>

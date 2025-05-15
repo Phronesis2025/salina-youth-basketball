@@ -11,7 +11,6 @@ import {
 } from "@stripe/react-stripe-js";
 import { Button } from "@/components/ui/button";
 
-// Initialize Stripe with your publishable key
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
 );
@@ -38,7 +37,7 @@ const CheckoutForm = ({
   onError,
 }: {
   formData: FormData;
-  onSuccess: (paymentId: string) => void;
+  onSuccess: (paymentId: string, joinRequestId: string) => void;
   onError: (error: string) => void;
 }) => {
   const stripe = useStripe();
@@ -56,7 +55,6 @@ const CheckoutForm = ({
     let joinRequestId: string | null = null;
 
     try {
-      // Step 1: Insert form data into Supabase via API route
       const response = await fetch("/api/create-join-request", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -68,12 +66,11 @@ const CheckoutForm = ({
       if (insertError) throw new Error(insertError);
       joinRequestId = newJoinRequestId;
 
-      // Step 2: Create a payment intent via the API route
       const paymentResponse = await fetch("/api/stripe-payment", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          amount: formData.payment_option === "full" ? 36000 : 3000, // Amount in cents
+          amount: formData.payment_option === "full" ? 36000 : 3000,
           description:
             formData.payment_option === "full"
               ? "Full Membership Fee"
@@ -86,7 +83,6 @@ const CheckoutForm = ({
         await paymentResponse.json();
       if (paymentError) throw new Error(paymentError);
 
-      // Step 3: Confirm the payment with Stripe Elements
       const cardElement = elements.getElement(CardElement);
       const { paymentIntent, error: stripeError } =
         await stripe.confirmCardPayment(clientSecret, {
@@ -96,7 +92,6 @@ const CheckoutForm = ({
       if (stripeError) throw new Error(stripeError.message);
 
       if (paymentIntent?.status === "succeeded") {
-        // Step 4: Update the join request with payment_status: "completed" and stripe_payment_id via API route
         const updateResponse = await fetch("/api/update-join-request", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -110,7 +105,6 @@ const CheckoutForm = ({
         const { error: updateError } = await updateResponse.json();
         if (updateError) throw new Error(updateError);
 
-        // Step 5: Send email notifications (placeholder for now)
         await fetch("/api/send-email", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -121,7 +115,7 @@ const CheckoutForm = ({
           }),
         });
 
-        onSuccess(paymentIntent.id);
+        onSuccess(paymentIntent.id, joinRequestId as string);
       } else {
         throw new Error("Payment failed");
       }
@@ -131,7 +125,6 @@ const CheckoutForm = ({
       setError(errorMessage);
       onError(errorMessage);
 
-      // Update payment_status to "failed" if payment fails
       if (joinRequestId) {
         await fetch("/api/update-join-request", {
           method: "POST",
@@ -198,8 +191,10 @@ export default function JoinConfirm() {
     router.push("/join");
   };
 
-  const handlePaymentSuccess = (paymentId: string) => {
-    router.push(`/join/status?status=success&paymentId=${paymentId}`);
+  const handlePaymentSuccess = (paymentId: string, joinRequestId: string) => {
+    router.push(
+      `/join/status?status=success&paymentId=${paymentId}&joinRequestId=${joinRequestId}`
+    );
   };
 
   const handlePaymentError = (errorMessage: string) => {
