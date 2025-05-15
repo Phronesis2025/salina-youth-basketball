@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Menu, X } from "lucide-react";
@@ -10,6 +11,7 @@ import { Menu, X } from "lucide-react";
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const pathname = usePathname();
 
   // Scroll effect for shrinking navbar
   useEffect(() => {
@@ -39,6 +41,17 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", throttledScroll);
   }, [scrolled]);
 
+  // Close mobile menu on outside click
+  useEffect(() => {
+    const handleOutsideClick = (e: MouseEvent) => {
+      if (isMobileMenuOpen && !(e.target as HTMLElement).closest("header")) {
+        setIsMobileMenuOpen(false);
+      }
+    };
+    document.addEventListener("click", handleOutsideClick);
+    return () => document.removeEventListener("click", handleOutsideClick);
+  }, [isMobileMenuOpen]);
+
   const navItems = [
     { name: "Teams", href: "/teams" },
     { name: "Schedules", href: "/schedules" },
@@ -49,13 +62,16 @@ export default function Navbar() {
   return (
     <header
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 flex justify-center w-full bg-black transition-all duration-300",
-        scrolled ? "h-12 shadow-md" : "h-16 shadow-none"
+        "fixed top-0 left-0 right-0 z-50 flex justify-center w-full bg-black transition-all duration-300 ease-in-out animate-fadeIn",
+        scrolled
+          ? "md:h-12 h-16 shadow-lg border-b border-gray-800"
+          : "h-16 shadow-none" // Adjusted mobile height, enhanced shadow
       )}
+      style={{ animationDelay: "0.1s" }}
     >
       <div
         className={cn(
-          "flex h-full items-center justify-between w-full max-w-[75rem] px-4 sm:px-6 lg:px-8"
+          "flex h-full items-center justify-between w-full max-w-[75rem] px-4 sm:px-6 lg:px-8 space-x-2" // Added space-x-2
         )}
       >
         {/* Logo */}
@@ -64,7 +80,9 @@ export default function Navbar() {
             <div
               className={cn(
                 "relative transition-all duration-300",
-                scrolled ? "h-10 w-[100px]" : "h-12 w-[120px]"
+                scrolled
+                  ? "md:h-10 md:w-[100px] h-12 w-[120px]"
+                  : "h-12 w-[120px]" // Kept mobile logo size consistent
               )}
             >
               <Image
@@ -73,14 +91,22 @@ export default function Navbar() {
                 width={120}
                 height={48}
                 priority
-                className="object-contain w-full h-full"
+                className="object-contain w-full h-full p-1"
+                onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
+                  console.error("Failed to load Navbar logo");
+                  const target = e.target as HTMLImageElement;
+                  target.src = "/images/placeholder-logo.png";
+                }}
               />
             </div>
           </Link>
         </div>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-4">
+        <nav
+          className="hidden md:flex items-center space-x-4"
+          role="navigation"
+        >
           {navItems.map((item, index) => {
             const isLastItem = index === navItems.length - 1;
             return (
@@ -90,8 +116,8 @@ export default function Navbar() {
                     asChild
                     variant="default"
                     className={cn(
-                      "bg-blue-600 text-white font-medium uppercase rounded-md hover:bg-blue-700 hover:scale-105 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-300 shadow-sm",
-                      scrolled ? "text-sm px-3 py-1" : "text-base px-4 py-1.5"
+                      "bg-blue-600 text-white font-medium font-inter uppercase rounded-md hover:bg-blue-700 hover:scale-105 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-300 shadow-sm",
+                      scrolled ? "text-sm px-4 py-1.5" : "text-base px-4 py-1.5"
                     )}
                   >
                     <Link href={item.href} className="no-underline">
@@ -102,9 +128,11 @@ export default function Navbar() {
                   <Link
                     href={item.href}
                     className={cn(
-                      "text-white font-medium uppercase hover:text-gray-200 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded-sm transition-all duration-300 no-underline",
-                      scrolled ? "text-sm" : "text-base"
+                      "text-white font-medium font-inter uppercase hover:text-blue-400 hover:scale-105 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded-sm transition-all duration-300 no-underline",
+                      scrolled ? "text-sm" : "text-base",
+                      pathname === item.href && "text-blue-400 underline"
                     )}
+                    aria-current={pathname === item.href ? "page" : undefined}
                   >
                     {item.name}
                   </Link>
@@ -122,12 +150,12 @@ export default function Navbar() {
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-expanded={isMobileMenuOpen}
             aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
-            className="text-white hover:bg-gray-800"
+            className="text-white hover:bg-gray-800 hover:scale-105 focus:scale-105 w-12 h-12 transition-all duration-300"
           >
             {isMobileMenuOpen ? (
-              <X className="h-6 w-6" />
+              <X className="h-8 w-8" />
             ) : (
-              <Menu className="h-6 w-6" />
+              <Menu className="h-8 w-8" />
             )}
           </Button>
         </div>
@@ -135,17 +163,25 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="md:hidden absolute top-12 left-0 w-full bg-black z-40 border-t border-gray-800">
-          <nav className="flex flex-col items-center py-4 space-y-4">
+        <div
+          className={cn(
+            "md:hidden absolute left-0 w-full min-h-screen bg-black z-40 border-t border-gray-800 shadow-lg animate-fadeIn top-16" // Simplified to top-16
+          )}
+          style={{ animationDelay: "0.2s" }}
+        >
+          <nav
+            className="flex flex-col items-center py-6 space-y-6 bg-gradient-to-b from-black to-gray-900"
+            role="navigation"
+          >
             {navItems.map((item, index) => {
               const isLastItem = index === navItems.length - 1;
               return (
-                <div key={item.name}>
+                <div key={item.name} className="w-full text-center">
                   {isLastItem ? (
                     <Button
                       asChild
                       variant="default"
-                      className="bg-blue-600 text-white font-medium uppercase rounded-md hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-300 px-4 py-1.5"
+                      className="bg-blue-600 text-white font-medium font-inter uppercase rounded-md hover:bg-blue-700 hover:scale-105 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-300 w-[calc(100%-2rem)] mx-4 px-4 py-2 text-base"
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
                       <Link href={item.href} className="no-underline">
@@ -155,8 +191,12 @@ export default function Navbar() {
                   ) : (
                     <Link
                       href={item.href}
-                      className="text-white font-medium uppercase hover:text-gray-200 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded-sm transition-all duration-300 no-underline text-base"
+                      className={cn(
+                        "text-white font-medium font-inter uppercase hover:text-blue-400 hover:scale-105 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded-sm transition-all duration-300 no-underline text-base block px-4 py-2",
+                        pathname === item.href && "text-blue-400 underline"
+                      )}
                       onClick={() => setIsMobileMenuOpen(false)}
+                      aria-current={pathname === item.href ? "page" : undefined}
                     >
                       {item.name}
                     </Link>
