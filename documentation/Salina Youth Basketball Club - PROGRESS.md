@@ -62,27 +62,17 @@
 
 ## Current State
 
-**Date**: May 16, 2025, 03:55 PM CDT
+**Date**: May 16, 2025, 06:00 PM CDT
 
-**Progress**: Completed the Join page functionality in Phase 3: Build Website. Resolved the “Invalid payment status or join request ID” error on `/join/status` by updating `/api/get-join-request.ts` to query by `joinRequestId` instead of `stripe_payment_id`, fixing `/app/join/page.tsx` to render the registration form, and updating `/join/confirm/page.tsx` to include `status` and `joinRequestId` with `encodeURIComponent` in the redirect. Corrected the “Join Team” button navigation issue by ensuring `/app/join/page.tsx` displays the form, enabling the full flow (`/join` → `/join/confirm` → `/join/status`). Addressed the Resend 403 error for user emails by handling failures in `/api/send-email.ts` and setting up a verified domain or workaround, ensuring both user and admin HTML invoice emails are sent successfully. Resolved image 404 errors (`WCS Logo-transparentBG.png`, `team-lightning.jpg`, `team-raptors.jpg`) by verifying files in `/public/images/` and removing stale preloads in `/app/layout.tsx`. Removed `animate-fadeIn` from `/app/page.tsx` for `NewsCarousel`, `TeamPreview`, `SchedulePreview`, and `ValuesSection` per user request. Fixed build errors: ESLint invalid options (`useEslintrc`, `extensions`) by updating `eslint.config.mjs`, clearing the cache, and confirming no `.eslintrc` files; TypeScript error in `/join/confirm/page.tsx` by adding a null check for `joinRequestId`; and Stripe `apiVersion` mismatch by setting `2025-02-24.acacia` in `/api/stripe-payment.ts`. Successfully deployed updates to Vercel (https://wcs-three.vercel.app/), with the Join page fully functional. Remaining Phase 3 tasks include building the Schedules, Shop, and Tournaments pages.
+**Progress**: Completed the Schedules page in Phase 3: Build Website. Implemented `/app/schedules/page.tsx` with FullCalendar integration, displaying events for 5 teams (Lightning, Thunder, Hawks, Raptors, Sparks) from May 16 to July 31, 2025, including Games (red background), Practices (blue), and Tournaments (purple). Added three dropdown filters (Boys/Girls, Team Name, Practice/Game/Tournament) styled to match the Teams page (`bg-blue-600`, `uppercase`). On mobile, Month view shows only colored blocks (no text) to resolve text overflow, while Week view shows titles. Added a "Today's Events" card displaying events for the current date (dynamically using `new Date()`), styled as `bg-gray-900 rounded-lg shadow-md p-6`. Removed colored circles, using background colors to indicate event types, and removed hover scaling on the calendar card. Aligned styling with the Teams page (`bg-[#002C51]`, blue buttons, animations). Tested locally for functionality (filters, navigation, event display) and responsiveness (mobile and desktop). Deployed updates to Vercel (https://wcs-three.vercel.app/schedules). Remaining Phase 3 tasks include building the Shop and Tournaments pages. Next task: Build the Shop page with static product listings and Stripe checkout.
 
 **Blockers**: None.
 
 **Errors**:
 
-- [May 14, 2025]: Build failed with Invalid revalidate value error in src/app/join/status/page.tsx due to a misinterpreted revalidate export, and missing eslint-plugin-next package in eslint.config.mjs. **Resolved** by removing invalid export and installing `eslint-plugin-next`.
-- [May 14, 2025]: `AbortError: signal is aborted without reason` on `/join/status` due to `/api/generate-invoice` taking ~15s, exceeding the 15s timeout in `fetchWithTimeout`. **Resolved** by transitioning to HTML invoice emails via Resend, removing PDF generation (`pdfkit`, `@types/pdfkit`, `blob-stream`), and deleting `/api/generate-invoice.ts`.
-- [May 15, 2025]: “Invalid payment status or join request ID” on `/join/status` after payment, indicating missing `status` or `joinRequestId` URL parameters in the redirect from `/join/confirm`. **Resolved** by updating `/join/confirm/page.tsx` to pass `status` and `joinRequestId` with `encodeURIComponent`, fixing `/app/join/page.tsx` to render the registration form, and updating `/api/get-join-request.ts` to query by `joinRequestId`.
-- [May 16, 2025]: “Failed to fetch join request data: 400 {"error":"Missing stripe_payment_id"}” on `/join/status`. **Resolved** by modifying `/api/get-join-request.ts` to use `joinRequestId`.
-- [May 16, 2025]: Resend 403 error for user emails. **Resolved** by handling failures in `/api/send-email.ts` and setting up a verified domain or workaround.
-- [May 16, 2025]: Image 404 errors (`WCS Logo-transparentBG.png`, `team-lightning.jpg`, `team-raptors.jpg`). **Resolved** by ensuring files exist in `/public/images/` and removing stale preloads in `/app/layout.tsx`.
-- [May 16, 2025]: Module not found for `@/components/ui/input` in `/app/join/page.tsx`. **Resolved** by using standard `<input>` elements.
-- [May 16, 2025]: Build error: `ESLint: Invalid Options: - Unknown options: useEslintrc, extensions` and `Type error: Type '"2025-04-30.basil"' is not assignable to type '"2025-02-24.acacia"'` in `/api/stripe-payment.ts`. **Resolved** by updating `eslint.config.mjs`, clearing the ESLint cache, confirming no `.eslintrc` files, and setting `apiVersion: "2025-02-24.acacia"` in `/api/stripe-payment.ts`.
-- [May 16, 2025]: Build error: `Type error: Argument of type 'string | null' is not assignable to parameter of type 'string'` in `/join/confirm/page.tsx`. **Resolved** by adding a null check for `joinRequestId`.
+- [May 16, 2025]: No errors encountered during Schedules page implementation. Initial FullCalendar CSS import issues were resolved earlier by importing `main.css` in `/src/app/global.css`. Text overflow on mobile was fixed by hiding text in Month view and using colored blocks.
 
-**Environment**: Local folder (C:\Users\phron\OneDrive\Documents\HTML CSS JS Projects\World Class Sports\salina-youth-basketball); GitHub (https://github.com/Phronesis2025/salina-youth-basketball); Supabase (created); Vercel (deployed); Resend (API key set, verified domain or workaround); Cursor (paid plan assumed).
-
-## To-Do List
+**To-Do List**
 
 - [x] Build Homepage
   - [x] Create Hero section with video and CTAs
@@ -99,14 +89,18 @@
   - [x] Transition from PDF invoice generation to HTML invoice emails via Resend
   - [x] Fix redirect error on `/join/status` to display success message and send emails
   - [x] Test Resend email delivery for user and admin invoices
+- [x] Build Schedules Page
+  - [x] Create app/schedules/page.tsx with FullCalendar integration
+  - [x] Style the page to match the project's design
+  - [x] Add navigation links (e.g., "Back to Homepage")
+  - [x] Test locally to ensure functionality and styling
+  - [x] Add dropdown filters (Boys/Girls, Team Name, Practice/Game/Tournament)
+  - [x] Use background colors for event types (Games: red, Practices: blue, Tournaments: purple)
+  - [x] Hide text in Month view on mobile, show only colors
+  - [x] Add "Today's Events" card with dynamic current date
 - [x] Deploy updates to Vercel with Join page working
 - [x] Commit changes to GitHub
 - [x] Update PROGRESS.md with Phase 3 status
-- [ ] Build Schedules Page
-  - [ ] Create app/schedules/page.tsx with FullCalendar integration
-  - [ ] Style the page to match the project's design
-  - [ ] Add navigation links (e.g., "Back to Homepage")
-  - [ ] Test locally to ensure functionality and styling
 - [ ] Build Shop Page
   - [ ] Create app/shop/page.tsx with static product listings
   - [ ] Implement a basic checkout flow with Stripe
