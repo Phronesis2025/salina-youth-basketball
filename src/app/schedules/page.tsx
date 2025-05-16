@@ -17,6 +17,11 @@ import {
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 
+// Import FullCalendar CSS directly
+import "@fullcalendar/core/main.css";
+import "@fullcalendar/daygrid/main.css";
+import "@fullcalendar/timegrid/main.css";
+
 // Static event data (5 teams, May 16–July 31, 2025)
 const events = [
   // May 16–31, 2025

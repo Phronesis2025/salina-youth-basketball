@@ -1,8 +1,6 @@
+/* /src/app/global.css */
+
 @import url("https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&family=Inter:wght@400;500&display=swap");
-/* FullCalendar styles */
-@import "@fullcalendar/core/main.css";
-@import "@fullcalendar/daygrid/main.css";
-@import "@fullcalendar/timegrid/main.css";
 
 @tailwind base;
 @tailwind components;
@@ -29,6 +27,7 @@
     --primary: 0 72% 51%;
   }
 }
+
 /* Prevent layout shift by always showing scrollbar */
 html {
   overflow-y: scroll;
@@ -78,6 +77,7 @@ h3 {
 .font-inter {
   font-family: var(--font-inter);
 }
+
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -107,6 +107,7 @@ h3 {
 .animate-bounce {
   animation: bounce 2s infinite;
 }
+
 /* Swiper Styles */
 .news-swiper .swiper-button-next,
 .news-swiper .swiper-button-prev {
