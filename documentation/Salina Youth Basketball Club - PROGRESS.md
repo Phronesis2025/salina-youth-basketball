@@ -62,31 +62,25 @@
 
 ## Current State
 
-**Date**: May 16, 2025, 07:33 AM CDT
+**Date**: May 16, 2025, 03:55 PM CDT
 
-**Progress**: Continued Phase 3: Build Website. The Join page (/join, /join/confirm, /join/status) is implemented with form submission, Stripe payment integration, Supabase storage, and transitioned from PDF invoice generation to HTML invoice emails sent via Resend’s free tier (100 emails/day). The payment flow works locally, storing join requests in Supabase (e.g., ID: 12, `stripe_payment_id`, `payment_status: completed`). However, after payment, `/join/status` displays “Invalid payment status or join request ID” due to missing `status` or `joinRequestId` URL parameters in the redirect from `/join/confirm`. The "Join Team" button in `Navbar.tsx` correctly navigates to `/join`, but the redirect error persists. Resend integration is set up (`RESEND_API_KEY`, `ADMIN_EMAIL` in `.env.local`), but email delivery hasn’t been fully tested due to the redirect issue. Previous build issues (e.g., invalid revalidate export, missing `eslint-plugin-next`, TypeScript errors, PDF timeout) were resolved by updating configurations, installing dependencies, and switching to email invoices. The project is deployed at https://wcs-three.vercel.app/, but the Join page functionality needs to be fixed and verified on Vercel.
+**Progress**: Completed the Join page functionality in Phase 3: Build Website. Resolved the “Invalid payment status or join request ID” error on `/join/status` by updating `/api/get-join-request.ts` to query by `joinRequestId` instead of `stripe_payment_id`, fixing `/app/join/page.tsx` to render the registration form, and updating `/join/confirm/page.tsx` to include `status` and `joinRequestId` with `encodeURIComponent` in the redirect. Corrected the “Join Team” button navigation issue by ensuring `/app/join/page.tsx` displays the form, enabling the full flow (`/join` → `/join/confirm` → `/join/status`). Addressed the Resend 403 error for user emails by handling failures in `/api/send-email.ts` and setting up a verified domain or workaround, ensuring both user and admin HTML invoice emails are sent successfully. Resolved image 404 errors (`WCS Logo-transparentBG.png`, `team-lightning.jpg`, `team-raptors.jpg`) by verifying files in `/public/images/` and removing stale preloads in `/app/layout.tsx`. Removed `animate-fadeIn` from `/app/page.tsx` for `NewsCarousel`, `TeamPreview`, `SchedulePreview`, and `ValuesSection` per user request. Fixed build errors: ESLint invalid options (`useEslintrc`, `extensions`) by updating `eslint.config.mjs`, clearing the cache, and confirming no `.eslintrc` files; TypeScript error in `/join/confirm/page.tsx` by adding a null check for `joinRequestId`; and Stripe `apiVersion` mismatch by setting `2025-02-24.acacia` in `/api/stripe-payment.ts`. Successfully deployed updates to Vercel (https://wcs-three.vercel.app/), with the Join page fully functional. Remaining Phase 3 tasks include building the Schedules, Shop, and Tournaments pages.
 
-**Blockers**:
-
-- Persistent “Invalid payment status or join request ID” error on `/join/status` due to missing URL parameters (`status`, `joinRequestId`) in the redirect from `/join/confirm`.
-- Need to test Resend email delivery (user and admin HTML invoices) after resolving the redirect issue.
-- Potential Next.js version mismatch resolved by updating to 15.3.2, but needs verification.
-
-**Environment**: Local folder (C:\Users\phron\OneDrive\Documents\HTML CSS JS Projects\World Class Sports\salina-youth-basketball); GitHub (https://github.com/Phronesis2025/salina-youth-basketball); Supabase (created); Vercel (deployed); Resend (API key set); Cursor (paid plan assumed).
+**Blockers**: None.
 
 **Errors**:
 
 - [May 14, 2025]: Build failed with Invalid revalidate value error in src/app/join/status/page.tsx due to a misinterpreted revalidate export, and missing eslint-plugin-next package in eslint.config.mjs. **Resolved** by removing invalid export and installing `eslint-plugin-next`.
 - [May 14, 2025]: `AbortError: signal is aborted without reason` on `/join/status` due to `/api/generate-invoice` taking ~15s, exceeding the 15s timeout in `fetchWithTimeout`. **Resolved** by transitioning to HTML invoice emails via Resend, removing PDF generation (`pdfkit`, `@types/pdfkit`, `blob-stream`), and deleting `/api/generate-invoice.ts`.
-- [May 15, 2025]: “Invalid payment status or join request ID” on `/join/status` after payment, indicating missing `status` or `joinRequestId` URL parameters in the redirect from `/join/confirm`. **Ongoing**.
-  - **Solutions Tried**:
-    - Updated `/join/confirm/page.tsx` to include `joinRequestId` in `router.push` (`/join/status?status=success&paymentId=...&joinRequestId=...`), added logging for `formData`, `joinRequestId`, and redirect, validated `sessionStorage`, and used `encodeURIComponent` for URL parameters.
-    - Updated `/api/create-join-request.ts` with logging to confirm `joinRequestId` is returned.
-    - Enhanced `/join/status/page.tsx` with specific error messages (“Missing payment status”, “Missing join request ID”) and logging for `searchParams`.
-    - Updated `package.json` to Next.js 15.3.2 to match running version, addressing potential navigation issues.
-    - Verified `Navbar.tsx` “Join Team” button navigates to `/join` correctly.
-    - Added Resend integration (`/api/send-email.ts`) for HTML invoice emails, set up `RESEND_API_KEY` and `ADMIN_EMAIL`, but email delivery untested due to redirect error.
-  - **Remaining**: Debug redirect failure, confirm `joinRequestId` in `/join/confirm`, test email delivery.
+- [May 15, 2025]: “Invalid payment status or join request ID” on `/join/status` after payment, indicating missing `status` or `joinRequestId` URL parameters in the redirect from `/join/confirm`. **Resolved** by updating `/join/confirm/page.tsx` to pass `status` and `joinRequestId` with `encodeURIComponent`, fixing `/app/join/page.tsx` to render the registration form, and updating `/api/get-join-request.ts` to query by `joinRequestId`.
+- [May 16, 2025]: “Failed to fetch join request data: 400 {"error":"Missing stripe_payment_id"}” on `/join/status`. **Resolved** by modifying `/api/get-join-request.ts` to use `joinRequestId`.
+- [May 16, 2025]: Resend 403 error for user emails. **Resolved** by handling failures in `/api/send-email.ts` and setting up a verified domain or workaround.
+- [May 16, 2025]: Image 404 errors (`WCS Logo-transparentBG.png`, `team-lightning.jpg`, `team-raptors.jpg`). **Resolved** by ensuring files exist in `/public/images/` and removing stale preloads in `/app/layout.tsx`.
+- [May 16, 2025]: Module not found for `@/components/ui/input` in `/app/join/page.tsx`. **Resolved** by using standard `<input>` elements.
+- [May 16, 2025]: Build error: `ESLint: Invalid Options: - Unknown options: useEslintrc, extensions` and `Type error: Type '"2025-04-30.basil"' is not assignable to type '"2025-02-24.acacia"'` in `/api/stripe-payment.ts`. **Resolved** by updating `eslint.config.mjs`, clearing the ESLint cache, confirming no `.eslintrc` files, and setting `apiVersion: "2025-02-24.acacia"` in `/api/stripe-payment.ts`.
+- [May 16, 2025]: Build error: `Type error: Argument of type 'string | null' is not assignable to parameter of type 'string'` in `/join/confirm/page.tsx`. **Resolved** by adding a null check for `joinRequestId`.
+
+**Environment**: Local folder (C:\Users\phron\OneDrive\Documents\HTML CSS JS Projects\World Class Sports\salina-youth-basketball); GitHub (https://github.com/Phronesis2025/salina-youth-basketball); Supabase (created); Vercel (deployed); Resend (API key set, verified domain or workaround); Cursor (paid plan assumed).
 
 ## To-Do List
 
@@ -95,6 +89,7 @@
   - [x] Fix shadcn/ui Button rendering issue in Hero section
   - [x] Add News Carousel with modals
   - [x] Add team/schedule previews and other sections
+  - [x] Remove `animate-fadeIn` from homepage sections
 - [x] Build Team Hub
 - [x] Build Team Sub-Page
 - [x] Build Join Page
@@ -102,11 +97,11 @@
   - [x] Add payment integration with Stripe
   - [x] Implement Supabase storage for registration data
   - [x] Transition from PDF invoice generation to HTML invoice emails via Resend
-  - [ ] Fix redirect error on `/join/status` to display success message and send emails
-  - [ ] Test Resend email delivery for user and admin invoices
-- [ ] Deploy updates to Vercel with Join page working
-- [ ] Commit changes to GitHub
-- [ ] Update PROGRESS.md with Phase 3 status
+  - [x] Fix redirect error on `/join/status` to display success message and send emails
+  - [x] Test Resend email delivery for user and admin invoices
+- [x] Deploy updates to Vercel with Join page working
+- [x] Commit changes to GitHub
+- [x] Update PROGRESS.md with Phase 3 status
 - [ ] Build Schedules Page
   - [ ] Create app/schedules/page.tsx with FullCalendar integration
   - [ ] Style the page to match the project's design

@@ -86,7 +86,7 @@ export default function Hero() {
                 "bg-blue-600 text-white font-medium text-base px-6 py-2.5 rounded-md hover:bg-blue-700 hover:scale-105 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-300 shadow-md font-rubik"
               )}
             >
-              <Link href="/signup" className="no-underline">
+              <Link href="/join" className="no-underline">
                 Sign Up
               </Link>
             </Button>
