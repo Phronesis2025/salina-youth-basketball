@@ -11,10 +11,15 @@ import { Menu, X } from "lucide-react";
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [hasAnimated, setHasAnimated] = useState(false); // Track if animation has run
   const pathname = usePathname();
 
-  // Scroll effect for shrinking navbar
+  // Scroll effect for desktop only
   useEffect(() => {
+    // Check if viewport is mobile (<768px)
+    const isMobile = window.matchMedia("(max-width: 767px)").matches;
+    if (isMobile) return; // Skip scroll listener on mobile
+
     let lastScrollY = window.scrollY;
 
     const handleScroll = () => {
@@ -52,6 +57,11 @@ export default function Navbar() {
     return () => document.removeEventListener("click", handleOutsideClick);
   }, [isMobileMenuOpen]);
 
+  // Set hasAnimated to true after initial render
+  useEffect(() => {
+    setHasAnimated(true);
+  }, []);
+
   const navItems = [
     { name: "Teams", href: "/teams" },
     { name: "Schedules", href: "/schedules" },
@@ -59,19 +69,25 @@ export default function Navbar() {
     { name: "Join the Team", href: "/join" },
   ];
 
+  const handleNavClick = (href: string, e: React.MouseEvent) => {
+    console.log(`Navigating to ${href}, event:`, {
+      href,
+      currentPath: window.location.pathname,
+      target: (e.target as HTMLElement).outerHTML,
+    });
+  };
+
   return (
     <header
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 flex justify-center w-full bg-black transition-all duration-300 ease-in-out animate-fadeIn",
-        scrolled
-          ? "md:h-12 h-16 shadow-lg border-b border-gray-800"
-          : "h-16 shadow-none" // Adjusted mobile height, enhanced shadow
+        "fixed top-0 left-0 right-0 z-50 flex justify-center w-full bg-black transition-all duration-300 ease-in-out animate-fadeIn"
       )}
       style={{ animationDelay: "0.1s" }}
+      data-animated={hasAnimated} // Prevent reanimation
     >
       <div
         className={cn(
-          "flex h-full items-center justify-between w-full max-w-[75rem] px-4 sm:px-6 lg:px-8 space-x-2" // Added space-x-2
+          "flex h-full items-center justify-between w-full max-w-[75rem] px-4 sm:px-6 lg:px-8 space-x-2"
         )}
       >
         {/* Logo */}
@@ -82,7 +98,7 @@ export default function Navbar() {
                 "relative transition-all duration-300",
                 scrolled
                   ? "md:h-10 md:w-[100px] h-12 w-[120px]"
-                  : "h-12 w-[120px]" // Kept mobile logo size consistent
+                  : "h-12 w-[120px]"
               )}
             >
               <Image
@@ -120,7 +136,11 @@ export default function Navbar() {
                       scrolled ? "text-sm px-4 py-1.5" : "text-base px-4 py-1.5"
                     )}
                   >
-                    <Link href={item.href} className="no-underline">
+                    <Link
+                      href={item.href}
+                      className="no-underline"
+                      onClick={(e) => handleNavClick(item.href, e)}
+                    >
                       {item.name}
                     </Link>
                   </Button>
@@ -133,6 +153,7 @@ export default function Navbar() {
                       pathname === item.href && "text-blue-400 underline"
                     )}
                     aria-current={pathname === item.href ? "page" : undefined}
+                    onClick={(e) => handleNavClick(item.href, e)}
                   >
                     {item.name}
                   </Link>
@@ -145,9 +166,13 @@ export default function Navbar() {
         {/* Mobile Menu Button */}
         <div className="md:hidden flex items-center">
           <Button
+            type="button" // Prevent form submission
             variant="ghost"
             size="icon"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            onClick={(e) => {
+              e.preventDefault(); // Prevent any default navigation
+              setIsMobileMenuOpen(!isMobileMenuOpen);
+            }}
             aria-expanded={isMobileMenuOpen}
             aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
             className="text-white hover:bg-gray-800 hover:scale-105 focus:scale-105 w-12 h-12 transition-all duration-300"
@@ -165,9 +190,10 @@ export default function Navbar() {
       {isMobileMenuOpen && (
         <div
           className={cn(
-            "md:hidden absolute left-0 w-full min-h-screen bg-black z-40 border-t border-gray-800 shadow-lg animate-fadeIn top-16" // Simplified to top-16
+            "md:hidden absolute left-0 w-full min-h-screen bg-black z-40 border-t border-gray-800 shadow-lg animate-fadeIn top-16"
           )}
           style={{ animationDelay: "0.2s" }}
+          data-animated={hasAnimated} // Prevent reanimation
         >
           <nav
             className="flex flex-col items-center py-6 space-y-6 bg-gradient-to-b from-black to-gray-900"
@@ -182,7 +208,10 @@ export default function Navbar() {
                       asChild
                       variant="default"
                       className="bg-blue-600 text-white font-medium font-inter uppercase rounded-md hover:bg-blue-700 hover:scale-105 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-300 w-[calc(100%-2rem)] mx-4 px-4 py-2 text-base"
-                      onClick={() => setIsMobileMenuOpen(false)}
+                      onClick={(e) => {
+                        setIsMobileMenuOpen(false);
+                        handleNavClick(item.href, e);
+                      }}
                     >
                       <Link href={item.href} className="no-underline">
                         {item.name}
@@ -195,7 +224,10 @@ export default function Navbar() {
                         "text-white font-medium font-inter uppercase hover:text-blue-400 hover:scale-105 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded-sm transition-all duration-300 no-underline text-base block px-4 py-2",
                         pathname === item.href && "text-blue-400 underline"
                       )}
-                      onClick={() => setIsMobileMenuOpen(false)}
+                      onClick={(e) => {
+                        setIsMobileMenuOpen(false);
+                        handleNavClick(item.href, e);
+                      }}
                       aria-current={pathname === item.href ? "page" : undefined}
                     >
                       {item.name}

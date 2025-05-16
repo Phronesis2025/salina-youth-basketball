@@ -60,40 +60,24 @@ export default async function handler(
         <div class="container">
           <h1>Salina Youth Basketball Club - Invoice</h1>
           <div class="section">
-            <p><span class="label">Invoice Number:</span> <span class="value">${
-              joinRequest.stripe_payment_id
-            }</span></p>
-            <p><span class="label">Date:</span> <span class="value">${new Date(
-              joinRequest.created_at
-            ).toLocaleDateString()}</span></p>
+            <p><span class="label">Invoice Number:</span> <span class="value">${joinRequest.stripe_payment_id}</span></p>
+            <p><span class="label">Date:</span> <span class="value">${new Date(joinRequest.created_at).toLocaleDateString()}</span></p>
           </div>
           <div class="section">
-            <p><span class="label">To:</span> <span class="value">${
-              formData.first_name
-            } ${formData.last_name}</span></p>
-            <p><span class="label">Email:</span> <span class="value">${
-              formData.parent_email
-            }</span></p>
+            <p><span class="label">To:</span> <span class="value">${formData.first_name} ${formData.last_name}</span></p>
+            <p><span class="label">Email:</span> <span class="value">${formData.parent_email}</span></p>
           </div>
           <div class="section">
             <p><span class="label">Registration Details:</span></p>
-            <p><span class="label">Name:</span> <span class="value">${
-              formData.first_name
-            } ${formData.last_name}</span></p>
-            <p><span class="label">Age Group:</span> <span class="value">${
-              formData.age_group
-            }</span></p>
-            <p><span class="label">Team Gender:</span> <span class="value">${
-              formData.team_gender
-            }</span></p>
+            <p><span class="label">Name:</span> <span class="value">${formData.first_name} ${formData.last_name}</span></p>
+            <p><span class="label">Age Group:</span> <span class="value">${formData.age_group}</span></p>
+            <p><span class="label">Team Gender:</span> <span class="value">${formData.team_gender}</span></p>
             <p><span class="label">Payment Option:</span> <span class="value">${
               formData.payment_option === "full"
                 ? "Pay in Full ($360.00)"
                 : "Monthly Installments ($30.00 x 12)"
             }</span></p>
-            <p><span class="label">Amount:</span> <span class="value">$${(
-              amount / 100
-            ).toFixed(2)}</span></p>
+            <p><span class="label">Amount:</span> <span class="value">$${(amount / 100).toFixed(2)}</span></p>
             <p><span class="label">Payment Status:</span> <span class="value">${
               joinRequest.payment_status.charAt(0).toUpperCase() +
               joinRequest.payment_status.slice(1)
@@ -107,16 +91,17 @@ export default async function handler(
       </html>
     `;
 
-    // User email
-    await resend.emails.send({
+    // Send user email
+    const userEmailResponse = await resend.emails.send({
       from: "Salina Youth Basketball <no-reply@resend.dev>", // Update to your domain in production
       to: formData.parent_email,
       subject: "Your Salina Youth Basketball Club Invoice",
       html: invoiceHtml,
     });
+    console.log("User email sent:", userEmailResponse);
 
-    // Admin email (includes invoice and join request summary)
-    await resend.emails.send({
+    // Send admin email
+    const adminEmailResponse = await resend.emails.send({
       from: "Salina Youth Basketball <no-reply@resend.dev>",
       to: process.env.ADMIN_EMAIL!,
       subject: `New Join Request and Invoice for ${formData.first_name} ${formData.last_name}`,
@@ -132,6 +117,7 @@ export default async function handler(
         </div>
       `,
     });
+    console.log("Admin email sent:", adminEmailResponse);
 
     return res.status(200).json({ message: "Email notifications sent" });
   } catch (error) {

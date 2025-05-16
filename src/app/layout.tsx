@@ -86,9 +86,6 @@ export default function RootLayout({
         <link rel="preload" href="/images/team-thunderhawks.jpg" as="image" />
         <link rel="preload" href="/images/team-firebolts.jpg" as="image" />
         <link rel="preload" href="/images/team-stingers.jpg" as="image" />
-        <link rel="preload" href="/images/team-lightning.jpg" as="image" />
-        <link rel="preload" href="/images/team-vipers.jpg" as="image" />
-        <link rel="preload" href="/images/team-raptors.jpg" as="image" />
         <link rel="preload" href="/images/placeholder-logo.png" as="image" />
       </head>
       <body

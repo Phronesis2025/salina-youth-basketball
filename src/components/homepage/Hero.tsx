@@ -37,16 +37,21 @@ export default function Hero() {
       >
         <source src="/videos/hype-video.mp4" type="video/mp4" />
         <img
-          src="/images/fallback-hero.jpg"
-          alt="Youth athletes training in action"
-          className="w-full h-full object-cover"
+          src="/images/WCS Logo-transparentBG.png"
+          alt="Salina Youth Basketball Club Logo"
+          className="w-full h-full object-contain"
+          onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
+            console.error("Failed to load Hero fallback image");
+            const target = e.target as HTMLImageElement;
+            target.src = "/images/placeholder-logo.png";
+          }}
         />
       </video>
 
       {/* Dark Overlay - Fixed with Dynamic Opacity */}
       <div
         ref={overlayRef}
-        className="fixed top-0 left-0 w-full h-full bg-black opacity-70 z-[-1]"
+        className="fixed top-0 left-0 w-full h-full bg-[#01182b] opacity-85 z-[-1]"
       ></div>
 
       {/* Content - Scrolls Normally */}
@@ -57,7 +62,7 @@ export default function Hero() {
             className="text-white text-[clamp(2.5rem,5vw,3.5rem)] font-bold leading-tight mb-4 sm:mb-6 font-rubik animate-fadeIn"
             style={{ animationDelay: "0.2s" }}
           >
-            World Class Sports
+            Developing Champions On and Off the Court
           </h1>
 
           {/* Subtitle */}
@@ -65,13 +70,14 @@ export default function Hero() {
             className="text-white text-[clamp(1.125rem,2vw,1.5rem)] leading-7 mb-6 max-w-xl font-inter font-medium animate-fadeIn"
             style={{ animationDelay: "0.4s" }}
           >
-            Empowering Youth to Dominate and Inspire
+            From fundamentals to competitive play, we build skill, character,
+            and confidence in every athlete.
           </p>
 
           {/* CTA Buttons */}
           <div
             className="flex flex-row flex-wrap gap-4 animate-fadeIn"
-            style={{ animationDelay: "0.6s" }}
+            style={{ animationDelay: "0.3s" }}
           >
             <Button
               asChild

@@ -10,16 +10,16 @@ export default function Home() {
       <main className="pt-24 px-4">
         <div className="mx-auto max-w-[75rem]">
           <Hero />
-          <div className="animate-fadeIn" style={{ animationDelay: "0.2s" }}>
+          <div>
             <NewsCarousel />
           </div>
-          <div className="animate-fadeIn" style={{ animationDelay: "0.4s" }}>
+          <div>
             <TeamPreview />
           </div>
-          <div className="animate-fadeIn" style={{ animationDelay: "0.6s" }}>
+          <div>
             <SchedulePreview />
           </div>
-          <div className="animate-fadeIn" style={{ animationDelay: "0.8s" }}>
+          <div>
             <ValuesSection />
           </div>
         </div>

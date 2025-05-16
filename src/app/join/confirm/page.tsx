@@ -1,3 +1,4 @@
+// app/join/confirm/page.tsx
 "use client";
 
 import { useState, useEffect } from "react";
@@ -55,6 +56,7 @@ const CheckoutForm = ({
     let joinRequestId: string | null = null;
 
     try {
+      console.log("Creating join request with formData:", formData);
       const response = await fetch("/api/create-join-request", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -63,9 +65,17 @@ const CheckoutForm = ({
 
       const { joinRequestId: newJoinRequestId, error: insertError } =
         await response.json();
-      if (insertError) throw new Error(insertError);
+      console.log("Create join request response:", {
+        newJoinRequestId,
+        insertError,
+      });
+
+      if (insertError || !newJoinRequestId) {
+        throw new Error(insertError || "Failed to create join request");
+      }
       joinRequestId = newJoinRequestId;
 
+      console.log("Creating payment intent for joinRequestId:", joinRequestId);
       const paymentResponse = await fetch("/api/stripe-payment", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -83,6 +93,7 @@ const CheckoutForm = ({
         await paymentResponse.json();
       if (paymentError) throw new Error(paymentError);
 
+      console.log("Confirming payment with Stripe");
       const cardElement = elements.getElement(CardElement);
       const { paymentIntent, error: stripeError } =
         await stripe.confirmCardPayment(clientSecret, {
@@ -92,6 +103,7 @@ const CheckoutForm = ({
       if (stripeError) throw new Error(stripeError.message);
 
       if (paymentIntent?.status === "succeeded") {
+        console.log("Updating join request with payment status");
         const updateResponse = await fetch("/api/update-join-request", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -105,7 +117,11 @@ const CheckoutForm = ({
         const { error: updateError } = await updateResponse.json();
         if (updateError) throw new Error(updateError);
 
-        await fetch("/api/send-email", {
+        console.log(
+          "Sending email notifications for joinRequestId:",
+          joinRequestId
+        );
+        const emailResponse = await fetch("/api/send-email", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -115,17 +131,30 @@ const CheckoutForm = ({
           }),
         });
 
-        onSuccess(paymentIntent.id, joinRequestId as string);
+        const emailResult = await emailResponse.json();
+        console.log("Email send result:", emailResult);
+        if (!emailResponse.ok)
+          throw new Error(emailResult.error || "Failed to send email");
+
+        console.log(
+          "Calling onSuccess with paymentId:",
+          paymentIntent.id,
+          "joinRequestId:",
+          joinRequestId
+        );
+        onSuccess(paymentIntent.id, joinRequestId);
       } else {
         throw new Error("Payment failed");
       }
     } catch (err) {
       const errorMessage =
         (err as Error).message || "An error occurred during payment";
+      console.error("Payment error:", errorMessage);
       setError(errorMessage);
       onError(errorMessage);
 
       if (joinRequestId) {
+        console.log("Updating join request to failed status");
         await fetch("/api/update-join-request", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -181,27 +210,48 @@ export default function JoinConfirm() {
   useEffect(() => {
     const storedFormData = sessionStorage.getItem("joinFormData");
     if (storedFormData) {
+      console.log(
+        "Form data loaded from sessionStorage:",
+        JSON.parse(storedFormData)
+      );
       setFormData(JSON.parse(storedFormData));
     } else {
+      console.log("No formData in sessionStorage, redirecting to /join");
       router.push("/join");
     }
   }, [router]);
 
   const handleEdit = () => {
+    console.log("Redirecting to /join for editing");
     router.push("/join");
   };
 
   const handlePaymentSuccess = (paymentId: string, joinRequestId: string) => {
-    router.push(
-      `/join/status?status=success&paymentId=${paymentId}&joinRequestId=${joinRequestId}`
-    );
+    if (!joinRequestId) {
+      console.error("Missing joinRequestId in handlePaymentSuccess");
+      setError("Failed to process payment: Missing join request ID");
+      return;
+    }
+    console.log("Payment successful, redirecting to /join/status with:", {
+      paymentId,
+      joinRequestId,
+    });
+    const redirectUrl = `/join/status?status=success&paymentId=${encodeURIComponent(
+      paymentId
+    )}&joinRequestId=${encodeURIComponent(joinRequestId)}`;
+    console.log("Redirect URL:", redirectUrl);
+    router.push(redirectUrl);
   };
 
   const handlePaymentError = (errorMessage: string) => {
+    console.error("Payment error:", errorMessage);
     setError(errorMessage);
   };
 
-  if (!formData) return null;
+  if (!formData) {
+    console.log("Rendering null due to missing formData");
+    return null;
+  }
 
   return (
     <section className="py-16 bg-[#002C51] min-h-screen">
