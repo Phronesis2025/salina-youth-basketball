@@ -1,4 +1,3 @@
-// app/join/confirm/page.tsx
 "use client";
 
 import { useState, useEffect } from "react";
@@ -136,13 +135,17 @@ const CheckoutForm = ({
         if (!emailResponse.ok)
           throw new Error(emailResult.error || "Failed to send email");
 
-        console.log(
-          "Calling onSuccess with paymentId:",
-          paymentIntent.id,
-          "joinRequestId:",
-          joinRequestId
-        );
-        onSuccess(paymentIntent.id, joinRequestId);
+        if (joinRequestId) {
+          console.log(
+            "Calling onSuccess with paymentId:",
+            paymentIntent.id,
+            "joinRequestId:",
+            joinRequestId
+          );
+          onSuccess(paymentIntent.id, joinRequestId);
+        } else {
+          throw new Error("Join request ID is missing");
+        }
       } else {
         throw new Error("Payment failed");
       }
