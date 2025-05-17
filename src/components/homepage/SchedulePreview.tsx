@@ -6,8 +6,8 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
-// Import events from schedules page
-import { events } from "@/app/schedules/page";
+// Import events from shared data file
+import { events } from "@/lib/schedules/data";
 
 // Define the Schedule type
 interface Schedule {
@@ -22,10 +22,11 @@ interface Schedule {
 // Team logo mapping
 const teamLogos: { [key: string]: string } = {
   Lightning: "/images/team-lightning.jpg",
-  Thunder: "/images/team-thunderhawks.jpg",
-  Hawks: "/images/team-default.jpg",
+  Thunderhawks: "/images/team-thunderhawks.jpg",
+  Stingers: "/images/team-stingers.jpg",
   Raptors: "/images/team-raptors.jpg",
-  Sparks: "/images/team-default.jpg",
+  Vipers: "/images/team-vipers.jpg",
+  Firebolts: "/images/team-firebolts.jpg",
 };
 
 export default function SchedulePreview() {
@@ -40,21 +41,21 @@ export default function SchedulePreview() {
       .map((event) => {
         const team = event.extendedProps.team;
         let teamsDisplay = event.title; // Default to event title
-        let logo1 = teamLogos[team] || "/images/team-default.jpg";
-        let logo2 = "/images/team-default.jpg"; // Default for opponent
+        let logo1 = teamLogos[team] || "/images/placeholder-team-default.jpg";
+        let logo2 = "/images/placeholder-team-default.jpg"; // Default for opponent
 
         // Adjust teams display based on event type
         if (event.extendedProps.type === "Game") {
-          // Extract opponent from title (e.g., "Thunder vs. Hawks (Game)" -> "Hawks")
+          // Extract opponent from title (e.g., "Thunderhawks vs. Warriors (Game)" -> "Warriors")
           const opponent = event.title
             .replace(`${team} vs. `, "")
             .replace(" (Game)", "");
           teamsDisplay = `${team} vs. ${opponent}`;
-          logo2 = teamLogos[opponent] || "/images/team-default.jpg";
+          logo2 = teamLogos[opponent] || "/images/placeholder-team-default.jpg";
         } else if (event.extendedProps.type === "Tournament") {
           // For tournaments, team field might be "All Teams" or a list
-          logo1 = "/images/team-default.jpg"; // Use default for tournaments
-          logo2 = "/images/team-default.jpg";
+          logo1 = "/images/placeholder-team-default.jpg"; // Use default for tournaments
+          logo2 = "/images/placeholder-team-default.jpg";
         }
 
         return {
@@ -81,10 +82,7 @@ export default function SchedulePreview() {
   return (
     <section className="bg-[#002C51] py-12" aria-label="Upcoming Games Preview">
       <div className="container max-w-[75rem] mx-auto px-4 sm:px-6 lg:px-8">
-        <h2
-          className="text-white text-[clamp(2.25rem,5vw,3rem)] font-bold font-rubik mb-8 text-center uppercase animate-fadeIn"
-          style={{ animationDelay: "0.2s" }}
-        >
+        <h2 className="text-white text-[clamp(2.25rem,5vw,3rem)] font-bold font-rubik mb-8 text-center uppercase">
           Upcoming Games
         </h2>
         {upcomingGames.length > 0 ? (
@@ -93,10 +91,8 @@ export default function SchedulePreview() {
               <div
                 key={schedule.id}
                 className={cn(
-                  "bg-gray-900 rounded-lg shadow-md overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-lg",
-                  "animate-fadeIn"
+                  "bg-gray-900 rounded-lg shadow-md overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-lg"
                 )}
-                style={{ animationDelay: `${0.3 + index * 0.1}s` }}
                 role="article"
                 aria-label={`Game: ${schedule.teams}`}
               >
@@ -114,7 +110,8 @@ export default function SchedulePreview() {
                               e: React.SyntheticEvent<HTMLImageElement>
                             ) => {
                               const target = e.target as HTMLImageElement;
-                              target.src = "/images/team-default.jpg";
+                              target.src =
+                                "/images/placeholder-team-default.jpg";
                             }}
                           />
                         </div>
@@ -130,7 +127,8 @@ export default function SchedulePreview() {
                               e: React.SyntheticEvent<HTMLImageElement>
                             ) => {
                               const target = e.target as HTMLImageElement;
-                              target.src = "/images/team-default.jpg";
+                              target.src =
+                                "/images/placeholder-team-default.jpg";
                             }}
                           />
                         </div>
@@ -197,10 +195,7 @@ export default function SchedulePreview() {
             ))}
           </div>
         ) : (
-          <p
-            className="text-white text-base font-inter text-center animate-fadeIn"
-            style={{ animationDelay: "0.3s" }}
-          >
+          <p className="text-white text-base font-inter text-center">
             No upcoming games scheduled.
           </p>
         )}
@@ -208,8 +203,7 @@ export default function SchedulePreview() {
           <Button
             asChild
             variant="default"
-            className="bg-blue-600 text-white font-medium font-inter rounded-md hover:bg-blue-700 hover:scale-105 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-300 text-base px-6 py-3 uppercase animate-fadeIn"
-            style={{ animationDelay: "0.4s" }}
+            className="bg-blue-600 text-white font-medium font-inter rounded-md hover:bg-blue-700 hover:scale-105 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-300 text-base px-6 py-3 uppercase"
           >
             <Link href="/schedules" className="no-underline">
               Full Schedule

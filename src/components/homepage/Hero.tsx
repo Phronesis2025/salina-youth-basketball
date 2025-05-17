@@ -59,7 +59,7 @@ export default function Hero() {
         <div className="flex flex-col items-start max-w-3xl">
           {/* Title */}
           <h1
-            className="text-white text-[clamp(2.5rem,5vw,3.5rem)] font-bold leading-tight mb-4 sm:mb-6 font-rubik animate-fadeIn"
+            className="text-white text-[clamp(2.5rem,5vw,3.5rem)] font-bold leading-tight mb-4 sm:mb-6 font-rubik"
             style={{ animationDelay: "0.2s" }}
           >
             Developing Champions On and Off the Court
@@ -67,7 +67,7 @@ export default function Hero() {
 
           {/* Subtitle */}
           <p
-            className="text-white text-[clamp(1.125rem,2vw,1.5rem)] leading-7 mb-6 max-w-xl font-inter font-medium animate-fadeIn"
+            className="text-white text-[clamp(1.125rem,2vw,1.5rem)] leading-7 mb-6 max-w-xl font-inter font-medium"
             style={{ animationDelay: "0.4s" }}
           >
             From fundamentals to competitive play, we build skill, character,
@@ -76,7 +76,7 @@ export default function Hero() {
 
           {/* CTA Buttons */}
           <div
-            className="flex flex-row flex-wrap gap-4 animate-fadeIn"
+            className="flex flex-row flex-wrap gap-4"
             style={{ animationDelay: "0.3s" }}
           >
             <Button

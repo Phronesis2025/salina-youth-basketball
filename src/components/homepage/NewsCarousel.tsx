@@ -105,7 +105,7 @@ export default function NewsCarousel() {
     <section className="bg-[#002C51] py-12" aria-label="Latest News">
       <div className="container max-w-[75rem] mx-auto px-4 sm:px-6 lg:px-8">
         <h2
-          className="text-white text-[clamp(2.25rem,5vw,3rem)] font-bold font-rubik mb-8 text-center animate-fadeIn"
+          className="text-white text-[clamp(2.25rem,5vw,3rem)] font-bold font-rubik mb-8 text-center"
           style={{ animationDelay: "0.2s" }}
         >
           Latest News
@@ -172,7 +172,7 @@ export default function NewsCarousel() {
         {/* Modal */}
         {isModalOpen && selectedNews && (
           <div
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 animate-fadeIn"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 "
             role="dialog"
             aria-labelledby="modal-title"
             aria-modal="true"

@@ -7,8 +7,8 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
-// Import events from schedules page
-import { events } from "@/app/schedules/page";
+// Import events from shared data file
+import { events } from "@/lib/schedules/data";
 
 // Define the Team type
 interface Team {

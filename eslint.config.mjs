@@ -4,13 +4,15 @@ import tseslint from "typescript-eslint";
 import pluginReact from "eslint-plugin-react";
 import nextPlugin from "@next/eslint-plugin-next";
 import styledJsxPlugin from "eslint-plugin-styled-jsx";
+import typescriptEslint from "@typescript-eslint/parser";
+import pluginTypescriptEslint from "@typescript-eslint/eslint-plugin";
 
 export default [
   {
     files: ["**/*.{js,mjs,cjs,ts,tsx}"],
     languageOptions: {
       globals: globals.browser,
-      parser: tseslint.parser,
+      parser: typescriptEslint,
       parserOptions: {
         project: "./tsconfig.json",
         tsconfigRootDir: import.meta.dirname,
@@ -22,6 +24,7 @@ export default [
       react: pluginReact,
       "@next/next": nextPlugin,
       "styled-jsx": styledJsxPlugin,
+      "@typescript-eslint": pluginTypescriptEslint,
     },
     rules: {
       ...pluginJs.configs.recommended.rules,

@@ -80,7 +80,7 @@ export default function Navbar() {
   return (
     <header
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 flex justify-center w-full bg-black transition-all duration-300 ease-in-out animate-fadeIn"
+        "fixed top-0 left-0 right-0 z-50 flex justify-center w-full bg-black transition-all duration-300 ease-in-out"
       )}
       style={{ animationDelay: "0.1s" }}
       data-animated={hasAnimated} // Prevent reanimation
@@ -190,7 +190,7 @@ export default function Navbar() {
       {isMobileMenuOpen && (
         <div
           className={cn(
-            "md:hidden absolute left-0 w-full min-h-screen bg-black z-40 border-t border-gray-800 shadow-lg animate-fadeIn top-16"
+            "md:hidden absolute left-0 w-full min-h-screen bg-black z-40 border-t border-gray-800 shadow-lg top-16"
           )}
           style={{ animationDelay: "0.2s" }}
           data-animated={hasAnimated} // Prevent reanimation

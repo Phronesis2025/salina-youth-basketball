@@ -46,7 +46,7 @@ export default function TeamPreview() {
     <section className="bg-[#002C51] py-12" aria-label="Our Teams">
       <div className="container max-w-[75rem] mx-auto px-4 sm:px-6 lg:px-8">
         <h2
-          className="text-white text-[clamp(2.25rem,5vw,3rem)] font-bold font-rubik mb-8 text-center uppercase animate-fadeIn"
+          className="text-white text-[clamp(2.25rem,5vw,3rem)] font-bold font-rubik mb-8 text-center uppercase"
           style={{ animationDelay: "0.2s" }}
         >
           Our Teams
@@ -57,8 +57,7 @@ export default function TeamPreview() {
               key={team.id}
               className={cn(
                 "group bg-gray-900 rounded-lg shadow-md overflow-hidden w-full h-[28rem] flex flex-col min-h-0", // Added 'group' for hover
-                "transform transition-all duration-300 hover:scale-105 hover:shadow-lg",
-                "animate-fadeIn"
+                "transform transition-all duration-300 hover:scale-105 hover:shadow-lg"
               )}
               style={{ animationDelay: `${0.3 + index * 0.1}s` }}
             >

@@ -78,7 +78,7 @@ export default function ValuesSection() {
     <section className="bg-[#002C51] py-12" aria-label="Our Values">
       <div className="container max-w-[75rem] mx-auto px-4 sm:px-6 lg:px-8">
         <h2
-          className="text-white text-[clamp(2.25rem,5vw,3rem)] font-bold font-rubik mb-8 text-center uppercase animate-fadeIn"
+          className="text-white text-[clamp(2.25rem,5vw,3rem)] font-bold font-rubik mb-8 text-center uppercase"
           style={{ animationDelay: "0.2s" }}
         >
           Our Values
@@ -90,7 +90,7 @@ export default function ValuesSection() {
               className={cn(
                 "group bg-gradient-to-r from-blue-600/20 to-transparent rounded-lg shadow-md overflow-hidden",
                 "transform transition-all duration-300 hover:scale-105 hover:shadow-lg hover:from-blue-600/30",
-                "animate-fadeIn p-6 sm:p-8 relative"
+                "p-6 sm:p-8 relative"
               )}
               style={{ animationDelay: `${0.3 + index * 0.1}s` }}
             >

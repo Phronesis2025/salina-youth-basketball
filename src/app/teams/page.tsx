@@ -82,7 +82,7 @@ export default function TeamHub() {
     >
       <div className="container max-w-[75rem] mx-auto px-4 sm:px-6 lg:px-8">
         <h1
-          className="text-white text-[clamp(2.25rem,5vw,3rem)] font-bold font-rubik mb-8 text-center uppercase animate-fadeIn"
+          className="text-white text-[clamp(2.25rem,5vw,3rem)] font-bold font-rubik mb-8 text-center uppercase"
           style={{ animationDelay: "0.2s" }}
         >
           Team Hub
@@ -90,7 +90,7 @@ export default function TeamHub() {
 
         {/* Filter Buttons */}
         <div
-          className="mb-8 flex justify-center flex-wrap gap-2 animate-fadeIn"
+          className="mb-8 flex justify-center flex-wrap gap-2"
           style={{ animationDelay: "0.3s" }}
           role="tablist"
           aria-label="Filter teams by age group"
@@ -124,8 +124,7 @@ export default function TeamHub() {
                 key={team.id}
                 className={cn(
                   "bg-gray-900 rounded-lg shadow-md overflow-hidden w-full h-[28rem] flex flex-col min-h-0",
-                  "transform transition-all duration-300 hover:scale-105 hover:shadow-lg",
-                  isInitialLoad && "animate-fadeIn"
+                  "transform transition-all duration-300 hover:scale-105 hover:shadow-lg"
                 )}
                 style={{
                   animationDelay: isInitialLoad
@@ -180,7 +179,7 @@ export default function TeamHub() {
           <Button
             asChild
             variant="default"
-            className="bg-blue-600 text-white font-medium font-inter rounded-md hover:bg-blue-700 hover:scale-105 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-300 text-base px-6 py-3 uppercase animate-fadeIn"
+            className="bg-blue-600 text-white font-medium font-inter rounded-md hover:bg-blue-700 hover:scale-105 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-300 text-base px-6 py-3 uppercase"
             style={{ animationDelay: "0.4s" }}
           >
             <Link href="/" className="no-underline">
