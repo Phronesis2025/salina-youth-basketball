@@ -31,11 +31,11 @@
 
 - **Phase 1 (Define Goal and Audience)**: Completed. Defined purpose, audience (parents, external teams), goals (streamline registrations, showcase teams), and design (dark theme, navy/white/red).
 - **Phase 2 (Plan Content and Structure)**: Completed. Created sitemap, navigation, and page content (Homepage, Team Hub, Coaches Corner, etc.), with placeholder content (values, articles, t-shirt designs).
-- **Phase 3 (Build Website)**: In Progress (Schedules, Shop, and Tournaments pages remaining).
+- **Phase 3 (Build Website)**: In Progress (Shop and Tournaments pages remaining).
 - **Phase 4 (Testing and Deployment)**: Not started.
 - **Phase 5 (Polish and Iteration)**: Not started.
 
-**Key Milestones**: Defined project goals, planned website structure, set up color scheme and design guidelines, prepared placeholder content (20-team dataset, Coaches Corner articles, t-shirt designs), built Homepage Hero section with functional CTAs, added News Carousel, Team Preview, Schedule Preview, and Values sections, created the Team Hub with filtering by age group, built the Team Sub-Page for detailed team information, deployed the site to Vercel, resolved build warnings and errors, fixed styling issues on Vercel, resolved permission issues during builds, added placeholder pages for routes, fixed logo and footer display issues, implemented logo shrinking on scroll, implemented the Join page with form submission, Stripe payment integration, Supabase storage, and transitioned from PDF invoice generation to HTML invoice emails via Resend.
+**Key Milestones**: Defined project goals, planned website structure, set up color scheme and design guidelines, prepared placeholder content (20-team dataset, Coaches Corner articles, t-shirt designs), built Homepage Hero section with functional CTAs, added News Carousel, Team Preview, Schedule Preview, and Values sections, created the Team Hub with filtering by age group, built the Team Sub-Page for detailed team information, deployed the site to Vercel, resolved build warnings and errors, fixed styling issues on Vercel, resolved permission issues during builds, added placeholder pages for routes, fixed logo and footer display issues, implemented logo shrinking on scroll, implemented the Join page with form submission, Stripe payment integration, Supabase storage, transitioned from PDF invoice generation to HTML invoice emails via Resend, completed the Schedules page with FullCalendar integration, updated Team Sub-Page with schedule tables and merchandise section, removed `animate-fadeIn` effect across all pages.
 
 ## Files for Review
 
@@ -43,17 +43,17 @@
 - src/components/common/Navbar.tsx (updated with logo, right-aligned links, scroll effect, mobile menu)
 - src/components/homepage/NewsCarousel.tsx (added carousel with static data and modals)
 - src/components/homepage/TeamPreview.tsx (added team previews with links)
-- src/components/homepage/SchedulePreview.tsx (added schedule previews with links)
+- src/components/homepage/SchedulePreview.tsx (added schedule previews with links, updated events, removed `animate-fadeIn`)
 - src/components/homepage/ValuesSection.tsx (added values section)
 - src/app/page.tsx (updated to include Hero, NewsCarousel, TeamPreview, SchedulePreview, and ValuesSection)
 - app/teams/page.tsx (added Team Hub with team list and age group filter)
-- app/teams/[id]/page.tsx (added Team Sub-Page with detailed team information)
+- app/teams/[id]/page.tsx (added Team Sub-Page with detailed team information, updated schedule tables, added merchandise section, removed `animate-fadeIn`)
 - app/signup/page.tsx (added placeholder page)
-- app/schedules/page.tsx (added placeholder page)
+- app/schedules/page.tsx (completed with FullCalendar, filters, "Today's Events" card, removed `animate-fadeIn`)
 - app/shop/page.tsx (added placeholder page)
 - app/tournaments/page.tsx (added placeholder page)
-- app/join/page.tsx (completed with registration form, payment integration)
-- app/join/confirm/page.tsx (completed with payment confirmation and Stripe integration)
+- app/join/page.tsx (completed with registration form, payment integration, removed `animate-fadeIn`)
+- app/join/confirm/page.tsx (completed with payment confirmation and Stripe integration, removed `animate-fadeIn`)
 - app/join/status/page.tsx (implemented with payment status display and email invoice confirmation, pending redirect fix)
 - pages/api/create-join-request.ts (implemented for creating join requests in Supabase)
 - pages/api/send-email.ts (implemented with Resend for HTML invoice emails)
@@ -62,15 +62,16 @@
 
 ## Current State
 
-**Date**: May 16, 2025, 06:00 PM CDT
+**Date**: May 17, 2025, 05:44 PM CDT
 
-**Progress**: Completed the Schedules page in Phase 3: Build Website. Implemented `/app/schedules/page.tsx` with FullCalendar integration, displaying events for 5 teams (Lightning, Thunder, Hawks, Raptors, Sparks) from May 16 to July 31, 2025, including Games (red background), Practices (blue), and Tournaments (purple). Added three dropdown filters (Boys/Girls, Team Name, Practice/Game/Tournament) styled to match the Teams page (`bg-blue-600`, `uppercase`). On mobile, Month view shows only colored blocks (no text) to resolve text overflow, while Week view shows titles. Added a "Today's Events" card displaying events for the current date (dynamically using `new Date()`), styled as `bg-gray-900 rounded-lg shadow-md p-6`. Removed colored circles, using background colors to indicate event types, and removed hover scaling on the calendar card. Aligned styling with the Teams page (`bg-[#002C51]`, blue buttons, animations). Tested locally for functionality (filters, navigation, event display) and responsiveness (mobile and desktop). Deployed updates to Vercel (https://wcs-three.vercel.app/schedules). Remaining Phase 3 tasks include building the Shop and Tournaments pages. Next task: Build the Shop page with static product listings and Stripe checkout.
+**Progress**: Completed the loose ends for the Schedules section in Phase 3: Build Website. Synced events in `SchedulePreview.tsx` and team sub-pages using the `events` array from `/app/schedules/page.tsx`, mapping team logos (Thunderhawks, Firebolts, Stingers, Lightning, Vipers, Raptors) and using Warriors as the opponent. Styled Join page fields to match Schedules page dropdowns (`bg-blue-600`, `rounded-md`, normal case), removed hover effects across both pages, and split credit card fields in `/join/confirm/page.tsx` into a grid layout on mobile. Updated `/app/teams/[id]/page.tsx` by removing the roster section, splitting the schedule into two tables (practices and games) with the next 7 events each, replacing "Opponent" with "Start Time" in the practices table, and adding a Team Apparel section with merchandise images linking to `/shop`. Removed the `animate-fadeIn` effect and associated `style` attributes from all pages (`/app/teams/[id]/page.tsx`, `/app/schedules/page.tsx`, `SchedulePreview.tsx`, `/app/join/page.tsx`, `/app/join/confirm/page.tsx`) to improve page load performance. Encountered a `net::ERR_CONNECTION_REFUSED` error when loading merchandise images in `/app/teams/[id]/page.tsx`, resolved by correcting the image path (removed `/public` prefix). Remaining Phase 3 tasks include building the Shop and Tournaments pages. Next task: Build the Shop page with static product listings and Stripe checkout.
 
 **Blockers**: None.
 
 **Errors**:
 
 - [May 16, 2025]: No errors encountered during Schedules page implementation. Initial FullCalendar CSS import issues were resolved earlier by importing `main.css` in `/src/app/global.css`. Text overflow on mobile was fixed by hiding text in Month view and using colored blocks.
+- [May 17, 2025]: Encountered `net::ERR_CONNECTION_REFUSED` error when loading merchandise images (e.g., `/public/images/team-thunderhawks-merch.jpg`) in `/app/teams/[id]/page.tsx`. Resolved by correcting the path to `/images/team-thunderhawks-merch.jpg` (removed `/public` prefix), as Next.js serves static files from the `public/` directory directly.
 
 **To-Do List**
 
@@ -98,9 +99,12 @@
   - [x] Use background colors for event types (Games: red, Practices: blue, Tournaments: purple)
   - [x] Hide text in Month view on mobile, show only colors
   - [x] Add "Today's Events" card with dynamic current date
+  - [x] Tie up loose ends: sync events in SchedulePreview and team pages, style Join page fields, split credit card fields on mobile, remove hover effects
 - [x] Deploy updates to Vercel with Join page working
 - [x] Commit changes to GitHub
 - [x] Update PROGRESS.md with Phase 3 status
+- [x] Remove `animate-fadeIn` effect from all pages
+- [ ] Resolve merchandise image loading issue (`net::ERR_CONNECTION_REFUSED`) in `/app/teams/[id]/page.tsx`
 - [ ] Build Shop Page
   - [ ] Create app/shop/page.tsx with static product listings
   - [ ] Implement a basic checkout flow with Stripe
@@ -190,12 +194,10 @@ Please provide the requested code, review, or guidance to resolve the redirect e
 
 - **Phase 3 To-Do List**: Updated to include the remaining pages (Schedules, Shop, Tournaments) as tasks, with detailed steps and explanations for each.
 - **Current State**: Kept the latest progress update about the Join page implementation and the build failure, as the deployment to Vercel with the Join page working correctly is still pending.
-- **Date and Time**: Updated to May 16, 2025, 07:33 AM CDT, as provided.
-- **May 16, 2025 Update**:
-  - Transitioned from PDF invoice download to HTML invoice emails via Resend to resolve `AbortError` timeout issue with `/api/generate-invoice`.
-  - Implemented Resend integration in `/api/send-email.ts`, updated `/join/confirm/page.tsx` to pass `joinRequestId`, and modified `/join/status/page.tsx` to show a success message with `parent_email` fetched via `/api/get-join-request.ts`.
-  - Removed PDF dependencies (`pdfkit`, `@types/pdfkit`, `blob-stream`) and deleted `/api/generate-invoice.ts`.
-  - Persistent “Invalid payment status or join request ID” error on `/join/status` due to missing `status` or `joinRequestId` URL parameters.
-  - Solutions tried include updating redirect logic, adding logging, validating `sessionStorage`, updating Next.js to 15.3.2, and verifying `Navbar.tsx` navigation.
-  - Added tasks to fix the redirect error and test Resend email delivery in the To-Do List.
-  - Confirmed `Navbar.tsx` “Join Team” button navigates correctly to `/join`, preserving user updates (scroll effect, mobile menu, styling).
+- **Date and Time**: Updated to May 17, 2025, 05:44 PM CDT, as provided.
+- **May 17, 2025 Update**:
+  - Completed loose ends for the Schedules section: synced events in `SchedulePreview.tsx` and team sub-pages, styled Join page fields, split credit card fields on mobile, removed hover effects.
+  - Updated `/app/teams/[id]/page.tsx`: removed roster section, split schedule into two tables (practices and games), replaced "Opponent" with "Start Time" in practices table, added Team Apparel section with merchandise images.
+  - Removed `animate-fadeIn` effect and associated `style` attributes from all pages (`/app/teams/[id]/page.tsx`, `/app/schedules/page.tsx`, `SchedulePreview.tsx`, `/app/join/page.tsx`, `/app/join/confirm/page.tsx`) to improve page load performance.
+  - Resolved `net::ERR_CONNECTION_REFUSED` error for merchandise images by correcting the path (removed `/public` prefix).
+  - Added task to resolve any remaining merchandise image loading issues.

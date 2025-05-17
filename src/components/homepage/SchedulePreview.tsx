@@ -6,82 +6,66 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
+// Import events from schedules page
+import { events } from "@/app/schedules/page";
+
+// Define the Schedule type
 interface Schedule {
-  id: number;
+  id: string;
   date: string;
   teams: string;
   location: string;
   logo1?: string; // Logo for first team
-  logo2?: string; // Logo for opponent (optional, using placeholder if missing)
+  logo2?: string; // Logo for opponent
 }
 
+// Team logo mapping
+const teamLogos: { [key: string]: string } = {
+  Lightning: "/images/team-lightning.jpg",
+  Thunder: "/images/team-thunderhawks.jpg",
+  Hawks: "/images/team-default.jpg",
+  Raptors: "/images/team-raptors.jpg",
+  Sparks: "/images/team-default.jpg",
+};
+
 export default function SchedulePreview() {
-  const today = new Date("2025-05-15T12:33:00-05:00"); // May 15, 2025, 12:33 PM CDT
+  const today = new Date("2025-05-17T14:32:00-05:00"); // May 17, 2025, 02:32 PM CDT
 
-  const schedules: Schedule[] = [
-    {
-      id: 1,
-      date: "2025-05-20",
-      teams: "Thunderhawks vs Eagles",
-      location: "Salina Arena",
-      logo1: "/images/team-thunderhawks.jpg",
-      logo2: "/images/placeholder-team-default.jpg",
-    },
-    {
-      id: 2,
-      date: "2025-05-22",
-      teams: "Firebolts vs Tigers",
-      location: "Downtown Arena",
-      logo1: "/images/team-firebolts.jpg",
-      logo2: "/images/placeholder-team-default.jpg",
-    },
-    {
-      id: 3,
-      date: "2025-05-25",
-      teams: "Stingers vs Wolves",
-      location: "Northside Court",
-      logo1: "/images/team-stingers.jpg",
-      logo2: "/images/placeholder-team-default.jpg",
-    },
-    {
-      id: 4,
-      date: "2025-05-21",
-      teams: "Lightning vs Hawks",
-      location: "Salina Arena",
-      logo1: "/images/team-lightning.jpg",
-      logo2: "/images/placeholder-team-default.jpg",
-    },
-    {
-      id: 5,
-      date: "2025-05-23",
-      teams: "Vipers vs Panthers",
-      location: "Hays Court",
-      logo1: "/images/team-vipers.jpg",
-      logo2: "/images/placeholder-team-default.jpg",
-    },
-    {
-      id: 6,
-      date: "2025-05-24",
-      teams: "Raptors vs Ravens",
-      location: "Northside Court",
-      logo1: "/images/team-raptors.jpg",
-      logo2: "/images/placeholder-team-default.jpg",
-    },
-    {
-      id: 7,
-      date: "2025-05-10", // Past game for testing
-      teams: "Thunderhawks vs Falcons",
-      location: "Hays Court",
-      logo1: "/images/team-thunderhawks.jpg",
-      logo2: "/images/placeholder-team-default.jpg",
-    },
-  ];
-
-  // Filter and sort upcoming games
+  // Filter and sort upcoming games (next 3 events)
   const upcomingGames = useMemo(() => {
-    return schedules
-      .filter((game) => new Date(game.date) > today)
-      .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+    return events
+      .filter((event) => new Date(event.start) > today)
+      .sort((a, b) => new Date(a.start).getTime() - new Date(b.start).getTime())
+      .slice(0, 3)
+      .map((event) => {
+        const team = event.extendedProps.team;
+        let teamsDisplay = event.title; // Default to event title
+        let logo1 = teamLogos[team] || "/images/team-default.jpg";
+        let logo2 = "/images/team-default.jpg"; // Default for opponent
+
+        // Adjust teams display based on event type
+        if (event.extendedProps.type === "Game") {
+          // Extract opponent from title (e.g., "Thunder vs. Hawks (Game)" -> "Hawks")
+          const opponent = event.title
+            .replace(`${team} vs. `, "")
+            .replace(" (Game)", "");
+          teamsDisplay = `${team} vs. ${opponent}`;
+          logo2 = teamLogos[opponent] || "/images/team-default.jpg";
+        } else if (event.extendedProps.type === "Tournament") {
+          // For tournaments, team field might be "All Teams" or a list
+          logo1 = "/images/team-default.jpg"; // Use default for tournaments
+          logo2 = "/images/team-default.jpg";
+        }
+
+        return {
+          id: event.id,
+          date: event.start,
+          teams: teamsDisplay,
+          location: event.extendedProps.location,
+          logo1,
+          logo2,
+        };
+      });
   }, []);
 
   // Format date (e.g., "Tue, May 20, 2025")
@@ -130,8 +114,7 @@ export default function SchedulePreview() {
                               e: React.SyntheticEvent<HTMLImageElement>
                             ) => {
                               const target = e.target as HTMLImageElement;
-                              target.src =
-                                "/images/placeholder-team-default.jpg";
+                              target.src = "/images/team-default.jpg";
                             }}
                           />
                         </div>
@@ -140,15 +123,14 @@ export default function SchedulePreview() {
                         <div className="relative w-12 h-12">
                           <Image
                             src={schedule.logo2}
-                            alt={`${schedule.teams.split(" vs ")[1]} logo`}
+                            alt={`${schedule.teams.split(" vs ")[1] || "Opponent"} logo`}
                             fill
                             className="object-contain"
                             onError={(
                               e: React.SyntheticEvent<HTMLImageElement>
                             ) => {
                               const target = e.target as HTMLImageElement;
-                              target.src =
-                                "/images/placeholder-team-default.jpg";
+                              target.src = "/images/team-default.jpg";
                             }}
                           />
                         </div>

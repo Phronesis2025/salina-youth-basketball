@@ -7,17 +7,18 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
+// Import events from schedules page
+import { events } from "@/app/schedules/page";
+
 // Define the Team type
 interface Team {
   id: number;
   name: string;
   ageGroup: string;
   coach: string;
-  roster: string[];
-  schedule: Array<{ date: string; opponent: string; location: string }>;
   coachBio: string;
   gallery: string[];
-  logo: string; // New field for team logo
+  logo: string;
 }
 
 // Define the expected params type
@@ -37,14 +38,9 @@ export default function TeamSubPage() {
       name: "Thunderhawks",
       ageGroup: "U-14",
       coach: "Coach Smith",
-      roster: ["Player 1", "Player 2", "Player 3", "Player 4", "Player 5"],
-      schedule: [
-        { date: "2025-06-01", opponent: "Eagles", location: "Salina Arena" },
-        { date: "2025-06-08", opponent: "Falcons", location: "Hays Court" },
-      ],
       coachBio:
         "Coach Smith has 10 years of experience coaching youth basketball and has led multiple teams to regional championships.",
-      gallery: ["/images/team-thunderhawks.jpg"], // Placeholder; add more images if available
+      gallery: ["/images/team-thunderhawks.jpg"],
       logo: "/images/team-thunderhawks.jpg",
     },
     {
@@ -52,11 +48,6 @@ export default function TeamSubPage() {
       name: "Firebolts",
       ageGroup: "U-16",
       coach: "Coach Johnson",
-      roster: ["Player A", "Player B", "Player C", "Player D", "Player E"],
-      schedule: [
-        { date: "2025-06-02", opponent: "Tigers", location: "Salina Arena" },
-        { date: "2025-06-09", opponent: "Lions", location: "Hays Court" },
-      ],
       coachBio:
         "Coach Johnson is a former college player with a passion for developing young athletes.",
       gallery: ["/images/team-firebolts.jpg"],
@@ -67,11 +58,6 @@ export default function TeamSubPage() {
       name: "Stingers",
       ageGroup: "U-12",
       coach: "Coach Davis",
-      roster: ["Player X", "Player Y", "Player Z", "Player W", "Player V"],
-      schedule: [
-        { date: "2025-06-03", opponent: "Wolves", location: "Salina Arena" },
-        { date: "2025-06-10", opponent: "Bears", location: "Hays Court" },
-      ],
       coachBio:
         "Coach Davis specializes in strategic gameplay and has coached at the national level.",
       gallery: ["/images/team-stingers.jpg"],
@@ -82,11 +68,6 @@ export default function TeamSubPage() {
       name: "Lightning",
       ageGroup: "U-10",
       coach: "Coach Brown",
-      roster: ["Player L1", "Player L2", "Player L3", "Player L4", "Player L5"],
-      schedule: [
-        { date: "2025-06-04", opponent: "Hawks", location: "Salina Arena" },
-        { date: "2025-06-11", opponent: "Cougars", location: "Hays Court" },
-      ],
       coachBio:
         "Coach Brown is dedicated to fostering teamwork and skill development in young athletes.",
       gallery: ["/images/team-lightning.jpg"],
@@ -97,11 +78,6 @@ export default function TeamSubPage() {
       name: "Vipers",
       ageGroup: "U-14",
       coach: "Coach Wilson",
-      roster: ["Player V1", "Player V2", "Player V3", "Player V4", "Player V5"],
-      schedule: [
-        { date: "2025-06-05", opponent: "Panthers", location: "Salina Arena" },
-        { date: "2025-06-12", opponent: "Jaguars", location: "Hays Court" },
-      ],
       coachBio:
         "Coach Wilson has a track record of building competitive teams with strong fundamentals.",
       gallery: ["/images/team-vipers.jpg"],
@@ -112,11 +88,6 @@ export default function TeamSubPage() {
       name: "Raptors",
       ageGroup: "U-16",
       coach: "Coach Taylor",
-      roster: ["Player R1", "Player R2", "Player R3", "Player R4", "Player R5"],
-      schedule: [
-        { date: "2025-06-06", opponent: "Ravens", location: "Salina Arena" },
-        { date: "2025-06-13", opponent: "Owls", location: "Hays Court" },
-      ],
       coachBio:
         "Coach Taylor focuses on player development and strategic play, with years of coaching experience.",
       gallery: ["/images/team-raptors.jpg"],
@@ -134,18 +105,14 @@ export default function TeamSubPage() {
           aria-label="Team Not Found"
         >
           <div className="container max-w-[75rem] mx-auto px-4 sm:px-6 lg:px-8">
-            <h1
-              className="text-white text-[clamp(2.25rem,5vw,3rem)] font-bold font-rubik mb-8 text-center uppercase animate-fadeIn"
-              style={{ animationDelay: "0.2s" }}
-            >
+            <h1 className="text-white text-[clamp(2.25rem,5vw,3rem)] font-bold font-rubik mb-8 text-center uppercase">
               Team Not Found
             </h1>
             <div className="text-center">
               <Button
                 asChild
                 variant="default"
-                className="bg-blue-600 text-white font-medium font-inter rounded-md hover:bg-blue-700 hover:scale-105 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-300 text-base px-6 py-3 uppercase animate-fadeIn"
-                style={{ animationDelay: "0.3s" }}
+                className="bg-blue-600 text-white font-medium font-inter rounded-md hover:bg-blue-700 hover:scale-105 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-300 text-base px-6 py-3 uppercase"
               >
                 <Link href="/teams">Back to Team Hub</Link>
               </Button>
@@ -166,18 +133,14 @@ export default function TeamSubPage() {
           aria-label="Team Not Found"
         >
           <div className="container max-w-[75rem] mx-auto px-4 sm:px-6 lg:px-8">
-            <h1
-              className="text-white text-[clamp(2.25rem,5vw,3rem)] font-bold font-rubik mb-8 text-center uppercase animate-fadeIn"
-              style={{ animationDelay: "0.2s" }}
-            >
+            <h1 className="text-white text-[clamp(2.25rem,5vw,3rem)] font-bold font-rubik mb-8 text-center uppercase">
               Team Not Found
             </h1>
             <div className="text-center">
               <Button
                 asChild
                 variant="default"
-                className="bg-blue-600 text-white font-medium font-inter rounded-md hover:bg-blue-700 hover:scale-105 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-300 text-base px-6 py-3 uppercase animate-fadeIn"
-                style={{ animationDelay: "0.3s" }}
+                className="bg-blue-600 text-white font-medium font-inter rounded-md hover:bg-blue-700 hover:scale-105 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-300 text-base px-6 py-3 uppercase"
               >
                 <Link href="/teams">Back to Team Hub</Link>
               </Button>
@@ -188,8 +151,64 @@ export default function TeamSubPage() {
     );
   }
 
+  // Current date for filtering upcoming events
+  const today = new Date("2025-05-17T16:45:00-05:00"); // May 17, 2025, 04:45 PM CDT
+
+  // Filter and sort events for this team
+  const teamEvents = events
+    .filter(
+      (event) =>
+        event.extendedProps.team === team.name ||
+        event.extendedProps.team === "All Teams"
+    )
+    .filter((event) => new Date(event.start) > today)
+    .sort((a, b) => new Date(a.start).getTime() - new Date(b.start).getTime());
+
+  // Split events into practices and games
+  const practices = teamEvents
+    .filter((event) => event.extendedProps.type === "Practice")
+    .slice(0, 7)
+    .map((event) => ({
+      date: event.start,
+      opponent: "N/A",
+      location: event.extendedProps.location,
+    }));
+
+  const games = teamEvents
+    .filter((event) => event.extendedProps.type === "Game")
+    .slice(0, 7)
+    .map((event) => ({
+      date: event.start,
+      opponent: event.title
+        .replace(`${team.name} vs. `, "")
+        .replace(" (Game)", ""),
+      location: event.extendedProps.location,
+    }));
+
+  // Map team names to merchandise images
+  const teamMerchImages: { [key: string]: string } = {
+    Thunderhawks: "/images/team-thunderhawks-merch.jpg",
+    Firebolts: "/images/team-firebolts-merch.jpg",
+    Stingers: "/images/team-stingers-merch.jpg",
+    Lightning: "/images/team-lightning-merch.jpg",
+    Vipers: "/images/team-vipers-merch.jpg",
+    Raptors: "/images/team-raptors-merch.jpg",
+  };
+
+  // Get the merchandise image for the current team
+  const teamMerchImage = teamMerchImages[team.name] || defaultPlaceholder;
+
   // Use team logo for Hero
   const heroImage = team.logo || defaultPlaceholder;
+
+  // Format date (e.g., "MM/DD/YYYY")
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    });
+  };
 
   return (
     <main className="pt-20 sm:pt-24">
@@ -199,10 +218,7 @@ export default function TeamSubPage() {
       >
         <div className="container max-w-[75rem] mx-auto px-4 sm:px-6 lg:px-8">
           {/* Hero Section */}
-          <div
-            className="relative w-full h-96 sm:h-[28rem] mb-8 animate-fadeIn"
-            style={{ animationDelay: "0.2s" }}
-          >
+          <div className="relative w-full h-96 sm:h-[28rem] mb-8">
             <Image
               src={heroImage}
               alt={`${team.name} team logo`}
@@ -235,10 +251,7 @@ export default function TeamSubPage() {
 
           {/* Overview and Coach Bio */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 mb-8">
-            <div
-              className="bg-gray-900 p-6 rounded-lg shadow-md animate-fadeIn"
-              style={{ animationDelay: "0.3s" }}
-            >
+            <div className="bg-gray-900 p-6 rounded-lg shadow-md">
               <h2 className="text-white text-2xl font-rubik font-semibold mb-4 uppercase">
                 Team Overview
               </h2>
@@ -249,10 +262,7 @@ export default function TeamSubPage() {
                 <strong>Age Group:</strong> {team.ageGroup}
               </p>
             </div>
-            <div
-              className="bg-gray-900 p-6 rounded-lg shadow-md animate-fadeIn"
-              style={{ animationDelay: "0.4s" }}
-            >
+            <div className="bg-gray-900 p-6 rounded-lg shadow-md">
               <h2 className="text-white text-2xl font-rubik font-semibold mb-4 uppercase">
                 Coach Bio
               </h2>
@@ -260,36 +270,48 @@ export default function TeamSubPage() {
             </div>
           </div>
 
-          {/* Roster */}
-          <div className="mb-8">
-            <h2
-              className="text-white text-2xl font-rubik font-semibold mb-4 uppercase animate-fadeIn"
-              style={{ animationDelay: "0.5s" }}
-            >
-              Roster
-            </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
-              {team.roster.map((player, index) => (
-                <div
-                  key={index}
-                  className="bg-gray-900 p-4 rounded-lg shadow-md h-32 flex items-center justify-center animate-fadeIn"
-                  style={{ animationDelay: `${0.6 + index * 0.1}s` }}
-                >
-                  <span className="text-white text-base font-inter">
-                    {player}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Schedule */}
+          {/* Schedule Section */}
           <div className="mb-8" id="schedule">
-            <h2
-              className="text-white text-2xl font-rubik font-semibold mb-4 uppercase animate-fadeIn"
-              style={{ animationDelay: "0.8s" }}
-            >
-              Schedule
+            <h2 className="text-white text-2xl font-rubik font-semibold mb-4 uppercase">
+              Upcoming Practices
+            </h2>
+            <div className="overflow-x-auto mb-8">
+              <table className="w-full text-white text-base font-inter">
+                <thead>
+                  <tr className="bg-blue-600">
+                    <th className="p-4 text-left">Date</th>
+                    <th className="p-4 text-left">Start Time</th>
+                    <th className="p-4 text-left">Location</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {practices.length > 0 ? (
+                    practices.map((practice, index) => (
+                      <tr key={index} className="bg-gray-900">
+                        <td className="p-4">{formatDate(practice.date)}</td>
+                        <td className="p-4">
+                          {new Date(practice.date).toLocaleTimeString("en-US", {
+                            hour: "numeric",
+                            minute: "2-digit",
+                            hour12: true,
+                          })}
+                        </td>
+                        <td className="p-4">{practice.location}</td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan={3} className="p-4 text-center">
+                        No upcoming practices scheduled.
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+
+            <h2 className="text-white text-2xl font-rubik font-semibold mb-4 uppercase">
+              Upcoming Games
             </h2>
             <div className="overflow-x-auto">
               <table className="w-full text-white text-base font-inter">
@@ -301,41 +323,36 @@ export default function TeamSubPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {team.schedule.map((game, index) => (
-                    <tr
-                      key={index}
-                      className="bg-gray-900 animate-fadeIn"
-                      style={{ animationDelay: `${0.9 + index * 0.1}s` }}
-                    >
-                      <td className="p-4">{game.date}</td>
-                      <td className="p-4">{game.opponent}</td>
-                      <td className="p-4">{game.location}</td>
+                  {games.length > 0 ? (
+                    games.map((game, index) => (
+                      <tr key={index} className="bg-gray-900">
+                        <td className="p-4">{formatDate(game.date)}</td>
+                        <td className="p-4">{game.opponent}</td>
+                        <td className="p-4">{game.location}</td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan={3} className="p-4 text-center">
+                        No upcoming games scheduled.
+                      </td>
                     </tr>
-                  ))}
+                  )}
                 </tbody>
               </table>
             </div>
-            {team.schedule.length === 0 && (
-              <p className="text-white text-base font-inter text-center mt-4">
-                No upcoming games scheduled.
-              </p>
-            )}
           </div>
 
           {/* Gallery */}
           <div className="mb-8">
-            <h2
-              className="text-white text-2xl font-rubik font-semibold mb-4 uppercase animate-fadeIn"
-              style={{ animationDelay: "1.1s" }}
-            >
+            <h2 className="text-white text-2xl font-rubik font-semibold mb-4 uppercase">
               Gallery
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8">
               {team.gallery.map((image, index) => (
                 <button
                   key={index}
-                  className="relative w-full h-48 overflow-hidden rounded-lg shadow-md group animate-fadeIn"
-                  style={{ animationDelay: `${1.2 + index * 0.1}s` }}
+                  className="relative w-full h-48 overflow-hidden rounded-lg shadow-md group"
                   onClick={() => setSelectedImage(image)}
                   aria-label={`View gallery image ${index + 1}`}
                 >
@@ -356,13 +373,48 @@ export default function TeamSubPage() {
             </div>
           </div>
 
+          {/* Team Apparel */}
+          <div className="mb-8">
+            <h2 className="text-white text-2xl font-rubik font-semibold mb-4 uppercase">
+              Team Apparel
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8">
+              <Link
+                href="/shop"
+                className="relative w-full h-48 overflow-hidden rounded-lg shadow-md group"
+                aria-label={`Purchase ${team.name} merchandise`}
+              >
+                <Image
+                  src={teamMerchImage}
+                  alt={`${team.name} merchandise`}
+                  fill
+                  className="object-cover object-top transition-transform duration-300 group-hover:scale-105"
+                  onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
+                    console.error(
+                      `Failed to load Merch image: ${teamMerchImage}`
+                    );
+                    const target = e.target as HTMLImageElement;
+                    target.src = defaultPlaceholder;
+                  }}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center">
+                  <Button
+                    variant="default"
+                    className="bg-blue-600 text-white font-medium font-inter rounded-md hover:bg-blue-700 hover:scale-105 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-300 text-base px-4 py-2 uppercase mb-4"
+                  >
+                    Shop Now
+                  </Button>
+                </div>
+              </Link>
+            </div>
+          </div>
+
           {/* Back CTA */}
           <div className="text-center">
             <Button
               asChild
               variant="default"
-              className="bg-blue-600 text-white font-medium font-inter rounded-md hover:bg-blue-700 hover:scale-105 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-300 text-base px-6 py-3 uppercase animate-fadeIn"
-              style={{ animationDelay: "1.4s" }}
+              className="bg-blue-600 text-white font-medium font-inter rounded-md hover:bg-blue-700 hover:scale-105 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-300 text-base px-6 py-3 uppercase"
             >
               <Link href="/teams">Back to Team Hub</Link>
             </Button>
@@ -371,7 +423,7 @@ export default function TeamSubPage() {
           {/* Gallery Modal */}
           {selectedImage && (
             <div
-              className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 animate-fadeIn"
+              className="fixed inset-0 bg-black/80 flex items-center justify-center z-50"
               onClick={() => setSelectedImage(null)}
               role="dialog"
               aria-label="Gallery image modal"
