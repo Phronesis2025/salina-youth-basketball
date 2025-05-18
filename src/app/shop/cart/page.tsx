@@ -17,17 +17,21 @@ interface CartItem {
 }
 
 export default function CartPage() {
-  // Initialize cartItems from localStorage synchronously
-  const [cartItems, setCartItems] = useState<CartItem[]>(() => {
+  // Initialize cartItems as empty array
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+
+  // Load cartItems from localStorage client-side
+  useEffect(() => {
     try {
       const storedCart = localStorage.getItem("cart");
       console.log("CartPage: Loaded cart from localStorage:", storedCart);
-      return storedCart ? JSON.parse(storedCart) : [];
+      if (storedCart) {
+        setCartItems(JSON.parse(storedCart));
+      }
     } catch (error) {
       console.error("CartPage: Failed to parse cart from localStorage:", error);
-      return [];
     }
-  });
+  }, []);
 
   // Update quantity
   const updateQuantity = (variantId: string, newQuantity: number) => {

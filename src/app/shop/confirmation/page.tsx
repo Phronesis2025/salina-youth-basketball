@@ -1,11 +1,14 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Navbar from "@/components/common/Navbar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+
+// Force dynamic rendering to avoid static generation
+export const dynamic = "force-dynamic";
 
 interface CartItem {
   productId: string;
@@ -35,7 +38,7 @@ interface OrderData {
   shippingAddress: ShippingAddress;
 }
 
-export default function ConfirmationPage() {
+function ConfirmationContent() {
   const searchParams = useSearchParams();
   const [orderData, setOrderData] = useState<OrderData | null>(null);
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
@@ -176,5 +179,19 @@ export default function ConfirmationPage() {
         </div>
       </section>
     </div>
+  );
+}
+
+export default function ConfirmationPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen flex items-center justify-center bg-[#002C51] text-white">
+          Loading...
+        </div>
+      }
+    >
+      <ConfirmationContent />
+    </Suspense>
   );
 }

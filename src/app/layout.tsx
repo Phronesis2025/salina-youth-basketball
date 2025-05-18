@@ -1,8 +1,6 @@
 import { Rubik, Inter, Montserrat, Bebas_Neue } from "next/font/google";
 import "./global.css";
-import Navbar from "@/components/common/Navbar";
-import Footer from "@/components/common/Footer";
-import { cn } from "@/lib/utils";
+import ClientLayout from "./ClientLayout";
 
 // Define Rubik font
 const rubik = Rubik({
@@ -40,14 +38,15 @@ export const metadata = {
   title: "World Class Sports - Salina Youth Basketball",
   description:
     "Join the Salina Youth Basketball Club for competitive teams, summer camps, and community engagement in Salina, KS.",
+  metadataBase: new URL("https://www.wcshoops.com"), // Update with your production domain
   icons: {
     icon: "/favicon.ico",
   },
   openGraph: {
     title: "World Class Sports - Salina Youth Basketball",
     description:
-      "Discover Salina Youth Basketball Club's teams, schedules, and programs in Salina, KS.",
-    url: "https://www.wcshoops.com", // Update with your domain
+      "Discover Salina Youth Basketball Club’s teams, schedules, and programs in Salina, KS.",
+    url: "https://www.wcshoops.com",
     siteName: "World Class Sports",
     images: [
       {
@@ -68,40 +67,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link
-          rel="preload"
-          href="/images/WCS Logo-transparentBG.png"
-          as="image"
-        />
-        <link rel="preload" href="/videos/hype-video.mp4" as="video" />
-        <link rel="preload" href="/images/placeholder-news.png" as="image" />
-        <link
-          rel="preload"
-          href="/images/placeholder-team-default.jpg"
-          as="image"
-        />
-        <link rel="preload" href="/images/team-thunderhawks.jpg" as="image" />
-        <link rel="preload" href="/images/team-firebolts.jpg" as="image" />
-        <link rel="preload" href="/images/team-stingers.jpg" as="image" />
-        <link rel="preload" href="/images/placeholder-logo.png" as="image" />
-      </head>
+    <html lang="en">
       <body
-        className={cn(
-          rubik.variable,
-          inter.variable,
-          montserrat.variable,
-          bebasNeue.variable,
-          "min-h-screen flex flex-col"
-        )}
+        className={`${rubik.variable} ${inter.variable} ${montserrat.variable} ${bebasNeue.variable} bg-[#002C51] text-white flex flex-col min-h-screen`}
       >
-        <Navbar />
-        <main className="flex-grow" role="main">
-          {children}
-        </main>
-        <Footer />
+        <ClientLayout>{children}</ClientLayout>
       </body>
     </html>
   );
