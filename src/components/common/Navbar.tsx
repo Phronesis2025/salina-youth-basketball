@@ -6,9 +6,13 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ShoppingCart } from "lucide-react";
 
-export default function Navbar() {
+interface NavbarProps {
+  cartItemCount: number;
+}
+
+export default function Navbar({ cartItemCount }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [hasAnimated, setHasAnimated] = useState(false); // Track if animation has run
@@ -161,6 +165,21 @@ export default function Navbar() {
               </div>
             );
           })}
+          {/* Cart Icon */}
+          <Link
+            href="/shop/cart"
+            className="relative text-white hover:text-blue-400 hover:scale-105 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-300"
+            onClick={(e) => handleNavClick("/shop/cart", e)}
+          >
+            <ShoppingCart
+              className={cn("h-6 w-6", scrolled ? "h-5 w-5" : "h-6 w-6")}
+            />
+            {cartItemCount > 0 && (
+              <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                {cartItemCount}
+              </span>
+            )}
+          </Link>
         </nav>
 
         {/* Mobile Menu Button */}
@@ -236,6 +255,21 @@ export default function Navbar() {
                 </div>
               );
             })}
+            {/* Cart Link for Mobile */}
+            <Link
+              href="/shop/cart"
+              className={cn(
+                "text-white font-medium font-inter uppercase hover:text-blue-400 hover:scale-105 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded-sm transition-all duration-300 no-underline text-base block px-4 py-2",
+                pathname === "/shop/cart" && "text-blue-400 underline"
+              )}
+              onClick={(e) => {
+                setIsMobileMenuOpen(false);
+                handleNavClick("/shop/cart", e);
+              }}
+              aria-current={pathname === "/shop/cart" ? "page" : undefined}
+            >
+              Cart {cartItemCount > 0 && `(${cartItemCount})`}
+            </Link>
           </nav>
         </div>
       )}

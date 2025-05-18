@@ -17,13 +17,29 @@ export default async function handler(
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  const { formData, paymentStatus, joinRequestId } = req.body;
-
-  if (!formData || !paymentStatus || !joinRequestId) {
-    return res.status(400).json({ error: "Missing required fields" });
-  }
+  const { formData, paymentStatus, joinRequestId, to, subject, html } =
+    req.body;
 
   try {
+    // Handle checkout page email
+    if (to && subject && html) {
+      const emailResponse = await resend.emails.send({
+        from: "Salina Youth Basketball Club <no-reply@yourdomain.com>", // Update to your verified domain
+        to,
+        subject,
+        html,
+      });
+      console.log("Checkout email sent:", emailResponse);
+      return res.status(200).json({ message: "Email sent" });
+    }
+
+    // Handle join request email
+    if (!formData || !paymentStatus || !joinRequestId) {
+      return res
+        .status(400)
+        .json({ error: "Missing required fields for join request" });
+    }
+
     // Fetch additional data from Supabase
     const { data: joinRequest, error } = await supabase
       .from("join_requests")
@@ -93,7 +109,7 @@ export default async function handler(
 
     // Send user email
     const userEmailResponse = await resend.emails.send({
-      from: "Salina Youth Basketball <no-reply@resend.dev>", // Update to your domain in production
+      from: "Salina Youth Basketball Club <no-reply@yourdomain.com>", // Update to your verified domain
       to: formData.parent_email,
       subject: "Your Salina Youth Basketball Club Invoice",
       html: invoiceHtml,
@@ -102,7 +118,7 @@ export default async function handler(
 
     // Send admin email
     const adminEmailResponse = await resend.emails.send({
-      from: "Salina Youth Basketball <no-reply@resend.dev>",
+      from: "Salina Youth Basketball Club <no-reply@yourdomain.com>",
       to: process.env.ADMIN_EMAIL!,
       subject: `New Join Request and Invoice for ${formData.first_name} ${formData.last_name}`,
       html: `
