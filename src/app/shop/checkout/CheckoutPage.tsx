@@ -72,9 +72,8 @@ const mockFormData: FormData = {
 export default function CheckoutPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const isTestMode =
-    process.env.NODE_ENV === "development" &&
-    searchParams?.get("test") === "true";
+  // Allow test mode in both development and production when ?test=true is present
+  const isTestMode = searchParams?.get("test") === "true";
   const [cartItems, setCartItems] = useState<CartItem[]>(
     isTestMode ? mockCartItems : []
   );
@@ -149,7 +148,10 @@ export default function CheckoutPage() {
               later.
             </p>
             <Link href="/shop">
-              <Button className="bg-blue-600 hover:bg-blue-700 text-white font-inter uppercase">
+              <Button
+                className="bg-blue-600 hover:bg-blue-7
+00 text-white font-inter uppercase"
+              >
                 Return to Shop
               </Button>
             </Link>
