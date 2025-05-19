@@ -11,6 +11,10 @@ module.exports = {
         navy: "#002C51",
         red: "#F11A20",
         white: "#FFFFFF",
+        blue: {
+          600: "#2563EB",
+          700: "#1D4ED8",
+        },
       },
     },
   },

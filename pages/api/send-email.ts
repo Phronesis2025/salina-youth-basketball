@@ -17,14 +17,26 @@ export default async function handler(
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  const { formData, paymentStatus, joinRequestId, to, subject, html } =
+  const { formData, paymentStatus, joinRequestId, to, subject, html, webhook } =
     req.body;
 
   try {
+    // Handle webhook email (e.g., order shipped)
+    if (webhook && to && subject && html) {
+      const emailResponse = await resend.emails.send({
+        from: "Salina Youth Basketball Club <no-reply@yourdomain.com>",
+        to,
+        subject,
+        html,
+      });
+      console.log("Webhook email sent:", emailResponse);
+      return res.status(200).json({ message: "Webhook email sent" });
+    }
+
     // Handle checkout page email
     if (to && subject && html) {
       const emailResponse = await resend.emails.send({
-        from: "Salina Youth Basketball Club <no-reply@yourdomain.com>", // Update to your verified domain
+        from: "Salina Youth Basketball Club <no-reply@yourdomain.com>",
         to,
         subject,
         html,
@@ -40,7 +52,6 @@ export default async function handler(
         .json({ error: "Missing required fields for join request" });
     }
 
-    // Fetch additional data from Supabase
     const { data: joinRequest, error } = await supabase
       .from("join_requests")
       .select("stripe_payment_id, created_at, payment_status")
@@ -51,10 +62,8 @@ export default async function handler(
       throw new Error("Failed to fetch join request data");
     }
 
-    // Derive amount from payment_option
-    const amount = formData.payment_option === "full" ? 36000 : 3000; // in cents
+    const amount = formData.payment_option === "full" ? 36000 : 3000;
 
-    // HTML invoice template
     const invoiceHtml = `
       <!DOCTYPE html>
       <html>
@@ -62,11 +71,11 @@ export default async function handler(
         <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
         <style>
-          body { background-color: #1C2526; color: #FFFFFF; font-family: 'Inter', sans-serif; margin: 0; padding: 20px; }
+          body { background-color: #002C51; color: #FFFFFF; font-family: 'Inter', sans-serif; margin: 0; padding: 20px; }
           .container { max-width: 600px; margin: 0 auto; background-color: #01182B; padding: 20px; border-radius: 8px; }
-          h1 { font-family: 'Rubik', sans-serif; font-size: 24px; color: #D91E18; text-align: center; }
+          h1 { font-family: 'Rubik', sans-serif; font-size: 24px; color: #F11A20; text-align: center; }
           p { font-size: 16px; line-height: 1.5; }
-          .label { font-weight: 500; color: #D91E18; }
+          .label { font-weight: 500; color: #F11A20; }
           .value { margin-left: 10px; }
           .section { margin: 20px 0; }
           .footer { text-align: center; font-size: 14px; color: #E6ECEF; }
@@ -107,16 +116,14 @@ export default async function handler(
       </html>
     `;
 
-    // Send user email
     const userEmailResponse = await resend.emails.send({
-      from: "Salina Youth Basketball Club <no-reply@yourdomain.com>", // Update to your verified domain
+      from: "Salina Youth Basketball Club <no-reply@yourdomain.com>",
       to: formData.parent_email,
       subject: "Your Salina Youth Basketball Club Invoice",
       html: invoiceHtml,
     });
     console.log("User email sent:", userEmailResponse);
 
-    // Send admin email
     const adminEmailResponse = await resend.emails.send({
       from: "Salina Youth Basketball Club <no-reply@yourdomain.com>",
       to: process.env.ADMIN_EMAIL!,
