@@ -72,7 +72,6 @@ const mockFormData: FormData = {
 export default function CheckoutPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  // Allow test mode in both development and production when ?test=true is present
   const isTestMode = searchParams?.get("test") === "true";
   const [cartItems, setCartItems] = useState<CartItem[]>(
     isTestMode ? mockCartItems : []
@@ -148,10 +147,7 @@ export default function CheckoutPage() {
               later.
             </p>
             <Link href="/shop">
-              <Button
-                className="bg-blue-600 hover:bg-blue-7
-00 text-white font-inter uppercase"
-              >
+              <Button className="bg-blue-600 hover:bg-blue-700 text-white font-inter uppercase">
                 Return to Shop
               </Button>
             </Link>
@@ -274,7 +270,10 @@ function CheckoutForm({
         body: JSON.stringify({ amount: totalPrice * 100 }), // Stripe expects cents
       });
 
-      if (!response.ok) throw new Error("Failed to create payment intent");
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || "Failed to create payment intent");
+      }
 
       const { clientSecret } = await response.json();
 
@@ -324,9 +323,15 @@ function CheckoutForm({
       );
 
       if (!printfulResponse.ok) {
-        const errorData = await printfulResponse.json();
+        const errorData = await printfulResponse.json().catch(() => ({}));
+        console.error(
+          "Printful API response:",
+          printfulResponse.status,
+          errorData
+        );
         throw new Error(
-          errorData.error || "Failed to submit order to Printful"
+          errorData.error ||
+            `Failed to submit order to Printful (Status: ${printfulResponse.status})`
         );
       }
 
@@ -371,7 +376,10 @@ function CheckoutForm({
       });
 
       if (!emailResponse.ok) {
-        console.error("Failed to send confirmation email");
+        console.error(
+          "Failed to send confirmation email:",
+          emailResponse.status
+        );
       }
 
       // Clear cart
@@ -614,7 +622,7 @@ function CheckoutForm({
                         required
                       />
                       {errors.city && (
-                        <p className="text-red text-sm mt-1">{errors.city}</p>
+                        <p className="text-red text.sm mt-1">{errors.city}</p>
                       )}
                     </div>
                     {/* State */}
@@ -644,7 +652,7 @@ function CheckoutForm({
                         name="zip"
                         value={formData.zip}
                         onChange={handleInputChange}
-                        className="w-full bg-navy text-white border border-gray-700 rounded-md px-3 py-2 focus:ring-2 focus:ring-red focus:border-red"
+                        className="w.full bg-navy text-white border border-gray-700 rounded-md px-3 py-2 focus:ring-2 focus:ring-red focus:border-red"
                         required
                       />
                       {errors.zip && (
