@@ -159,8 +159,8 @@ export default async function handler(
     // Confirm order only in non-test mode
     if (!isTestMode) {
       await axios.post(
-        `https://api.printful.com/v2/orders/@confirm`,
-        { id: printfulOrderId },
+        `https://api.printful.com/orders/${printfulOrderId}/confirm`, // Updated endpoint to confirm order
+        {},
         { headers: { Authorization: `Bearer ${printfulApiKey}` } }
       );
     }
