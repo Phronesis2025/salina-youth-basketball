@@ -32,10 +32,10 @@
 - **Phase 1 (Define Goal and Audience)**: Completed. Defined purpose, audience (parents, external teams), goals (streamline registrations, showcase teams), and design (dark theme, navy/white/red).
 - **Phase 2 (Plan Content and Structure)**: Completed. Created sitemap, navigation, and page content (Homepage, Team Hub, Coaches Corner, etc.), with placeholder content (values, articles, t-shirt designs).
 - **Phase 3 (Build Website)**: In Progress (Tournaments page remaining).
-- **Phase 4 (Testing and Deployment)**: In Progress (deployed to Vercel, testing pending).
+- **Phase 4 (Testing and Deployment)**: In Progress (deployed to Vercel, testing in progress).
 - **Phase 5 (Polish and Iteration)**: Not started.
 
-**Key Milestones**: Defined project goals, planned website structure, set up color scheme and design guidelines, prepared placeholder content (20-team dataset, Coaches Corner articles, t-shirt designs), built Homepage Hero section with functional CTAs, added News Carousel, Team Preview, Schedule Preview, and Values sections, created the Team Hub with filtering by age group, built the Team Sub-Page for detailed team information, deployed the site to Vercel, resolved build warnings and errors, fixed styling issues on Vercel, resolved permission issues during builds, added placeholder pages for routes, fixed logo and footer display issues, implemented logo shrinking on scroll, implemented the Join page with form submission, Stripe payment integration, Supabase storage, transitioned from PDF invoice generation to HTML invoice emails via Resend, completed the Schedules page with FullCalendar integration, updated Team Sub-Page with schedule tables and merchandise section, removed `animate-fadeIn` effect across all pages, built the Shop page with product listings and Stripe checkout, resolved build errors (ESLint, TypeScript, `localStorage`, `useSearchParams`), and successfully deployed to Vercel.
+**Key Milestones**: Defined project goals, planned website structure, set up color scheme and design guidelines, prepared placeholder content (20-team dataset, Coaches Corner articles, t-shirt designs), built Homepage Hero section with functional CTAs, added News Carousel, Team Preview, Schedule Preview, and Values sections, created the Team Hub with filtering by age group, built the Team Sub-Page for detailed team information, deployed the site to Vercel, resolved build warnings and errors, fixed styling issues on Vercel, resolved permission issues during builds, added placeholder pages for routes, fixed logo and footer display issues, implemented logo shrinking on scroll, implemented the Join page with form submission, Stripe payment integration, Supabase storage, transitioned from PDF invoice generation to HTML invoice emails via Resend, completed the Schedules page with FullCalendar integration, updated Team Sub-Page with schedule tables and merchandise section, removed `animate-fadeIn` effect across all pages, built the Shop page with product listings and Stripe checkout, resolved build errors (ESLint, TypeScript, `localStorage`, `useSearchParams`), successfully deployed to Vercel, integrated Printful API for order fulfillment, tested order submission in test and live modes, resolved Printful API errors (incorrect endpoint, test mode logic), and deployed a working version to Vercel.
 
 ## Files for Review
 
@@ -55,7 +55,8 @@
 - app/shop/[category]/page.tsx (completed with category filtering, product listings)
 - app/shop/product/[id]/page.tsx (completed with product details, cart functionality)
 - app/shop/cart/page.tsx (completed with cart management, resolved `localStorage` SSR error)
-- app/shop/checkout/page.tsx (completed with Stripe checkout flow)
+- app/shop/checkout/page.tsx (completed with Stripe checkout flow, Printful order submission, resolved `useSearchParams` errors)
+- app/shop/checkout/CheckoutPage.tsx (added to handle client-side checkout logic, resolved `useSearchParams` prerendering issue)
 - app/shop/confirmation/page.tsx (completed with order summary, resolved `useSearchParams` error)
 - app/tournaments/page.tsx (added placeholder page)
 - app/join/page.tsx (completed with registration form, payment integration, removed `animate-fadeIn`)
@@ -66,15 +67,16 @@
 - pages/api/stripe-payment.ts (implemented for Stripe payment intents)
 - pages/api/get-join-request.ts (implemented for fetching join request data)
 - pages/api/update-join-request.ts (implemented for updating join request status)
+- pages/api/create-printful-order.ts (implemented for submitting orders to Printful, resolved API endpoint errors)
 - src/app/layout.tsx (updated with `metadataBase`, client-side cart logic via `ClientLayout`)
 - src/app/ClientLayout.tsx (added for client-side `cartItemCount` and layout rendering)
 - eslint.config.mjs (updated to remove `eslint-plugin-styled-jsx`, fixed ESLint errors)
 
 ## Current State
 
-**Date**: May 18, 2025, 05:51 PM CDT
+**Date**: May 20, 2025, 02:31 PM CDT
 
-**Progress**: Completed the Shop page build in Phase 3: Build Website, including `/app/shop/page.tsx`, `/app/shop/[category]/page.tsx`, `/app/shop/product/[id]/page.tsx`, `/app/shop/cart/page.tsx`, `/app/shop/checkout/page.tsx`, and `/app/shop/confirmation/page.tsx`. Implemented product listings, cart functionality, Stripe checkout flow, and order confirmation, styled with `bg-[#002C51]` background, `bg-gray-900` cards, `bg-blue-600` buttons, uppercase Rubik headings, and Inter body text. Resolved build errors: ESLint (`typescript-eslint`, `eslint-plugin-styled-jsx`), TypeScript (`cartItemCount` prop), `localStorage` SSR issues, and `useSearchParams` suspense errors. Successfully deployed to Vercel, with environment variables configured (Supabase, Stripe, Resend). Remaining Phase 3 task is building the Tournaments page. Phase 4 (Testing and Deployment) is in progress, with deployment complete and testing pending. Next task: Integrate Printful API for order fulfillment, ensuring orders placed on the website are successfully submitted to Printful.
+**Progress**: Completed the Printful API integration for order fulfillment in Phase 3: Build Website. Implemented `/pages/api/create-printful-order.ts` to submit orders to Printful, mapping checkout data (`items`, `subtotal`, `shippingAddress`, `customerEmail`) to Printful's order format. Updated `/app/shop/checkout/CheckoutPage.tsx` to handle order submission and error logging. Resolved issues with `isTestMode` logic, ensuring test mode works in production (`?test=true` creates draft orders). Fixed Printful API errors: incorrect confirmation endpoint (`/v2/orders/@confirm` to `/orders/{id}/confirm`), missing API keys in Vercel, and client-side error handling mismatches. Successfully tested order submission in both test mode (draft orders in Printful) and live mode (confirmed orders), with proper logging in Supabase `orders` and `logs` tables. Deployed a fully working version to Vercel at `https://wcs-three.vercel.app`, with environment variables (`PRINTFUL_TEST_API_KEY`, `PRINTFUL_API_KEY`) configured. Remaining Phase 3 task is building the Tournaments page. Phase 4 (Testing and Deployment) is in progress, with deployment complete and initial testing of the Shop page successful. Next task: Build the Tournaments page and continue end-to-end testing of all flows (registration, schedules, purchases).
 
 **Blockers**: None.
 
@@ -85,6 +87,8 @@
 - [May 17, 2025]: Resolved build errors: ESLint (`Cannot find package 'typescript-eslint'`) by installing `@typescript-eslint/parser` and `@typescript-eslint/eslint-plugin`; TypeScript error in `/app/schedules/page.ts` by moving `events` and `teams` to `/src/lib/schedules/data.ts`.
 - [May 18, 2025]: Fixed ESLint error (`Cannot find package 'eslint-plugin-styled-jsx'`) by removing the plugin from `eslint.config.mjs`, as Tailwind CSS is used instead of Styled JSX.
 - [May 18, 2025]: Resolved build errors: `localStorage is not defined` in `/app/shop/cart/page.tsx` by moving `localStorage` access to `useEffect`; `useSearchParams` suspense error in `/app/shop/confirmation/page.tsx` by adding `dynamic = 'force-dynamic'`; `metadataBase` warning by adding it to `/src/app/layout.tsx`.
+- [May 19, 2025]: Resolved Printful API integration errors: `Property 'source' is required` by adding `source: "api"` to the payload and updating the endpoint to `/orders` (removing `/v2`); `There can only be one file for each placement` by sending a single file in the `files` array; missing API keys by setting `PRINTFUL_TEST_API_KEY` and `PRINTFUL_API_KEY` in Vercel; incorrect test mode logic by updating `isTestMode` to rely solely on `searchParams` in `/app/shop/checkout/CheckoutPage.tsx`.
+- [May 20, 2025]: Fixed Printful order confirmation error: 404 on `/v2/orders/@confirm` by updating to the correct endpoint `/orders/{id}/confirm` in `/pages/api/create-printful-order.ts`. Resolved client-side error ("contact support") by ensuring the server handles confirmation failures gracefully and the client receives the correct response.
 
 **To-Do List**
 
@@ -127,17 +131,18 @@
   - [x] Test locally to ensure functionality and styling
   - [x] Resolve build errors (ESLint, TypeScript, `localStorage`, `useSearchParams`)
   - [x] Deploy to Vercel with Shop page working
+- [x] Integrate Printful API
+  - [x] Discuss Printful API integration for order fulfillment
+  - [x] Implement API routes to submit orders to Printful (`/pages/api/create-printful-order.ts`)
+  - [x] Test order placement from website to Printful (test and live modes)
+  - [x] Update Shop page checkout flow to include Printful order submission
+  - [x] Resolve Printful API errors (endpoint, test mode, client-server mismatch)
 - [ ] Build Tournaments Page
   - [ ] Create app/tournaments/page.tsx with static tournament listings
   - [ ] Implement a signup form for external teams with Supabase storage
   - [ ] Style the page to match the project's design
   - [ ] Add navigation links (e.g., "Back to Homepage")
   - [ ] Test locally to ensure functionality and styling
-- [ ] Integrate Printful API
-  - [ ] Discuss Printful API integration for order fulfillment
-  - [ ] Implement API routes to submit orders to Printful
-  - [ ] Test order placement from website to Printful
-  - [ ] Update Shop page checkout flow to include Printful order submission
 
 ## Phase 4: Testing and Deployment
 
@@ -172,6 +177,7 @@
 - Optimized CSS configuration
 - Transitioned from PDF invoice generation to HTML invoice emails via Resend
 - Deployed Shop page with Stripe checkout and Vercel hosting
+- Integrated Printful API for order fulfillment with test and live mode support
 
 ## Prompts
 
@@ -185,20 +191,20 @@ PROGRESS.md Contents:
 
 Current Task:
 
-I’m ready to integrate the Printful API to enable order fulfillment for the Shop page (`/app/shop/*`). The Shop page is complete with product listings, cart, Stripe checkout, and confirmation, deployed to Vercel. I need to ensure that when a user places an order (e.g., t-shirts for Thunderhawks, Firebolts), it is successfully submitted to Printful for fulfillment. Please discuss the Printful API integration, including authentication, required API endpoints (e.g., creating orders), data mapping from our checkout (`/app/shop/checkout/page.tsx`) to Printful, and any API routes needed (e.g., `/pages/api/printful-order.ts`). Highlight potential challenges (e.g., rate limits, error handling, product sync) and provide a plan to implement and test the integration.
+[Insert current task here, e.g., building the Tournaments page or testing end-to-end flows.]
 
 Additional Context:
 
 - The Shop page uses Stripe for payments (`/pages/api/stripe-payment.ts`) and Resend for emails (`/pages/api/send-email.ts`).
 - Orders are confirmed in `/app/shop/confirmation/page.tsx` with data like `items` (productId, variantId, size, color, quantity), `subtotal`, `shippingCost`, `totalPrice`, and `shippingAddress` (fullName, street, city, state, zip, country).
-- Printful will handle t-shirt fulfillment (e.g., `/images/team-thunderhawks-merch.jpg` products).
+- Printful handles t-shirt fulfillment (e.g., `/images/team-thunderhawks-merch.jpg` products).
 - Refer to Printful API Docs (https://www.printful.com/api) for endpoints and authentication.
 - Use cost-minimal approaches (e.g., Printful’s pay-per-use model).
 - Style any new UI (e.g., error messages) to match the dark theme (`bg-[#002C51]`, `bg-gray-900` cards, `bg-blue-600` buttons).
 - Update `PROGRESS.md` with task completion and status after each response.
 - Ensure compliance with `.cursor/rules/*.mdc` (e.g., `styling-rules.mdc` for Tailwind).
 
-Please provide a detailed plan for Printful API integration, then proceed with implementing necessary code (e.g., API routes, checkout updates). Let me know if you need specific files (e.g., `/app/shop/checkout/page.tsx`, `/pages/api/stripe-payment.ts`) or clarification.
+Please provide a detailed plan for the current task, then proceed with implementing necessary code. Let me know if you need specific files or clarification.
 
 ## References
 
@@ -212,12 +218,12 @@ Please provide a detailed plan for Printful API integration, then proceed with i
 
 ## Notes on Updates
 
-- **Phase 3 To-Do List**: Updated to mark Shop page tasks as completed (discussion, implementation, styling, testing, deployment), added Printful API integration as a new task.
-- **Phase 4 To-Do List**: Marked Vercel deployment as completed, noted testing and other tasks as pending.
-- **Current State**: Updated to reflect Shop page completion, Vercel deployment, and the start of Printful API integration on May 18, 2025, 05:51 PM CDT.
-- **Errors**: Added entries for resolved build errors (ESLint, `localStorage`, `useSearchParams`, `metadataBase`) and the `eslint-plugin-styled-jsx` 404 error, fixed by updating `eslint.config.mjs`.
-- **May 18, 2025 Update**:
-  - Completed Shop page build with product listings, cart, Stripe checkout, and confirmation.
-  - Resolved build errors: ESLint (`typescript-eslint`, `eslint-plugin-styled-jsx`), TypeScript (`cartItemCount`), `localStorage` SSR, `useSearchParams` suspense.
-  - Successfully deployed to Vercel with environment variables configured.
-  - Started Printful API integration for order fulfillment.
+- **Phase 3 To-Do List**: Updated to mark Shop page tasks as completed (discussion, implementation, styling, testing, deployment), added Printful API integration as a new task, marked it as completed with test and live mode testing.
+- **Phase 4 To-Do List**: Marked Vercel deployment as completed, noted initial testing of Shop page as successful, with remaining testing tasks pending.
+- **Current State**: Updated to reflect Printful API integration completion, successful deployment, and testing status on May 20, 2025, 02:31 PM CDT.
+- **Errors**: Added entries for resolved Printful API integration errors (endpoint issues, test mode logic, client-server mismatch) on May 19–20, 2025.
+- **May 20, 2025 Update**:
+  - Completed Printful API integration with `/pages/api/create-printful-order.ts` and updates to `/app/shop/checkout/CheckoutPage.tsx`.
+  - Resolved Printful API errors: incorrect confirmation endpoint, test mode logic, and client-side error handling.
+  - Successfully tested order submission in test and live modes, with orders appearing in Printful Dashboard and Supabase logs.
+  - Deployed a fully working version to Vercel at `https://wcs-three.vercel.app`.
