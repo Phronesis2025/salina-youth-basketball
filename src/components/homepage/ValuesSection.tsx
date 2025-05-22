@@ -1,125 +1,326 @@
 "use client";
 
+import { useState, useEffect, useRef } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation } from "swiper/modules";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
+import "swiper/css";
+import "swiper/css/navigation";
 
 interface Value {
   id: number;
   title: string;
   description: string;
-  icon: string; // Added for hover icon
+  longDescription: string;
+  example: string;
+  image: string;
 }
 
 export default function ValuesSection() {
   const values: Value[] = [
     {
       id: 1,
-      title: "Teamwork",
+      title: "Integrity",
       description:
-        "We believe in the power of collaboration and supporting each other on and off the court.",
-      icon: "teamwork",
+        "We uphold honesty and strong moral principles in all actions.",
+      longDescription:
+        "Integrity is the foundation of our program, ensuring players act with honesty and fairness, fostering trust within the team and community.",
+      example:
+        "During a game, a player admits to a referee about an unnoticed foul, even if it risks a penalty, demonstrating our commitment to fair play.",
+      image: "/images/integrity.png",
     },
     {
       id: 2,
-      title: "Excellence",
-      description:
-        "We strive for greatness in every game, practice, and interaction, pushing our limits to achieve success.",
-      icon: "trophy",
+      title: "Respect",
+      description: "We honor teammates, opponents, and coaches with dignity.",
+      longDescription:
+        "Respect shapes our interactions, teaching players to value others’ efforts and perspectives, creating a positive and inclusive environment.",
+      example:
+        "In practice, players listen attentively to their coach’s feedback and encourage struggling teammates, building a supportive team culture.",
+      image: "/images/respect.png",
     },
     {
       id: 3,
-      title: "Inspiration",
-      description:
-        "We aim to inspire young athletes to dream big, work hard, and make a positive impact in their communities.",
-      icon: "star",
+      title: "Responsibility",
+      description: "We take ownership of our actions and commitments.",
+      longDescription:
+        "Responsibility empowers players to be accountable for their roles, from attending practices to making smart decisions on and off the court.",
+      example:
+        "A player ensures their equipment is ready and arrives early to practice, setting a reliable example for the team.",
+      image: "/images/responsibility.png",
+    },
+    {
+      id: 4,
+      title: "Teamwork",
+      description: "We succeed through collaboration and mutual support.",
+      longDescription:
+        "Teamwork drives our success, teaching players to work together, communicate effectively, and prioritize the team’s goals over individual achievements.",
+      example:
+        "In a close game, players pass to an open teammate for a better shot, showcasing trust and collective effort.",
+      image: "/images/teamwork.png",
+    },
+    {
+      id: 5,
+      title: "Having Fun",
+      description: "We embrace joy and passion in every moment.",
+      longDescription:
+        "Having Fun fuels our love for the game, encouraging players to enjoy the process, celebrate progress, and maintain a positive attitude.",
+      example:
+        "During practice, coaches incorporate fun drills like a dribbling relay race, keeping players engaged and excited.",
+      image: "/images/having fun.png",
     },
   ];
 
-  const renderIcon = (icon: string) => {
-    switch (icon) {
-      case "teamwork":
-        return (
-          <svg
-            className="w-10 h-10 text-blue-400"
-            fill="currentColor"
-            viewBox="0 0 24 24"
-            aria-hidden="true"
-          >
-            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
-          </svg>
-        );
-      case "trophy":
-        return (
-          <svg
-            className="w-10 h-10 text-blue-400"
-            fill="currentColor"
-            viewBox="0 0 24 24"
-            aria-hidden="true"
-          >
-            <path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94A5.01 5.01 0 0011 15.9V19H7v2h10v-2h-4v-3.1a5.01 5.01 0 003.61-2.96C19.08 12.63 21 10.55 21 8V7c0-1.1-.9-2-2-2zM5 8V7h2v3.82C5.84 10.4 5 9.3 5 8zm14 0c0 1.3-.84 2.4-2 2.82V7h2v1z" />
-          </svg>
-        );
-      case "star":
-        return (
-          <svg
-            className="w-10 h-10 text-blue-400"
-            fill="currentColor"
-            viewBox="0 0 24 24"
-            aria-hidden="true"
-          >
-            <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-          </svg>
-        );
-      default:
-        return null;
+  const [selectedValue, setSelectedValue] = useState<Value | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const modalRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+
+  const openModal = (item: Value) => {
+    setSelectedValue(item);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setSelectedValue(null);
+    setIsModalOpen(false);
+  };
+
+  // Handle click outside modal to close
+  const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.target === e.currentTarget) {
+      closeModal();
     }
   };
+
+  // Focus trap and ESC key handling for modal
+  useEffect(() => {
+    if (isModalOpen && modalRef.current && closeButtonRef.current) {
+      const focusableElements = modalRef.current.querySelectorAll(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      );
+      const firstElement = focusableElements[0] as HTMLElement;
+      const lastElement = focusableElements[
+        focusableElements.length - 1
+      ] as HTMLElement;
+
+      const handleKeyDown = (e: KeyboardEvent) => {
+        if (e.key === "Escape") {
+          closeModal();
+          return;
+        }
+        if (e.key === "Tab") {
+          if (e.shiftKey && document.activeElement === firstElement) {
+            e.preventDefault();
+            lastElement.focus();
+          } else if (!e.shiftKey && document.activeElement === lastElement) {
+            e.preventDefault();
+            firstElement.focus();
+          }
+        }
+      };
+
+      document.addEventListener("keydown", handleKeyDown);
+      closeButtonRef.current.focus();
+
+      return () => {
+        document.removeEventListener("keydown", handleKeyDown);
+      };
+    }
+  }, [isModalOpen]);
 
   return (
     <section className="bg-[#002C51] py-12" aria-label="Our Values">
       <div className="container max-w-[75rem] mx-auto px-4 sm:px-6 lg:px-8">
-        <h2
-          className="text-white text-[clamp(2.25rem,5vw,3rem)] font-bold font-rubik mb-8 text-center uppercase"
-          style={{ animationDelay: "0.2s" }}
+        <Swiper
+          modules={[Navigation]}
+          spaceBetween={0}
+          slidesPerView={1}
+          loop={true}
+          navigation={{
+            prevEl: ".values-prev",
+            nextEl: ".values-next",
+          }}
+          className="values-swiper"
+          aria-label="Values carousel"
         >
-          Our Values
-        </h2>
-        <div className="flex flex-col gap-6">
-          {values.map((value, index) => (
-            <div
-              key={value.id}
-              className={cn(
-                "group bg-gradient-to-r from-blue-600/20 to-transparent rounded-lg shadow-md overflow-hidden",
-                "transform transition-all duration-300 hover:scale-105 hover:shadow-lg hover:from-blue-600/30",
-                "p-6 sm:p-8 relative"
-              )}
-              style={{ animationDelay: `${0.3 + index * 0.1}s` }}
-            >
-              <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center transition-transform duration-300 group-hover:rotate-360">
-                    <svg
-                      className="w-5 h-5 text-white"
-                      fill="currentColor"
-                      viewBox="0 0 24 24"
-                      aria-hidden="true"
-                    >
-                      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z" />
-                    </svg>
-                  </div>
-                  <h3 className="text-white text-2xl font-rubik font-semibold uppercase">
-                    {value.title}
+          {values.map((item) => (
+            <SwiperSlide key={item.id}>
+              <div
+                className={cn(
+                  "relative w-full h-[500px] rounded-lg overflow-hidden",
+                  "transform transition-all duration-300"
+                )}
+              >
+                <Image
+                  src={item.image}
+                  alt={item.title}
+                  fill
+                  priority={item.id === 1}
+                  className={cn(
+                    "object-cover",
+                    ["Having Fun", "Respect", "Teamwork"].includes(item.title)
+                      ? "object-center"
+                      : "object-top"
+                  )}
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.src = "/images/placeholder-team-default.jpg";
+                  }}
+                />
+                <div className="absolute inset-0 bg-gray-900/75" />
+                <h2
+                  className="absolute top-4 left-1/2 transform -translate-x-1/2 text-white text-[clamp(2rem,4vw,2.5rem)] font-rubik font-bold uppercase bg-gray-900/70 px-3 md:px-6 py-2 rounded whitespace-nowrap"
+                  style={{ animationDelay: "0.2s" }}
+                >
+                  Our Values
+                </h2>
+                <div
+                  className={cn(
+                    "absolute top-1/2 inset-x-0 mx-auto max-w-[80vw] bg-gray-900/70 px-4 py-2 rounded md:max-w-[400px] md:ml-12 md:inset-x-auto transform -translate-y-1/2 md:transform md:-translate-y-1/2 md:translate-x-0 text-white text-center md:text-left"
+                  )}
+                >
+                  <h3 className="text-2xl md:text-3xl font-rubik font-semibold uppercase mb-2">
+                    {item.title}
                   </h3>
+                  <p className="text-sm md:text-lg font-inter mb-4">
+                    {item.description}
+                  </p>
+                  <Button
+                    className={cn(
+                      "bg-blue-600 text-white font-medium font-inter rounded-md",
+                      "hover:bg-blue-700 hover:scale-105 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2",
+                      "transition-all duration-300 text-base px-4 py-2 mb-2 uppercase mx-auto md:mx-0"
+                    )}
+                    onClick={() => openModal(item)}
+                  >
+                    Read More
+                  </Button>
                 </div>
-                <p className="text-white text-base font-inter flex-grow">
-                  {value.description}
-                </p>
-                <div className="absolute right-6 top-1/2 transform -translate-y-1/2 opacity-0 translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 sm:block hidden">
-                  {renderIcon(value.icon)}
+                <div
+                  className="absolute bottom-5 left-1/2 transform -translate-x-1/2 flex space-x-2"
+                  style={{ animationDelay: "0.4s" }}
+                >
+                  <button
+                    className={cn(
+                      "values-prev bg-blue-600 text-white p-2 rounded-full",
+                      "hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2",
+                      "transition-all duration-300"
+                    )}
+                    aria-label="Previous value"
+                  >
+                    <svg
+                      className="w-6 h-6"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M15 19l-7-7 7-7"
+                      />
+                    </svg>
+                  </button>
+                  <button
+                    className={cn(
+                      "values-next bg-blue-600 text-white p-2 rounded-full",
+                      "hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2",
+                      "transition-all duration-300"
+                    )}
+                    aria-label="Next value"
+                  >
+                    <svg
+                      className="w-6 h-6"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M9 5l7 7-7 7"
+                      />
+                    </svg>
+                  </button>
                 </div>
               </div>
-            </div>
+            </SwiperSlide>
           ))}
-        </div>
+        </Swiper>
+
+        {/* Modal */}
+        {isModalOpen && selectedValue && (
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
+            role="dialog"
+            aria-labelledby="modal-title"
+            aria-modal="true"
+            onClick={handleOverlayClick}
+          >
+            <div
+              ref={modalRef}
+              className="bg-gray-900 text-white rounded-lg max-w-xl w-full mx-4 p-6 relative"
+            >
+              <button
+                ref={closeButtonRef}
+                onClick={closeModal}
+                onKeyDown={(e) => e.key === "Enter" && closeModal()}
+                className="absolute top-4 right-4 text-white hover:text-gray-200 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded-sm transition-colors duration-300"
+                aria-label="Close modal"
+              >
+                <svg
+                  className="w-6 h-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+              <h3
+                id="modal-title"
+                className="font-rubik text-3xl font-semibold mb-4 uppercase"
+              >
+                {selectedValue.title}
+              </h3>
+              <div className="relative w-full h-48 overflow-hidden rounded-lg mb-4">
+                <Image
+                  src={selectedValue.image}
+                  alt={selectedValue.title}
+                  fill
+                  className={cn(
+                    "object-cover",
+                    ["Having Fun", "Respect", "Teamwork"].includes(
+                      selectedValue.title
+                    )
+                      ? "object-center"
+                      : "object-top"
+                  )}
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.src = "/images/placeholder-team-default.jpg";
+                  }}
+                />
+              </div>
+              <p className="text-base font-inter mb-2">
+                {selectedValue.longDescription}
+              </p>
+              <p className="text-base font-inter">
+                <strong>Example:</strong> {selectedValue.example}
+              </p>
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );
