@@ -28,7 +28,7 @@ export default function CoachesPage() {
       title: "AI-Generated Drills",
       description:
         "Explore weekly basketball drills, like the Lightning Pass Relay, to boost your team’s skills.",
-      link: "/coaches/drills/1",
+      link: "/coaches/drills/current", // Updated link to dynamic route
       image: currentDrill.image,
     },
     {
@@ -62,10 +62,10 @@ export default function CoachesPage() {
           className="mb-12 text-center"
           aria-label="Coaches Page Welcome"
         >
-          <h1 className="text-white text-[clamp(2rem,4vw,2.5rem)] font-rubik font-bold uppercase mb-4">
+          <h1 className="text-white text-[clamp(2rem,4vw,2.5rem)] font-inter font-bold uppercase mb-4">
             Coaches Corner
           </h1>
-          <p className="text-gray-300 text-[clamp(1rem,2vw,1.125rem)] font-inter mb-8 max-w-2xl mx-auto">
+          <p className="text-gray-300 text-[clamp(1rem,2vw,1.125rem)] font-rubik mb-8 max-w-2xl mx-auto">
             Your hub for coaching resources, AI-generated drills, and league
             updates to lead your team to success.
           </p>
@@ -93,7 +93,7 @@ export default function CoachesPage() {
                 aria-label={`Section: ${section.title}`}
               >
                 <CardHeader>
-                  <CardTitle className="text-white text-[clamp(1.25rem,2vw,1.5rem)] font-rubik font-semibold uppercase whitespace-nowrap">
+                  <CardTitle className="text-white text-[clamp(1.25rem,2vw,1.5rem)] font-inter font-semibold uppercase whitespace-nowrap">
                     {section.title}
                   </CardTitle>
                 </CardHeader>

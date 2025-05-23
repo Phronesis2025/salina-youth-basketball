@@ -36,7 +36,7 @@ export default function ResourcesPage() {
       <div className="container max-w-[75rem] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Hero Section */}
         <section className="mb-12 text-center" aria-label="Resource Archive">
-          <h1 className="text-white text-[clamp(2rem,4vw,2.5rem)] font-inter font-bold uppercase mb-4">
+          <h1 className="text-white text-[clamp(2rem,4vw,2.5rem)] font-rubik font-bold uppercase mb-4">
             Resource Archive
           </h1>
           <p className="text-gray-300 text-[clamp(1rem,2vw,1.125rem)] font-rubik mb-8 max-w-2xl mx-auto">
@@ -54,7 +54,7 @@ export default function ResourcesPage() {
                   key={resource.title}
                   className="bg-gray-900/50 rounded-lg p-4 transition-all duration-300 hover:shadow-red-500/50"
                 >
-                  <h2 className="text-white text-[clamp(1.25rem,2vw,1.5rem)] font-inter font-semibold uppercase mb-2 whitespace-nowrap">
+                  <h2 className="text-white text-[clamp(1.25rem,2vw,1.5rem)] font-rubik font-semibold uppercase mb-2 line-clamp-2">
                     {resource.title}
                   </h2>
                   <p className="text-gray-300 text-[clamp(0.875rem,1.5vw,1rem)] font-rubik mb-4">

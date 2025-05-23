@@ -1,43 +1,121 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { supabase } from "@/lib/supabaseClient";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+
+interface Drill {
+  title: string;
+  skills: string[];
+  equipment: string[];
+  time: string;
+  instructions: string;
+  additional_info: string;
+  benefits: string;
+  difficulty: string;
+  category: string;
+  week_number: number;
+  suggested_image_type: string;
+  image_name: string | null;
+}
 
 export default function DrillPage() {
-  const drill = {
-    title: "Lightning Pass Relay",
-    skills: ["Passing", "Defensive stance & footwork"],
-    equipment: ["cones", "markers"],
-    time: "10 minutes",
-    instructions:
-      "Set up two parallel lines of 4 cones each, 10 feet apart, forming two lanes across half the court. Split players into two even teams, each lined up behind the first cone of their lane. The first player in each line starts in a defensive stance, holding a basketball. On the coach’s whistle, they slide sideways through the cones, staying low, and make a crisp chest pass to the next teammate at the end of the lane. The receiving player catches, assumes a defensive stance, and slides back through the cones to pass to the next player. Continue until all players complete the circuit. Run 4 rounds, switching to bounce passes for the final two rounds. The first team to finish each round earns a point. Encourage quick, accurate passes and low stances.",
-    additional_info:
-      "Use markers to outline lanes for clarity. For younger players (8–10), reduce cones to 3 per lane and shorten the distance to 8 feet. Coaches should monitor stance height and passing form, ensuring players don’t stand upright. For older players (12–14), add a time limit per round (e.g., 30 seconds) to increase urgency. Ensure teams are balanced in skill to keep the relay competitive. If space is limited, use one lane and alternate teams. Clear the court of extra balls to avoid distractions.",
-    benefits:
-      "This drill enhances passing accuracy and speed, teaching players to deliver precise chest and bounce passes under movement. It also strengthens defensive stance and lateral footwork, improving agility and balance when guarding opponents or navigating tight game situations.",
-    difficulty: "Basic",
-    category: "Drill",
-    week_number: 1,
-    suggested_image_type:
-      "Action shot of players sliding through cones and passing",
-  };
+  const [currentDrill, setCurrentDrill] = useState<Drill | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [imageError, setImageError] = useState(false);
+
+  useEffect(() => {
+    const fetchCurrentDrill = async () => {
+      try {
+        // Calculate the current week and map to week_number (1 to 26)
+        const currentWeek =
+          Math.floor(
+            (new Date().getTime() -
+              new Date(new Date().getFullYear(), 0, 1).getTime()) /
+              (7 * 24 * 60 * 60 * 1000)
+          ) + 1;
+        const weekNumber = ((currentWeek - 1) % 26) + 1;
+
+        // Fetch the drill for the current week
+        const { data, error } = await supabase
+          .from("drills")
+          .select("*")
+          .eq("week_number", weekNumber)
+          .single();
+
+        if (error) {
+          throw new Error(error.message);
+        }
+
+        if (data) {
+          setCurrentDrill(data);
+        }
+      } catch (err) {
+        setError("Failed to load the current drill. Please try again later.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCurrentDrill();
+  }, []);
+
+  if (loading) {
+    return (
+      <main className="bg-[#002C51] min-h-screen py-12">
+        <div className="container max-w-[75rem] mx-auto px-4 sm:px-6 lg:px-8">
+          <p className="text-white text-center">Loading drill...</p>
+        </div>
+      </main>
+    );
+  }
+
+  if (error || !currentDrill) {
+    return (
+      <main className="bg-[#002C51] min-h-screen py-12">
+        <div className="container max-w-[75rem] mx-auto px-4 sm:px-6 lg:px-8">
+          <p className="text-red-500 text-center">
+            {error || "No drill found for this week."}
+          </p>
+          <div className="mt-8 flex justify-center">
+            <Link href="/coaches">
+              <Button
+                variant="default"
+                className="bg-blue-600 text-white font-medium font-inter rounded-md hover:bg-blue-700 hover:scale-105 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-300 text-base px-6 py-3 uppercase"
+              >
+                Back to Coaches Corner
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </main>
+    );
+  }
+
+  const imagePath =
+    imageError || !currentDrill.image_name
+      ? "/images/drill-placeholder.jpg"
+      : `/images/${currentDrill.image_name}`;
 
   return (
     <main className="bg-[#002C51] min-h-screen py-12">
       <div className="container max-w-[75rem] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Hero Section */}
         <section className="mb-12" aria-label="Drill Overview">
-          <h1 className="text-white text-[clamp(2rem,4vw,2.5rem)] font-rubik font-bold text-center uppercase mb-6">
-            {drill.title}
+          <h1 className="text-white text-[clamp(2rem,4vw,2.5rem)] font-inter font-bold text-center uppercase mb-6">
+            {currentDrill.title}
           </h1>
           <div className="relative h-64 sm:h-96 mb-6">
             <Image
-              src="/images/drill-placeholder.png"
-              alt="Placeholder for Lightning Pass Relay drill"
+              src={imagePath}
+              alt={`Image for ${currentDrill.title} drill`}
               fill
               className="object-cover rounded-lg"
               sizes="(max-width: 768px) 100vw, 600px"
+              onError={() => setImageError(true)}
             />
           </div>
         </section>
@@ -47,11 +125,11 @@ export default function DrillPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             {/* Skills */}
             <div>
-              <h2 className="text-white text-[clamp(1.25rem,2vw,1.5rem)] font-rubik font-semibold uppercase mb-2 whitespace-nowrap">
+              <h2 className="text-white text-[clamp(1.25rem,2vw,1.5rem)] font-inter font-semibold uppercase mb-2 whitespace-nowrap">
                 Skills
               </h2>
               <ul className="text-gray-300 text-[clamp(0.875rem,1.5vw,1rem)] font-rubik list-disc pl-5">
-                {drill.skills.map((skill, index) => (
+                {currentDrill.skills.map((skill, index) => (
                   <li key={index}>{skill}</li>
                 ))}
               </ul>
@@ -63,7 +141,7 @@ export default function DrillPage() {
                 Equipment Needed
               </h2>
               <ul className="text-gray-300 text-[clamp(0.875rem,1.5vw,1rem)] font-rubik list-disc pl-5">
-                {drill.equipment.map((item, index) => (
+                {currentDrill.equipment.map((item, index) => (
                   <li key={index}>{item}</li>
                 ))}
               </ul>
@@ -77,7 +155,7 @@ export default function DrillPage() {
                 Time
               </h2>
               <p className="text-gray-300 text-[clamp(0.875rem,1.5vw,1rem)] font-rubik">
-                {drill.time}
+                {currentDrill.time}
               </p>
             </div>
             <div>
@@ -85,7 +163,7 @@ export default function DrillPage() {
                 Difficulty
               </h2>
               <p className="text-gray-300 text-[clamp(0.875rem,1.5vw,1rem)] font-rubik">
-                {drill.difficulty}
+                {currentDrill.difficulty}
               </p>
             </div>
           </div>
@@ -96,7 +174,7 @@ export default function DrillPage() {
               Instructions
             </h2>
             <p className="text-gray-300 text-[clamp(0.875rem,1.5vw,1rem)] font-rubik whitespace-pre-wrap">
-              {drill.instructions}
+              {currentDrill.instructions}
             </p>
           </div>
 
@@ -106,7 +184,7 @@ export default function DrillPage() {
               Additional Info
             </h2>
             <p className="text-gray-300 text-[clamp(0.875rem,1.5vw,1rem)] font-rubik whitespace-pre-wrap">
-              {drill.additional_info}
+              {currentDrill.additional_info}
             </p>
           </div>
 
@@ -116,7 +194,7 @@ export default function DrillPage() {
               Benefits
             </h2>
             <p className="text-gray-300 text-[clamp(0.875rem,1.5vw,1rem)] font-rubik whitespace-pre-wrap">
-              {drill.benefits}
+              {currentDrill.benefits}
             </p>
           </div>
         </article>

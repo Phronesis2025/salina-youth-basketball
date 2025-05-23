@@ -38,7 +38,7 @@ export default function RulesPage() {
       <div className="container max-w-[75rem] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Hero Section */}
         <section className="mb-12 text-center" aria-label="Rules and Policies">
-          <h1 className="text-white text-[clamp(2rem,4vw,2.5rem)] font-inter font-bold uppercase mb-4">
+          <h1 className="text-white text-[clamp(2rem,4vw,2.5rem)] font-rubik font-bold uppercase mb-4">
             Rules & Policies
           </h1>
           <p className="text-gray-300 text-[clamp(1rem,2vw,1.125rem)] font-rubik mb-8 max-w-2xl mx-auto">
@@ -57,7 +57,7 @@ export default function RulesPage() {
                   value={`rule-${index}`}
                   className="bg-gray-900/50 rounded-lg transition-all duration-300 hover:shadow-red-500/50"
                 >
-                  <AccordionTrigger className="text-white text-[clamp(1.25rem,2vw,1.5rem)] font-inter font-semibold uppercase px-6 py-4 hover:no-underline">
+                  <AccordionTrigger className="text-white text-[clamp(1.25rem,2vw,1.5rem)] font-rubik font-semibold uppercase px-6 py-4 hover:no-underline">
                     {rule.title}
                   </AccordionTrigger>
                   <AccordionContent className="text-gray-300 text-[clamp(0.875rem,1.5vw,1rem)] font-rubik px-6 py-2">

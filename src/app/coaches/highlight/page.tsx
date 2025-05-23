@@ -50,7 +50,7 @@ export default function CoachHighlightPage() {
 
           {/* Coaching Philosophy */}
           <div className="mb-6">
-            <h2 className="text-white text-[clamp(1.25rem,2vw,1.5rem)] font-inter font-semibold uppercase mb-2 whitespace-nowrap">
+            <h2 className="text-white text-[clamp(1.25rem,2vw,1.5rem)] font-rubik font-semibold uppercase mb-2 whitespace-nowrap">
               Coaching Philosophy
             </h2>
             <p className="text-gray-300 text-[clamp(0.875rem,1.5vw,1rem)] font-rubik">
@@ -60,7 +60,7 @@ export default function CoachHighlightPage() {
 
           {/* Team Achievements */}
           <div className="mb-6">
-            <h2 className="text-white text-[clamp(1.25rem,2vw,1.5rem)] font-inter font-semibold uppercase mb-2 whitespace-nowrap">
+            <h2 className="text-white text-[clamp(1.25rem,2vw,1.5rem)] font-rubik font-semibold uppercase mb-2 whitespace-nowrap">
               Team Achievements
             </h2>
             <p className="text-gray-300 text-[clamp(0.875rem,1.5vw,1rem)] font-rubik">
@@ -70,7 +70,7 @@ export default function CoachHighlightPage() {
 
           {/* Quote */}
           <div className="mb-6">
-            <h2 className="text-white text-[clamp(1.25rem,2vw,1.5rem)] font-inter font-semibold uppercase mb-2 whitespace-nowrap">
+            <h2 className="text-white text-[clamp(1.25rem,2vw,1.5rem)] font-rubik font-semibold uppercase mb-2 whitespace-nowrap">
               Quote
             </h2>
             <blockquote className="text-gray-300 text-[clamp(0.875rem,1.5vw,1rem)] font-rubik italic border-l-4 border-red-500 pl-4">
