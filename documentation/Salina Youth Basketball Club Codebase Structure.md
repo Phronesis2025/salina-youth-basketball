@@ -1,109 +1,107 @@
-# Salina Youth Basketball Club Codebase Structure
+# Salina Youth Basketball Club Codebase Structure (Updated)
 
 ## Root Directory
-- **Project Type**: Next.js (TypeScript for type safety).
-- **Key Files**:
-  - `package.json`: Dependencies (next, react, tailwindcss, supabase-js, stripe, swiper, @fullcalendar/core).
-  - `.env.local`: Environment variables (Supabase URL/key, Stripe/Printful keys).
-  - `next.config.js`: Next.js configuration (e.g., image optimization).
-  - `tsconfig.json`: TypeScript settings.
-  - `tailwind.config.js`: Tailwind CSS customizations (e.g., sporty colors: orange, black, white).
-  - `postcss.config.js`: PostCSS for Tailwind.
 
-## Directory Structure
 ```
 salina-youth-basketball/
-├── public/                   # Static assets
-│   ├── images/               # Logos, team thumbnails, placeholders
-│   ├── favicon.ico           # Site favicon
-│   └── videos/               # Hype video (optional)
-├── src/                      # Source code
-│   ├── components/           # Reusable React components
-│   │   ├── common/           # Shared UI elements
-│   │   │   ├── Button.tsx    # CTA buttons
-│   │   │   ├── Navbar.tsx    # Sticky header
-│   │   │   ├── Footer.tsx    # Footer with links
-│   │   │   └── Modal.tsx     # News article modals
-│   │   ├── homepage/         # Homepage-specific
-│   │   │   ├── Hero.tsx      # Video and CTAs
-│   │   │   ├── NewsCarousel.tsx # Swiper.js carousel
-│   │   │   └── TeamPreview.tsx # Team card grid
-│   │   ├── team/             # Team Hub and sub-pages
-│   │   │   ├── TeamCard.tsx  # Team grid card
-│   │   │   ├── ScheduleTabs.tsx # Tabbed schedule UI
-│   │   │   └── GalleryGrid.tsx # Masonry photo grid
-│   │   ├── shop/             # Merch Page
-│   │   │   ├── ProductCard.tsx # T-shirt card
-│   │   │   └── CountdownTimer.tsx # Limited-edition timer
-│   │   ├── portal/           # Parent Portal
-│   │   │   ├── Dashboard.tsx  # Schedules, roster, payments
-│   │   │   └── ProfileForm.tsx # Update profile
-│   │   └── coaches/          # Coaches Corner
-│   │       ├── ArticleCard.tsx # Article grid card
-│   │       └── VideoPlayer.tsx # Embedded video
-│   ├── pages/                # Next.js pages
-│   │   ├── _app.tsx          # Custom App (global styles, providers)
-│   │   ├── _document.tsx     # Custom Document (HTML structure)
-│   │   ├── index.tsx         # Homepage
-│   │   ├── teams/            # Team Hub
-│   │   │   ├── index.tsx     # Team grid
-│   │   │   └── [teamId].tsx  # Team sub-page
-│   │   ├── coaches-corner.tsx # Coaches Corner
-│   │   ├── tournaments.tsx   # Tournament Registry
-│   │   ├── shop.tsx          # Merch Page
-│   │   ├── portal.tsx        # Parent Portal (protected)
-│   │   ├── about.tsx         # About/Contact
-│   │   ├── news.tsx          # News Page
-│   │   └── api/              # API routes
-│   │       ├── auth/         # Supabase Auth endpoints
-│   │       ├── teams.ts      # Fetch team data
-│   │       ├── schedules.ts  # CRUD for schedules
-│   │       ├── payments.ts   # Stripe checkout
-│   │       └── products.ts   # Fetch products
-│   ├── lib/                  # Utilities and integrations
-│   │   ├── supabase.ts       # Supabase client setup
-│   │   ├── stripe.ts         # Stripe client setup
-│   │   ├── printful.ts       # Printful API helpers
-│   │   └── types.ts          # TypeScript interfaces (Team, Product, etc.)
-│   ├── styles/               # Global and component styles
-│   │   ├── globals.css       # Tailwind imports, base styles
-│   │   └── fonts.css         # Custom fonts (e.g., Montserrat, Bebas Neue)
-│   └── hooks/                # Custom React hooks
-│       ├── useAuth.ts        # Supabase Auth state
-│       ├── useTeams.ts       # Fetch team data
-│       └── useCart.ts        # Shopping cart state
-├── tests/                    # Unit and integration tests
-│   ├── components/           # Component tests
-│   └── pages/                # Page tests
-├── scripts/                  # Utility scripts
-│   └── seed.ts               # Seed Supabase with initial data
-└── README.md                 # Project documentation
+├── .git/                  # Git version control
+├── .next/                 # Next.js build output
+├── documentation/         # Project docs, drills, and planning
+│   ├── drills.csv
+│   ├── drills.json
+│   ├── Salina Youth Basketball Club Codebase Structure.md
+│   └── ...
+├── node_modules/          # Node.js dependencies
+├── public/                # Static assets (images, favicon, etc.)
+├── src/                   # Source code
+│   ├── app/               # Next.js app directory (routing, pages)
+│   │   ├── layout.tsx
+│   │   ├── global.css
+│   │   ├── ClientLayout.tsx
+│   │   ├── page.tsx
+│   │   ├── favicon.ico
+│   │   ├── coaches/
+│   │   │   ├── page.tsx
+│   │   │   └── drills/
+│   │   │       └── [id]/
+│   │   │           └── page.tsx
+│   │   ├── join/
+│   │   │   ├── page.tsx
+│   │   │   ├── status/
+│   │   │   │   └── page.tsx
+│   │   │   └── confirm/
+│   │   │       └── page.tsx
+│   │   ├── shop/
+│   │   │   ├── page.tsx
+│   │   │   ├── checkout/
+│   │   │   │   ├── CheckoutPage.tsx
+│   │   │   │   └── page.tsx
+│   │   │   ├── confirmation/
+│   │   │   │   └── page.tsx
+│   │   │   ├── cart/
+│   │   │   │   └── page.tsx
+│   │   │   ├── product/
+│   │   │   └── [category]/
+│   │   ├── schedules/
+│   │   ├── signup/
+│   │   ├── teams/
+│   │   └── tournaments/
+│   ├── components/        # Reusable React components
+│   │   ├── ui/
+│   │   │   ├── accordion.tsx
+│   │   │   ├── button.tsx
+│   │   │   ├── card.tsx
+│   │   │   ├── dialog.tsx
+│   │   │   ├── dropdown-menu.tsx
+│   │   │   └── select.tsx
+│   │   ├── homepage/
+│   │   │   ├── CoachesCorner.tsx
+│   │   │   ├── Hero.tsx
+│   │   │   ├── NewsCarousel.tsx
+│   │   │   ├── SchedulePreview.tsx
+│   │   │   ├── TeamPreview.tsx
+│   │   │   └── ValuesSection.tsx
+│   │   └── common/
+│   │       ├── Footer.tsx
+│   │       └── Navbar.tsx
+│   ├── lib/               # Utility functions and API clients
+│   │   ├── supabaseClient.ts
+│   │   ├── utils.ts
+│   │   ├── shop/
+│   │   │   └── data.ts
+│   │   ├── schedules/
+│   │   │   └── data.ts
+│   │   └── types/
+│   ├── types/             # TypeScript type definitions
+│   │   └── latex.d.ts
+├── pages/                 # API routes (Next.js API)
+│   └── api/
+│       ├── create-join-request.ts
+│       ├── create-printful-order.ts
+│       ├── get-join-request.ts
+│       ├── printful-webhooks.ts
+│       ├── send-email.ts
+│       ├── stripe-payment.ts
+│       └── update-join-request.ts
+├── .eslintrc.json         # ESLint config
+├── eslint.config.mjs      # ESLint config (module)
+├── next.config.js         # Next.js config (JS)
+├── next.config.ts         # Next.js config (TS)
+├── package.json           # Project dependencies and scripts
+├── package-lock.json      # Dependency lock file
+├── postcss.config.js      # PostCSS config for Tailwind
+├── tailwind.config.js     # Tailwind CSS config
+├── tsconfig.json          # TypeScript config
+├── README.md              # Project overview
+└── .gitignore             # Git ignore rules
 ```
 
-## Key Components
-- **Components**: Modular, reusable (e.g., `Button`, `ProductCard`) for consistent UI.
-- **Pages**: Map to **Phase 2** sitemap, with dynamic routes for teams.
-- **API Routes**: Handle Supabase queries (e.g., fetch news), Stripe sessions, and Printful orders.
-- **Utilities**: Centralized Supabase/Stripe/Printful logic for reusability.
-- **Hooks**: Manage state and data fetching (e.g., `useAuth` for login status).
+## Key Notes
 
-## Dependencies
-- **Core**: `next`, `react`, `react-dom`, `typescript`.
-- **Styling**: `tailwindcss`, `postcss`.
-- **Data**: `@supabase/supabase-js`.
-- **Payments**: `stripe`.
-- **UI**: `swiper`, `@fullcalendar/core`, `@fullcalendar/react`.
-- **Testing**: `jest`, `@testing-library/react`.
+- **src/app/**: Main Next.js app directory, with subfolders for each route and feature (coaches, join, shop, etc.).
+- **src/components/**: All UI and page components, organized by feature and type.
+- **src/lib/**: Utility code, including Supabase client and data helpers.
+- **pages/api/**: API endpoints for backend logic (join requests, Printful, Stripe, email, etc.).
+- **documentation/**: Project documentation, planning, and drill data.
 
-## Development Workflow
-- **Cursor**: Use AI-assisted coding for rapid component/API development.
-- **Supabase**: Initialize tables (`teams`, `news`, etc.) and import dataset.
-- **Vercel**: Deploy for preview and production.
-- **Testing**: Unit tests for components, integration tests for APIs.
-- **Secrets**: Store API keys in `.env.local`.
-
-## Scalability and Maintenance
-- **Modular Design**: Add new teams or features by extending components/routes.
-- **Supabase**: Flexible schema for future data (e.g., more tournaments).
-- **Budget**: Vercel/Supabase costs within $20–$30/month (free tiers initially).
-- **Documentation**: README and inline comments for admin handoff.
+_This structure reflects the current state of the codebase as of this update._

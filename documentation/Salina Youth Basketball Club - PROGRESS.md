@@ -35,7 +35,7 @@
 - **Phase 4 (Testing and Deployment)**: In Progress (deployed to Vercel, testing in progress).
 - **Phase 5 (Polish and Iteration)**: Not started.
 
-**Key Milestones**: Defined project goals, planned website structure, set up color scheme and design guidelines, prepared placeholder content (20-team dataset, Coaches Corner articles, t-shirt designs), built Homepage Hero section with functional CTAs, added News Carousel, Team Preview, Schedule Preview, Values, and Coaches Corner sections, created the Team Hub with filtering by age group, built the Team Sub-Page for detailed team information, deployed the site to Vercel, resolved build warnings and errors, fixed styling issues on Vercel, resolved permission issues during builds, added placeholder pages for routes, fixed logo and footer display issues, implemented logo shrinking on scroll, implemented the Join page with form submission, Stripe payment integration, Supabase storage, transitioned from PDF invoice generation to HTML invoice emails via Resend, completed the Schedules page with FullCalendar integration, updated Team Sub-Page with schedule tables and merchandise section, removed `animate-fadeIn` effect across all pages, built the Shop page with product listings and Stripe checkout, resolved build errors (ESLint, TypeScript, `localStorage`, `useSearchParams`), successfully deployed to Vercel, integrated Printful API for order fulfillment, tested order submission in test and live modes, resolved Printful API errors (incorrect endpoint, test mode logic), updated the Values section with a simplified carousel, text alignment, shaded box, modal outside click, and single-line mobile title, and deployed a working version to Vercel.
+**Key Milestones**: Defined project goals, planned website structure, set up color scheme and design guidelines, prepared placeholder content (20-team dataset, Coaches Corner articles, t-shirt designs), built Homepage Hero section with functional CTAs, added News Carousel, Team Preview, Schedule Preview, Values, and Coaches Corner sections, created the Team Hub with filtering by age group, built the Team Sub-Page for detailed team information, deployed the site to Vercel, resolved build warnings and errors, fixed styling issues on Vercel, resolved permission issues during builds, added placeholder pages for routes, fixed logo and footer display issues, implemented logo shrinking on scroll, implemented the Join page with form submission, Stripe payment integration, Supabase storage, transitioned from PDF invoice generation to HTML invoice emails via Resend, completed the Schedules page with FullCalendar integration, updated Team Sub-Page with schedule tables and merchandise section, removed `animate-fadeIn` effect across all pages, built the Shop page with product listings and Stripe checkout, resolved build errors (ESLint, TypeScript, `localStorage`, `useSearchParams`), successfully deployed to Vercel, integrated Printful API for order fulfillment, tested order submission in test and live modes, resolved Printful API errors (incorrect endpoint, test mode logic), updated the Values section with a simplified carousel, text alignment, shaded box, modal outside click, and single-line mobile title, completed the Coaches Corner section with dynamic drill fetching, image handling, and accordion styling improvements, deployed a working version to Vercel.
 
 ## Files for Review
 
@@ -45,7 +45,7 @@
 - src/components/homepage/TeamPreview.tsx (added team previews with links)
 - src/components/homepage/SchedulePreview.tsx (added schedule previews with links, updated events, removed `animate-fadeIn`)
 - src/components/homepage/ValuesSection.tsx (completed with simplified carousel, text alignment, shaded box, modal outside click, single-line mobile title)
-- src/components/homepage/CoachesCorner.tsx (added with placeholder cards)
+- src/components/homepage/CoachesCorner.tsx (completed with dynamic drill fetch, updated accordion styling, moved subtitle above accordion)
 - src/app/page.tsx (updated to include Hero, ValuesSection, CoachesCorner, NewsCarousel, TeamPreview, SchedulePreview)
 - src/lib/schedules/data.ts (added to store shared events and teams data)
 - app/teams/page.tsx (added Team Hub with team list and age group filter)
@@ -63,6 +63,12 @@
 - app/join/page.tsx (completed with registration form, payment integration, removed `animate-fadeIn`)
 - app/join/confirm/page.tsx (completed with payment confirmation and Stripe integration, removed `animate-fadeIn`)
 - app/join/status/page.tsx (implemented with payment status display and email invoice confirmation, pending redirect fix)
+- app/coaches/page.tsx (completed with cards linking to Coaches Corner sections, updated AI-Generated Drills link to `/coaches/drills/current`)
+- app/coaches/highlight/page.tsx (completed with static Coach Highlight content)
+- app/coaches/drills/[id]/page.tsx (completed with dynamic drill fetching based on week_number, added image_name column support)
+- app/coaches/rules/page.tsx (completed with static rules content)
+- app/coaches/videos/page.tsx (completed with YouTube video links and thumbnails)
+- app/coaches/resources/page.tsx (completed with static resource list, fixed mobile title overflow, updated titles to Rubik font)
 - pages/api/create-join-request.ts (implemented for creating join requests in Supabase)
 - pages/api/send-email.ts (implemented with Resend for HTML invoice emails)
 - pages/api/stripe-payment.ts (implemented for Stripe payment intents)
@@ -75,9 +81,9 @@
 
 ## Current State
 
-**Date**: May 22, 2025, 12:43 PM CDT
+**Date**: May 23, 2025, 02:25 PM CDT
 
-**Progress**: Completed the Values section updates in Phase 3: Build Website. Simplified the Values section (`/src/components/homepage/ValuesSection.tsx`) into a single-slide carousel using Swiper.js, with five values (Integrity, Respect, Responsibility, Teamwork, Having Fun) and corresponding images (`/images/integrity.png`, etc.). Implemented responsive text alignment (centered on mobile, left-aligned on desktop), added a shaded box (`bg-gray-900/50`) for text on both mobile and desktop, adjusted desktop text box margin to 48px (`md:ml-12`), increased section title font to `text-[clamp(2rem,4vw,2.5rem)]` with `px-3 md:px-6` and `whitespace-nowrap` to ensure single-line display on mobile, removed text animation, and added modal outside click to close functionality. Deployed the updated homepage to Vercel at `https://wcs-three.vercel.app`. Remaining Phase 3 task is building the Tournaments page. Phase 4 (Testing and Deployment) is in progress, with deployment complete and initial testing of the Shop page and Values section successful. Next task: Refine the Coaches Corner section and continue end-to-end testing of all flows (registration, schedules, purchases).
+**Progress**: Completed the Coaches Corner section in Phase 3: Build Website. Implemented the Coaches Corner section with dynamic drill fetching in `/app/coaches/drills/[id]/page.tsx` using Supabase, displaying the current week's drill based on `week_number` (1 to 26). Added a new `image_name` column to the `drills` table, populated it with image names derived from the `title` (e.g., `lightning-pass-relay.jpg`), and updated `/app/coaches/drills/[id]/page.tsx` to use this field for dynamic image loading with a fallback to `/images/drill-placeholder.jpg`. Fixed the CSV import issue for the `drills` table by correcting the array format for `skills` and `equipment` columns, successfully loading 26 drills into Supabase. Updated `/app/coaches/page.tsx` to link the AI-Generated Drills card to `/coaches/drills/current` for dynamic drill display. Updated `/app/coaches/resources/page.tsx` to fix title overflow on mobile using `line-clamp-2` and changed titles to Rubik font (`font-rubik`). Enhanced the accordion styling in `CoachesCorner.tsx` by removing the white bottom border (`border-b-0`, replaced with `border border-red-500/50`), adding a hover scale effect (`hover:scale-[1.02]`), an active state background (`data-[state=open]:bg-red-500/10`), adjusting padding (`py-3`), and moved the subtitle above the accordion in the right column. Deployed the updated site to Vercel at `https://wcs-three.vercel.app`. Remaining Phase 3 task is building the Tournaments page. Phase 4 (Testing and Deployment) is in progress, with deployment complete and initial testing of the Shop page, Values section, and Coaches Corner section successful. Next task: Build the Tournaments page and continue end-to-end testing of all flows (registration, schedules, purchases).
 
 **Blockers**: None.
 
@@ -91,6 +97,7 @@
 - [May 19, 2025]: Resolved Printful API integration errors: `Property 'source' is required` by adding `source: "api"` to the payload and updating the endpoint to `/orders` (removing `/v2`); `There can only be one file for each placement` by sending a single file in the `files` array; missing API keys by setting `PRINTFUL_TEST_API_KEY` and `PRINTFUL_API_KEY` in Vercel; incorrect test mode logic by updating `isTestMode` to rely solely on `searchParams` in `/app/shop/checkout/CheckoutPage.tsx`.
 - [May 20, 2025]: Fixed Printful order confirmation error: 404 on `/v2/orders/@confirm` by updating to the correct endpoint `/orders/{id}/confirm` in `/pages/api/create-printful-order.ts`. Resolved client-side error ("contact support") by ensuring the server handles confirmation failures gracefully and the client receives the correct response.
 - [May 22, 2025]: No errors during Values section updates. Successfully implemented simplified carousel, responsive text alignment, shaded box, modal outside click, and single-line mobile section title.
+- [May 23, 2025]: Fixed CSV import issue for `drills` table by correcting array format for `skills` and `equipment` columns, successfully loaded 26 drills into Supabase. No errors during Coaches Corner section updates (dynamic drill fetching, image handling, accordion styling).
 
 **To-Do List**
 
@@ -101,7 +108,7 @@
   - [x] Add team/schedule previews and other sections
   - [x] Remove `animate-fadeIn` from homepage sections
   - [x] Update Values section with simplified carousel, text alignment, shaded box, modal outside click, single-line mobile title
-  - [x] Add Coaches Corner section with placeholder cards
+  - [x] Add Coaches Corner section with dynamic drill fetch, image handling, and updated accordion styling
 - [x] Build Team Hub
 - [x] Build Team Sub-Page
 - [x] Build Join Page
@@ -141,6 +148,15 @@
   - [x] Test order placement from website to Printful (test and live modes)
   - [x] Update Shop page checkout flow to include Printful order submission
   - [x] Resolve Printful API errors (endpoint, test mode, client-server mismatch)
+- [x] Build Coaches Corner Section
+  - [x] Create placeholder cards for Coaches Corner sections
+  - [x] Implement dynamic drill fetching in `/app/coaches/drills/[id]/page.tsx` using Supabase
+  - [x] Add `image_name` column to `drills` table and update page to use dynamic images
+  - [x] Fix CSV import issue for `drills` table (array format for `skills` and `equipment`)
+  - [x] Update `/app/coaches/page.tsx` to link AI-Generated Drills to `/coaches/drills/current`
+  - [x] Fix mobile title overflow in `/app/coaches/resources/page.tsx` with `line-clamp-2` and update titles to Rubik font
+  - [x] Enhance accordion styling in `CoachesCorner.tsx` (remove white bottom border, add red border, hover scale, active state background, adjust padding)
+  - [x] Move subtitle above accordion in `CoachesCorner.tsx`
 - [ ] Build Tournaments Page
   - [ ] Create app/tournaments/page.tsx with static tournament listings
   - [ ] Implement a signup form for external teams with Supabase storage
@@ -183,6 +199,7 @@
 - Deployed Shop page with Stripe checkout and Vercel hosting
 - Integrated Printful API for order fulfillment with test and live mode support
 - Updated Values section with simplified carousel, responsive text alignment, shaded box, modal outside click, and single-line mobile title
+- Completed Coaches Corner section with dynamic drill fetching, image handling, and accordion styling improvements
 
 ## Prompts
 
@@ -223,10 +240,17 @@ Please provide a detailed plan for the current task, then proceed with implement
 
 ## Notes on Updates
 
-- **Phase 3 To-Do List**: Updated to mark Shop page tasks as completed (discussion, implementation, styling, testing, deployment), added Printful API integration as a new task, marked it as completed with test and live mode testing, marked Values section updates as completed (simplified carousel, text alignment, shaded box, modal outside click, single-line mobile title).
-- **Phase 4 To-Do List**: Marked Vercel deployment as completed, noted initial testing of Shop page and Values section as successful, with remaining testing tasks pending.
-- **Current State**: Updated to reflect Printful API integration and Values section completion, successful deployment, and testing status on May 22, 2025, 12:43 PM CDT.
-- **Errors**: Added entry for May 22, 2025, noting no errors during Values section updates.
-- **May 22, 2025 Update**:
-  - Completed Values section updates with `/src/components/homepage/ValuesSection.tsx`, implementing a simplified single-slide carousel with Swiper.js, responsive text alignment (centered on mobile, left-aligned on desktop), shaded box for text (`bg-gray-900/50`), desktop text box margin (`md:ml-12`), modal outside click to close, and single-line mobile section title with adjusted font (`text-[clamp(2rem,4vw,2.5rem)]`) and padding (`px-3 md:px-6`).
+- **Phase 3 To-Do List**: Updated to mark Coaches Corner section tasks as completed (dynamic drill fetching, image handling, accordion styling, subtitle positioning), added details on CSV import fix, mobile title overflow fix, and font updates.
+- **Phase 4 To-Do List**: Noted initial testing of Coaches Corner section as successful, with remaining testing tasks pending.
+- **Current State**: Updated to reflect Coaches Corner section completion, successful deployment, and testing status on May 23, 2025, 02:25 PM CDT.
+- **Errors**: Added entry for May 23, 2025, noting the CSV import fix and no errors during Coaches Corner updates.
+- **May 23, 2025 Update**:
+  - Completed Coaches Corner section with `/src/components/homepage/CoachesCorner.tsx` and related pages:
+    - Implemented dynamic drill fetching in `/app/coaches/drills/[id]/page.tsx` using Supabase, displaying the current week's drill based on `week_number`.
+    - Added `image_name` column to `drills` table, populated with image names (e.g., `lightning-pass-relay.jpg`), and updated `/app/coaches/drills/[id]/page.tsx` to use dynamic images.
+    - Fixed CSV import issue for `drills` table by correcting array format for `skills` and `equipment`, loaded 26 drills into Supabase.
+    - Updated `/app/coaches/page.tsx` to link AI-Generated Drills to `/coaches/drills/current`.
+    - Fixed mobile title overflow in `/app/coaches/resources/page.tsx` with `line-clamp-2` and updated titles to Rubik font.
+    - Enhanced accordion styling in `CoachesCorner.tsx` by removing white bottom border, adding red border, hover scale, active state background, and adjusting padding.
+    - Moved subtitle above accordion in `CoachesCorner.tsx`.
   - Deployed a fully working version to Vercel at `https://wcs-three.vercel.app`.
