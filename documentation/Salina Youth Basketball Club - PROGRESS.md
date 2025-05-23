@@ -35,7 +35,7 @@
 - **Phase 4 (Testing and Deployment)**: In Progress (deployed to Vercel, testing in progress).
 - **Phase 5 (Polish and Iteration)**: Not started.
 
-**Key Milestones**: Defined project goals, planned website structure, set up color scheme and design guidelines, prepared placeholder content (20-team dataset, Coaches Corner articles, t-shirt designs), built Homepage Hero section with functional CTAs, added News Carousel, Team Preview, Schedule Preview, and Values sections, created the Team Hub with filtering by age group, built the Team Sub-Page for detailed team information, deployed the site to Vercel, resolved build warnings and errors, fixed styling issues on Vercel, resolved permission issues during builds, added placeholder pages for routes, fixed logo and footer display issues, implemented logo shrinking on scroll, implemented the Join page with form submission, Stripe payment integration, Supabase storage, transitioned from PDF invoice generation to HTML invoice emails via Resend, completed the Schedules page with FullCalendar integration, updated Team Sub-Page with schedule tables and merchandise section, removed `animate-fadeIn` effect across all pages, built the Shop page with product listings and Stripe checkout, resolved build errors (ESLint, TypeScript, `localStorage`, `useSearchParams`), successfully deployed to Vercel, integrated Printful API for order fulfillment, tested order submission in test and live modes, resolved Printful API errors (incorrect endpoint, test mode logic), and deployed a working version to Vercel.
+**Key Milestones**: Defined project goals, planned website structure, set up color scheme and design guidelines, prepared placeholder content (20-team dataset, Coaches Corner articles, t-shirt designs), built Homepage Hero section with functional CTAs, added News Carousel, Team Preview, Schedule Preview, Values, and Coaches Corner sections, created the Team Hub with filtering by age group, built the Team Sub-Page for detailed team information, deployed the site to Vercel, resolved build warnings and errors, fixed styling issues on Vercel, resolved permission issues during builds, added placeholder pages for routes, fixed logo and footer display issues, implemented logo shrinking on scroll, implemented the Join page with form submission, Stripe payment integration, Supabase storage, transitioned from PDF invoice generation to HTML invoice emails via Resend, completed the Schedules page with FullCalendar integration, updated Team Sub-Page with schedule tables and merchandise section, removed `animate-fadeIn` effect across all pages, built the Shop page with product listings and Stripe checkout, resolved build errors (ESLint, TypeScript, `localStorage`, `useSearchParams`), successfully deployed to Vercel, integrated Printful API for order fulfillment, tested order submission in test and live modes, resolved Printful API errors (incorrect endpoint, test mode logic), updated the Values section with a simplified carousel, text alignment, shaded box, modal outside click, and single-line mobile title, and deployed a working version to Vercel.
 
 ## Files for Review
 
@@ -44,8 +44,9 @@
 - src/components/homepage/NewsCarousel.tsx (added carousel with static data and modals)
 - src/components/homepage/TeamPreview.tsx (added team previews with links)
 - src/components/homepage/SchedulePreview.tsx (added schedule previews with links, updated events, removed `animate-fadeIn`)
-- src/components/homepage/ValuesSection.tsx (added values section)
-- src/app/page.tsx (updated to include Hero, NewsCarousel, TeamPreview, SchedulePreview, and ValuesSection)
+- src/components/homepage/ValuesSection.tsx (completed with simplified carousel, text alignment, shaded box, modal outside click, single-line mobile title)
+- src/components/homepage/CoachesCorner.tsx (added with placeholder cards)
+- src/app/page.tsx (updated to include Hero, ValuesSection, CoachesCorner, NewsCarousel, TeamPreview, SchedulePreview)
 - src/lib/schedules/data.ts (added to store shared events and teams data)
 - app/teams/page.tsx (added Team Hub with team list and age group filter)
 - app/teams/[id]/page.tsx (added Team Sub-Page with detailed team information, updated schedule tables, added merchandise section, removed `animate-fadeIn`)
@@ -74,9 +75,9 @@
 
 ## Current State
 
-**Date**: May 20, 2025, 02:31 PM CDT
+**Date**: May 22, 2025, 12:43 PM CDT
 
-**Progress**: Completed the Printful API integration for order fulfillment in Phase 3: Build Website. Implemented `/pages/api/create-printful-order.ts` to submit orders to Printful, mapping checkout data (`items`, `subtotal`, `shippingAddress`, `customerEmail`) to Printful's order format. Updated `/app/shop/checkout/CheckoutPage.tsx` to handle order submission and error logging. Resolved issues with `isTestMode` logic, ensuring test mode works in production (`?test=true` creates draft orders). Fixed Printful API errors: incorrect confirmation endpoint (`/v2/orders/@confirm` to `/orders/{id}/confirm`), missing API keys in Vercel, and client-side error handling mismatches. Successfully tested order submission in both test mode (draft orders in Printful) and live mode (confirmed orders), with proper logging in Supabase `orders` and `logs` tables. Deployed a fully working version to Vercel at `https://wcs-three.vercel.app`, with environment variables (`PRINTFUL_TEST_API_KEY`, `PRINTFUL_API_KEY`) configured. Remaining Phase 3 task is building the Tournaments page. Phase 4 (Testing and Deployment) is in progress, with deployment complete and initial testing of the Shop page successful. Next task: Build the Tournaments page and continue end-to-end testing of all flows (registration, schedules, purchases).
+**Progress**: Completed the Values section updates in Phase 3: Build Website. Simplified the Values section (`/src/components/homepage/ValuesSection.tsx`) into a single-slide carousel using Swiper.js, with five values (Integrity, Respect, Responsibility, Teamwork, Having Fun) and corresponding images (`/images/integrity.png`, etc.). Implemented responsive text alignment (centered on mobile, left-aligned on desktop), added a shaded box (`bg-gray-900/50`) for text on both mobile and desktop, adjusted desktop text box margin to 48px (`md:ml-12`), increased section title font to `text-[clamp(2rem,4vw,2.5rem)]` with `px-3 md:px-6` and `whitespace-nowrap` to ensure single-line display on mobile, removed text animation, and added modal outside click to close functionality. Deployed the updated homepage to Vercel at `https://wcs-three.vercel.app`. Remaining Phase 3 task is building the Tournaments page. Phase 4 (Testing and Deployment) is in progress, with deployment complete and initial testing of the Shop page and Values section successful. Next task: Refine the Coaches Corner section and continue end-to-end testing of all flows (registration, schedules, purchases).
 
 **Blockers**: None.
 
@@ -89,6 +90,7 @@
 - [May 18, 2025]: Resolved build errors: `localStorage is not defined` in `/app/shop/cart/page.tsx` by moving `localStorage` access to `useEffect`; `useSearchParams` suspense error in `/app/shop/confirmation/page.tsx` by adding `dynamic = 'force-dynamic'`; `metadataBase` warning by adding it to `/src/app/layout.tsx`.
 - [May 19, 2025]: Resolved Printful API integration errors: `Property 'source' is required` by adding `source: "api"` to the payload and updating the endpoint to `/orders` (removing `/v2`); `There can only be one file for each placement` by sending a single file in the `files` array; missing API keys by setting `PRINTFUL_TEST_API_KEY` and `PRINTFUL_API_KEY` in Vercel; incorrect test mode logic by updating `isTestMode` to rely solely on `searchParams` in `/app/shop/checkout/CheckoutPage.tsx`.
 - [May 20, 2025]: Fixed Printful order confirmation error: 404 on `/v2/orders/@confirm` by updating to the correct endpoint `/orders/{id}/confirm` in `/pages/api/create-printful-order.ts`. Resolved client-side error ("contact support") by ensuring the server handles confirmation failures gracefully and the client receives the correct response.
+- [May 22, 2025]: No errors during Values section updates. Successfully implemented simplified carousel, responsive text alignment, shaded box, modal outside click, and single-line mobile section title.
 
 **To-Do List**
 
@@ -98,6 +100,8 @@
   - [x] Add News Carousel with modals
   - [x] Add team/schedule previews and other sections
   - [x] Remove `animate-fadeIn` from homepage sections
+  - [x] Update Values section with simplified carousel, text alignment, shaded box, modal outside click, single-line mobile title
+  - [x] Add Coaches Corner section with placeholder cards
 - [x] Build Team Hub
 - [x] Build Team Sub-Page
 - [x] Build Join Page
@@ -178,6 +182,7 @@
 - Transitioned from PDF invoice generation to HTML invoice emails via Resend
 - Deployed Shop page with Stripe checkout and Vercel hosting
 - Integrated Printful API for order fulfillment with test and live mode support
+- Updated Values section with simplified carousel, responsive text alignment, shaded box, modal outside click, and single-line mobile title
 
 ## Prompts
 
@@ -218,12 +223,10 @@ Please provide a detailed plan for the current task, then proceed with implement
 
 ## Notes on Updates
 
-- **Phase 3 To-Do List**: Updated to mark Shop page tasks as completed (discussion, implementation, styling, testing, deployment), added Printful API integration as a new task, marked it as completed with test and live mode testing.
-- **Phase 4 To-Do List**: Marked Vercel deployment as completed, noted initial testing of Shop page as successful, with remaining testing tasks pending.
-- **Current State**: Updated to reflect Printful API integration completion, successful deployment, and testing status on May 20, 2025, 02:31 PM CDT.
-- **Errors**: Added entries for resolved Printful API integration errors (endpoint issues, test mode logic, client-server mismatch) on May 19–20, 2025.
-- **May 20, 2025 Update**:
-  - Completed Printful API integration with `/pages/api/create-printful-order.ts` and updates to `/app/shop/checkout/CheckoutPage.tsx`.
-  - Resolved Printful API errors: incorrect confirmation endpoint, test mode logic, and client-side error handling.
-  - Successfully tested order submission in test and live modes, with orders appearing in Printful Dashboard and Supabase logs.
+- **Phase 3 To-Do List**: Updated to mark Shop page tasks as completed (discussion, implementation, styling, testing, deployment), added Printful API integration as a new task, marked it as completed with test and live mode testing, marked Values section updates as completed (simplified carousel, text alignment, shaded box, modal outside click, single-line mobile title).
+- **Phase 4 To-Do List**: Marked Vercel deployment as completed, noted initial testing of Shop page and Values section as successful, with remaining testing tasks pending.
+- **Current State**: Updated to reflect Printful API integration and Values section completion, successful deployment, and testing status on May 22, 2025, 12:43 PM CDT.
+- **Errors**: Added entry for May 22, 2025, noting no errors during Values section updates.
+- **May 22, 2025 Update**:
+  - Completed Values section updates with `/src/components/homepage/ValuesSection.tsx`, implementing a simplified single-slide carousel with Swiper.js, responsive text alignment (centered on mobile, left-aligned on desktop), shaded box for text (`bg-gray-900/50`), desktop text box margin (`md:ml-12`), modal outside click to close, and single-line mobile section title with adjusted font (`text-[clamp(2rem,4vw,2.5rem)]`) and padding (`px-3 md:px-6`).
   - Deployed a fully working version to Vercel at `https://wcs-three.vercel.app`.
