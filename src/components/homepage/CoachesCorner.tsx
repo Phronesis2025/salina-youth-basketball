@@ -35,7 +35,7 @@ export default function CoachesCorner() {
       <div className="container max-w-[75rem] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Title and Description */}
         <div className="text-center mb-12">
-          <h2 className="text-white text-[clamp(2rem,4vw,2.5rem)] font-inter font-bold uppercase mb-4 border-b-2 border-red-500 pb-2 mx-auto w-fit">
+          <h2 className="text-white text-[clamp(2rem,4vw,2.5rem)] font-rubik font-bold uppercase mb-4 border-b-2 border-red-500 pb-2 mx-auto w-fit">
             Coaches Corner
           </h2>
           <p className="text-gray-300 text-[clamp(1rem,2vw,1.125rem)] font-rubik max-w-2xl mx-auto">

@@ -28,7 +28,7 @@ export default function DrillPage() {
       <div className="container max-w-[75rem] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Hero Section */}
         <section className="mb-12" aria-label="Drill Overview">
-          <h1 className="text-white text-[clamp(2rem,4vw,2.5rem)] font-inter font-bold text-center uppercase mb-6">
+          <h1 className="text-white text-[clamp(2rem,4vw,2.5rem)] font-rubik font-bold text-center uppercase mb-6">
             {drill.title}
           </h1>
           <div className="relative h-64 sm:h-96 mb-6">
@@ -43,11 +43,11 @@ export default function DrillPage() {
         </section>
 
         {/* Drill Details */}
-        <article className="bg-gray-900/50 rounded-lg p-6 sm:p-8 shadow-md border border-red-500/50">
+        <article className="bg-gray-900/50 rounded-lg px-3 md:px-6 py-6 shadow-md border border-red-500/50">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             {/* Skills */}
             <div>
-              <h2 className="text-white text-[clamp(1.25rem,2vw,1.5rem)] font-inter font-semibold uppercase mb-2">
+              <h2 className="text-white text-[clamp(1.25rem,2vw,1.5rem)] font-rubik font-semibold uppercase mb-2 whitespace-nowrap">
                 Skills
               </h2>
               <ul className="text-gray-300 text-[clamp(0.875rem,1.5vw,1rem)] font-rubik list-disc pl-5">
@@ -59,7 +59,7 @@ export default function DrillPage() {
 
             {/* Equipment */}
             <div>
-              <h2 className="text-white text-[clamp(1.25rem,2vw,1.5rem)] font-inter font-semibold uppercase mb-2">
+              <h2 className="text-white text-[clamp(1.25rem,2vw,1.5rem)] font-inter font-semibold uppercase mb-2 whitespace-nowrap">
                 Equipment Needed
               </h2>
               <ul className="text-gray-300 text-[clamp(0.875rem,1.5vw,1rem)] font-rubik list-disc pl-5">
@@ -73,7 +73,7 @@ export default function DrillPage() {
           {/* Time and Difficulty */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div>
-              <h2 className="text-white text-[clamp(1.25rem,2vw,1.5rem)] font-inter font-semibold uppercase mb-2">
+              <h2 className="text-white text-[clamp(1.25rem,2vw,1.5rem)] font-inter font-semibold uppercase mb-2 whitespace-nowrap">
                 Time
               </h2>
               <p className="text-gray-300 text-[clamp(0.875rem,1.5vw,1rem)] font-rubik">
@@ -81,7 +81,7 @@ export default function DrillPage() {
               </p>
             </div>
             <div>
-              <h2 className="text-white text-[clamp(1.25rem,2vw,1.5rem)] font-inter font-semibold uppercase mb-2">
+              <h2 className="text-white text-[clamp(1.25rem,2vw,1.5rem)] font-inter font-semibold uppercase mb-2 whitespace-nowrap">
                 Difficulty
               </h2>
               <p className="text-gray-300 text-[clamp(0.875rem,1.5vw,1rem)] font-rubik">
@@ -92,7 +92,7 @@ export default function DrillPage() {
 
           {/* Instructions */}
           <div className="mb-6">
-            <h2 className="text-white text-[clamp(1.25rem,2vw,1.5rem)] font-inter font-semibold uppercase mb-2">
+            <h2 className="text-white text-[clamp(1.25rem,2vw,1.5rem)] font-inter font-semibold uppercase mb-2 whitespace-nowrap">
               Instructions
             </h2>
             <p className="text-gray-300 text-[clamp(0.875rem,1.5vw,1rem)] font-rubik whitespace-pre-wrap">
@@ -102,7 +102,7 @@ export default function DrillPage() {
 
           {/* Additional Info */}
           <div className="mb-6">
-            <h2 className="text-white text-[clamp(1.25rem,2vw,1.5rem)] font-inter font-semibold uppercase mb-2">
+            <h2 className="text-white text-[clamp(1.25rem,2vw,1.5rem)] font-inter font-semibold uppercase mb-2 whitespace-nowrap">
               Additional Info
             </h2>
             <p className="text-gray-300 text-[clamp(0.875rem,1.5vw,1rem)] font-rubik whitespace-pre-wrap">
@@ -112,7 +112,7 @@ export default function DrillPage() {
 
           {/* Benefits */}
           <div>
-            <h2 className="text-white text-[clamp(1.25rem,2vw,1.5rem)] font-inter font-semibold uppercase mb-2">
+            <h2 className="text-white text-[clamp(1.25rem,2vw,1.5rem)] font-inter font-semibold uppercase mb-2 whitespace-nowrap">
               Benefits
             </h2>
             <p className="text-gray-300 text-[clamp(0.875rem,1.5vw,1rem)] font-rubik whitespace-pre-wrap">
