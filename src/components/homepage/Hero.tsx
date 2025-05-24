@@ -14,7 +14,7 @@ export default function Hero() {
       if (overlayRef.current) {
         const scrollY = window.scrollY;
         // Increase opacity from 0.7 to max 0.8
-        const newOpacity = 0.7 + Math.min(scrollY * 0.0001, 0.1);
+        const newOpacity = 0.8 + Math.min(scrollY * 0.0001, 0.1);
         overlayRef.current.style.opacity = `${newOpacity}`;
       }
     };
@@ -55,23 +55,29 @@ export default function Hero() {
       ></div>
 
       {/* Content - Scrolls Normally */}
-      <div className="relative z-10 container max-w-[75rem] mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32">
+      <div className="relative z-10 container max-w-[75rem] mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-4 -mt-20 md:-mt-20">
         <div className="flex flex-col items-start max-w-3xl">
           {/* Title */}
           <h1
-            className="text-white text-[clamp(2.5rem,5vw,3.5rem)] font-bold leading-tight mb-4 sm:mb-6 font-rubik"
+            className="text-white text-[clamp(5.4rem,7vw,10.5rem)] font-extrabold leading-[0.8] tracking-normal mb-4 sm:mb-2 font-rubik"
             style={{ animationDelay: "0.2s" }}
           >
-            Developing Champions On and Off the Court
+            World Class Sports
           </h1>
+          <h2
+            className="text-white text-[clamp(1.8rem,3vw,2.5rem)] font-bold leading-tight mb-4 sm:mb-6 font-rubik"
+            style={{ animationDelay: "0.2s" }}
+          >
+            Basketball training for life
+          </h2>
 
           {/* Subtitle */}
           <p
-            className="text-white text-[clamp(1.125rem,2vw,1.5rem)] leading-7 mb-6 max-w-xl font-inter font-medium"
+            className="text-white text-[clamp(1.125rem,1.5vw,1.5rem)] leading-7 mb-6 max-w-xl font-inter font-light"
             style={{ animationDelay: "0.4s" }}
           >
-            From fundamentals to competitive play, we build skill, character,
-            and confidence in every athlete.
+            Fostering character, confidence, and community through basketball
+            excellence.
           </p>
 
           {/* CTA Buttons */}

@@ -15,14 +15,12 @@ interface NavbarProps {
 export default function Navbar({ cartItemCount }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [hasAnimated, setHasAnimated] = useState(false); // Track if animation has run
+  const [hasAnimated, setHasAnimated] = useState(false);
   const pathname = usePathname();
 
-  // Scroll effect for desktop only
   useEffect(() => {
-    // Check if viewport is mobile (<768px)
     const isMobile = window.matchMedia("(max-width: 767px)").matches;
-    if (isMobile) return; // Skip scroll listener on mobile
+    if (isMobile) return;
 
     let lastScrollY = window.scrollY;
 
@@ -34,7 +32,6 @@ export default function Navbar({ cartItemCount }: NavbarProps) {
       lastScrollY = window.scrollY;
     };
 
-    // Throttle scroll events
     let isThrottled = false;
     const throttledScroll = () => {
       if (!isThrottled) {
@@ -50,7 +47,6 @@ export default function Navbar({ cartItemCount }: NavbarProps) {
     return () => window.removeEventListener("scroll", throttledScroll);
   }, [scrolled]);
 
-  // Close mobile menu on outside click
   useEffect(() => {
     const handleOutsideClick = (e: MouseEvent) => {
       if (isMobileMenuOpen && !(e.target as HTMLElement).closest("header")) {
@@ -61,7 +57,6 @@ export default function Navbar({ cartItemCount }: NavbarProps) {
     return () => document.removeEventListener("click", handleOutsideClick);
   }, [isMobileMenuOpen]);
 
-  // Set hasAnimated to true after initial render
   useEffect(() => {
     setHasAnimated(true);
   }, []);
@@ -70,6 +65,7 @@ export default function Navbar({ cartItemCount }: NavbarProps) {
     { name: "Teams", href: "/teams" },
     { name: "Schedules", href: "/schedules" },
     { name: "Shop", href: "/shop" },
+    { name: "About", href: "/about" },
     { name: "Join the Team", href: "/join" },
   ];
 
@@ -87,7 +83,7 @@ export default function Navbar({ cartItemCount }: NavbarProps) {
         "fixed top-0 left-0 right-0 z-50 flex justify-center w-full bg-black transition-all duration-300 ease-in-out"
       )}
       style={{ animationDelay: "0.1s" }}
-      data-animated={hasAnimated} // Prevent reanimation
+      data-animated={hasAnimated}
     >
       <div
         className={cn(
@@ -185,11 +181,11 @@ export default function Navbar({ cartItemCount }: NavbarProps) {
         {/* Mobile Menu Button */}
         <div className="md:hidden flex items-center">
           <Button
-            type="button" // Prevent form submission
+            type="button"
             variant="ghost"
             size="icon"
             onClick={(e) => {
-              e.preventDefault(); // Prevent any default navigation
+              e.preventDefault();
               setIsMobileMenuOpen(!isMobileMenuOpen);
             }}
             aria-expanded={isMobileMenuOpen}
@@ -212,7 +208,7 @@ export default function Navbar({ cartItemCount }: NavbarProps) {
             "md:hidden absolute left-0 w-full min-h-screen bg-black z-40 border-t border-gray-800 shadow-lg top-16"
           )}
           style={{ animationDelay: "0.2s" }}
-          data-animated={hasAnimated} // Prevent reanimation
+          data-animated={hasAnimated}
         >
           <nav
             className="flex flex-col items-center py-6 space-y-6 bg-gradient-to-b from-black to-gray-900"

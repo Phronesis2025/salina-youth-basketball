@@ -14,6 +14,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { tournaments } from "@/lib/tournaments/data";
+import { cn } from "@/lib/utils";
 
 export default function Tournaments() {
   const [formData, setFormData] = useState({
@@ -143,7 +144,10 @@ export default function Tournaments() {
                   onChange={(e) =>
                     setFormData({ ...formData, teamName: e.target.value })
                   }
-                  className="bg-gray-800 text-white border-gray-700 font-inter"
+                  className={cn(
+                    "bg-blue-600 text-white font-medium font-inter rounded-md text-base uppercase h-10 w-full",
+                    "focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-300"
+                  )}
                   required
                   aria-required="true"
                   aria-label="Team Name"
@@ -162,7 +166,10 @@ export default function Tournaments() {
                   onChange={(e) =>
                     setFormData({ ...formData, coachName: e.target.value })
                   }
-                  className="bg-gray-800 text-white border-gray-700 font-inter"
+                  className={cn(
+                    "bg-blue-600 text-white font-medium font-inter rounded-md text-base uppercase h-10 w-full",
+                    "focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-300"
+                  )}
                   required
                   aria-required="true"
                   aria-label="Coach Name"
@@ -181,7 +188,10 @@ export default function Tournaments() {
                   onChange={(e) =>
                     setFormData({ ...formData, email: e.target.value })
                   }
-                  className="bg-gray-800 text-white border-gray-700 font-inter"
+                  className={cn(
+                    "bg-blue-600 text-white font-medium font-inter rounded-md text-base uppercase h-10 w-full",
+                    "focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-300"
+                  )}
                   required
                   aria-required="true"
                   aria-label="Email"
@@ -200,7 +210,10 @@ export default function Tournaments() {
                   onChange={(e) =>
                     setFormData({ ...formData, phone: e.target.value })
                   }
-                  className="bg-gray-800 text-white border-gray-700 font-inter"
+                  className={cn(
+                    "bg-blue-600 text-white font-medium font-inter rounded-md text-base uppercase h-10 w-full",
+                    "focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-300"
+                  )}
                   aria-label="Phone"
                 />
               </div>
@@ -211,15 +224,20 @@ export default function Tournaments() {
                   }
                   value={formData.tournamentId}
                 >
-                  <SelectTrigger className="bg-gray-800 text-white border-gray-700 font-inter focus:ring-2 focus:ring-blue-600">
+                  <SelectTrigger
+                    className={cn(
+                      "bg-blue-600 text-white font-medium font-inter rounded-md text-base uppercase h-10 w-full",
+                      "focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-300"
+                    )}
+                  >
                     <SelectValue placeholder="Select Tournament" />
                   </SelectTrigger>
-                  <SelectContent className="bg-gray-900 text-white border-gray-700">
+                  <SelectContent className="bg-[#002C51] text-white border-gray-600">
                     {tournaments.map((tournament) => (
                       <SelectItem
                         key={tournament.id}
                         value={tournament.id}
-                        className="text-white font-inter hover:bg-gray-800 focus:bg-gray-800"
+                        className="text-white font-inter hover:bg-blue-700 focus:bg-blue-700"
                       >
                         {tournament.name}
                       </SelectItem>
