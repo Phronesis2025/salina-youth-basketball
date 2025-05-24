@@ -1,6 +1,7 @@
 import { Rubik, Inter, Montserrat, Bebas_Neue } from "next/font/google";
 import "./global.css";
 import ClientLayout from "./ClientLayout";
+import { Analytics } from "@vercel/analytics/next";
 
 // Define Rubik font
 const rubik = Rubik({
@@ -45,7 +46,7 @@ export const metadata = {
   openGraph: {
     title: "World Class Sports - Salina Youth Basketball",
     description:
-      "Discover Salina Youth Basketball Club’s teams, schedules, and programs in Salina, KS.",
+      "Discover Salina Youth Basketball Club's teams, schedules, and programs in Salina, KS.",
     url: "https://www.wcshoops.com",
     siteName: "World Class Sports",
     images: [
@@ -72,6 +73,7 @@ export default function RootLayout({
         className={`${rubik.variable} ${inter.variable} ${montserrat.variable} ${bebasNeue.variable} bg-[#002C51] text-white flex flex-col min-h-screen`}
       >
         <ClientLayout>{children}</ClientLayout>
+        <Analytics />
       </body>
     </html>
   );
