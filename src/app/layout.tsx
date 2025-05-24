@@ -2,6 +2,7 @@ import { Rubik, Inter, Montserrat, Bebas_Neue } from "next/font/google";
 import "./global.css";
 import ClientLayout from "./ClientLayout";
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 // Define Rubik font
 const rubik = Rubik({
@@ -74,6 +75,7 @@ export default function RootLayout({
       >
         <ClientLayout>{children}</ClientLayout>
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
