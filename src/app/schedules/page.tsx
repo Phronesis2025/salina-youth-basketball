@@ -6,7 +6,7 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import Link from "next/link";
-import Head from "next/head"; // Import Head for adding <link> tags
+import Head from "next/head";
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -16,18 +16,46 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
+import { supabase } from "@/lib/supabaseClient";
 
-// Import events and teams from shared data file
-import { events, teams } from "@/lib/schedules/data";
+// Import events from shared data file
+import { events } from "@/lib/schedules/data";
+
+interface Team {
+  name: string;
+  grade_level: string;
+}
 
 export default function SchedulesPage() {
   const [genderFilter, setGenderFilter] = useState("All");
   const [teamFilter, setTeamFilter] = useState("All Teams");
   const [typeFilter, setTypeFilter] = useState("All Events");
   const [filteredEvents, setFilteredEvents] = useState(events);
+  const [teams, setTeams] = useState<Team[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
   // Use the current date dynamically
   const today = new Date();
+
+  // Fetch teams from Supabase
+  useEffect(() => {
+    async function fetchTeams() {
+      try {
+        const { data, error } = await supabase
+          .from("teams")
+          .select("name, grade_level");
+        if (error) throw error;
+        setTeams(data || []);
+      } catch (err: any) {
+        setError("Failed to load teams. Please try again later.");
+        console.error("Error fetching teams:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchTeams();
+  }, []);
 
   // Update filtered events when any filter changes
   useEffect(() => {
@@ -35,13 +63,21 @@ export default function SchedulesPage() {
 
     if (genderFilter !== "All") {
       filtered = filtered.filter(
-        (event) => event.extendedProps.gender === genderFilter
+        (event) =>
+          event.extendedProps.team === "All Teams" ||
+          teams.some(
+            (team) =>
+              team.name === event.extendedProps.team &&
+              team.grade_level.endsWith(genderFilter)
+          )
       );
     }
 
     if (teamFilter !== "All Teams") {
       filtered = filtered.filter(
-        (event) => event.extendedProps.team === teamFilter
+        (event) =>
+          event.extendedProps.team === teamFilter ||
+          event.extendedProps.team === "All Teams"
       );
     }
 
@@ -52,13 +88,13 @@ export default function SchedulesPage() {
     }
 
     setFilteredEvents(filtered);
-  }, [genderFilter, teamFilter, typeFilter]);
+  }, [genderFilter, teamFilter, typeFilter, teams]);
 
   // Filter available teams based on gender selection
   const availableTeams =
     genderFilter === "All"
       ? teams
-      : teams.filter((team) => team.gender === genderFilter);
+      : teams.filter((team) => team.grade_level.endsWith(genderFilter));
 
   // Get events for today (current date)
   const todayEvents = filteredEvents.filter((event) => {
@@ -78,6 +114,34 @@ export default function SchedulesPage() {
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
+
+  if (loading) {
+    return (
+      <section
+        className="bg-[#002C51] pt-20 sm:pt-24 py-12 min-h-screen"
+        aria-label="Schedules"
+      >
+        <div className="container max-w-[75rem] mx-auto px-4 sm:px-6 lg:px-8">
+          <p className="text-white text-base font-inter text-center">
+            Loading schedules...
+          </p>
+        </div>
+      </section>
+    );
+  }
+
+  if (error) {
+    return (
+      <section
+        className="bg-[#002C51] pt-20 sm:pt-24 py-12 min-h-screen"
+        aria-label="Schedules"
+      >
+        <div className="container max-w-[75rem] mx-auto px-4 sm:px-6 lg:px-8">
+          <p className="text-white text-base font-inter text-center">{error}</p>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <>

@@ -1,131 +1,85 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { supabase } from "@/lib/supabaseClient";
 
 // Import events from shared data file
 import { events } from "@/lib/schedules/data";
 
-// Define the Team type
 interface Team {
   id: number;
+  grade_level: string;
   name: string;
-  ageGroup: string;
-  coach: string;
-  coachBio: string;
+  coaches: string[];
+  coach_bio: string;
   gallery: string[];
+  image: string;
   logo: string;
+  merch_image: string;
 }
 
-// Define the expected params type
 type TeamParams = {
-  [key: string]: string | string[];
   id: string;
 };
 
 export default function TeamSubPage() {
   const params = useParams<TeamParams>();
   const teamId = params && params.id ? parseInt(params.id, 10) : null;
+  const [team, setTeam] = useState<Team | null>(null);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
-
-  const allTeams: Team[] = [
-    {
-      id: 1,
-      name: "Thunderhawks",
-      ageGroup: "U-14",
-      coach: "Coach Smith",
-      coachBio:
-        "Coach Smith has 10 years of experience coaching youth basketball and has led multiple teams to regional championships.",
-      gallery: ["/images/team-thunderhawks.jpg"],
-      logo: "/images/team-thunderhawks.jpg",
-    },
-    {
-      id: 2,
-      name: "Firebolts",
-      ageGroup: "U-16",
-      coach: "Coach Johnson",
-      coachBio:
-        "Coach Johnson is a former college player with a passion for developing young athletes.",
-      gallery: ["/images/team-firebolts.jpg"],
-      logo: "/images/team-firebolts.jpg",
-    },
-    {
-      id: 3,
-      name: "Stingers",
-      ageGroup: "U-12",
-      coach: "Coach Davis",
-      coachBio:
-        "Coach Davis specializes in strategic gameplay and has coached at the national level.",
-      gallery: ["/images/team-stingers.jpg"],
-      logo: "/images/team-stingers.jpg",
-    },
-    {
-      id: 4,
-      name: "Lightning",
-      ageGroup: "U-10",
-      coach: "Coach Brown",
-      coachBio:
-        "Coach Brown is dedicated to fostering teamwork and skill development in young athletes.",
-      gallery: ["/images/team-lightning.jpg"],
-      logo: "/images/team-lightning.jpg",
-    },
-    {
-      id: 5,
-      name: "Vipers",
-      ageGroup: "U-14",
-      coach: "Coach Wilson",
-      coachBio:
-        "Coach Wilson has a track record of building competitive teams with strong fundamentals.",
-      gallery: ["/images/team-vipers.jpg"],
-      logo: "/images/team-vipers.jpg",
-    },
-    {
-      id: 6,
-      name: "Raptors",
-      ageGroup: "U-16",
-      coach: "Coach Taylor",
-      coachBio:
-        "Coach Taylor focuses on player development and strategic play, with years of coaching experience.",
-      gallery: ["/images/team-raptors.jpg"],
-      logo: "/images/team-raptors.jpg",
-    },
-  ];
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
   const defaultPlaceholder = "/images/placeholder-team-default.jpg";
 
-  if (!teamId) {
+  useEffect(() => {
+    async function fetchTeam() {
+      if (!teamId) {
+        setError("Invalid team ID.");
+        setLoading(false);
+        return;
+      }
+      try {
+        const { data, error } = await supabase
+          .from("teams")
+          .select("*")
+          .eq("id", teamId)
+          .single();
+        if (error) throw error;
+        setTeam(data);
+      } catch (err: any) {
+        setError("Team not found.");
+        console.error("Error fetching team:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchTeam();
+  }, [teamId]);
+
+  if (loading) {
     return (
       <main className="pt-20 sm:pt-24">
         <section
           className="bg-[#002C51] py-12 min-h-screen"
-          aria-label="Team Not Found"
+          aria-label="Loading Team"
         >
           <div className="container max-w-[75rem] mx-auto px-4 sm:px-6 lg:px-8">
-            <h1 className="text-white text-[clamp(2.25rem,5vw,3rem)] font-bold font-rubik mb-8 text-center uppercase">
-              Team Not Found
-            </h1>
-            <div className="text-center">
-              <Button
-                asChild
-                variant="default"
-                className="bg-blue-600 text-white font-medium font-inter rounded-md hover:bg-blue-700 hover:scale-105 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-300 text-base px-6 py-3 uppercase"
-              >
-                <Link href="/teams">Back to Team Hub</Link>
-              </Button>
-            </div>
+            <p className="text-white text-base font-inter text-center">
+              Loading team...
+            </p>
           </div>
         </section>
       </main>
     );
   }
 
-  const team = allTeams.find((t) => t.id === teamId);
-
-  if (!team) {
+  if (error || !teamId || !team) {
     return (
       <main className="pt-20 sm:pt-24">
         <section
@@ -185,21 +139,9 @@ export default function TeamSubPage() {
       location: event.extendedProps.location,
     }));
 
-  // Map team names to merchandise images
-  const teamMerchImages: { [key: string]: string } = {
-    Thunderhawks: "/images/team-thunderhawks-merch.jpg",
-    Firebolts: "/images/team-firebolts-merch.jpg",
-    Stingers: "/images/team-stingers-merch.jpg",
-    Lightning: "/images/team-lightning-merch.jpg",
-    Vipers: "/images/team-vipers-merch.jpg",
-    Raptors: "/images/team-raptors-merch.jpg",
-  };
-
-  // Get the merchandise image for the current team
-  const teamMerchImage = teamMerchImages[team.name] || defaultPlaceholder;
-
-  // Use team logo for Hero
-  const heroImage = team.logo || defaultPlaceholder;
+  // Use team image for Hero and merchandise
+  const heroImage = team.image || defaultPlaceholder;
+  const teamMerchImage = team.merch_image || defaultPlaceholder;
 
   // Format date (e.g., "MM/DD/YYYY")
   const formatDate = (dateString: string) => {
@@ -224,8 +166,8 @@ export default function TeamSubPage() {
               alt={`${team.name} team logo`}
               fill
               priority
-              className="object-cover object-top"
-              onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
+              className="object-cover object-center"
+              onError={(e) => {
                 console.error(`Failed to load Hero image: ${heroImage}`);
                 const target = e.target as HTMLImageElement;
                 target.src = defaultPlaceholder;
@@ -234,10 +176,23 @@ export default function TeamSubPage() {
                 console.log(`Hero image loaded: ${heroImage}`)
               }
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-            <div className="absolute bottom-6 left-6 right-6">
-              <h1 className="text-white text-[clamp(2.5rem,6vw,4xl)] font-bold font-rubik uppercase">
-                {team.name} ({team.ageGroup})
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-black/10"></div>
+            <div className="absolute bottom-6 left-6 right-6 flex flex-col items-center">
+              <div className="relative w-[100px] h-[100px] rounded-full border-8 border-[#002C51] shadow-[0_5px_10px_rgba(0,0,0,0.5)] bg-black/50 mb-4">
+                <Image
+                  src={team.logo}
+                  alt={`${team.name} logo`}
+                  fill
+                  className="object-contain rounded-full"
+                  onError={(e) => {
+                    console.error(`Failed to load Logo image: ${team.logo}`);
+                    const target = e.target as HTMLImageElement;
+                    target.src = defaultPlaceholder;
+                  }}
+                />
+              </div>
+              <h1 className="text-white text-[clamp(2.5rem,6vw,4xl)] font-bold font-rubik uppercase text-shadow-[0_2px_4px_rgba(0,0,0,0.5)]">
+                {team.name}
               </h1>
               <Button
                 asChild
@@ -256,17 +211,19 @@ export default function TeamSubPage() {
                 Team Overview
               </h2>
               <p className="text-white text-base font-inter mb-2">
-                <strong>Coach:</strong> {team.coach}
+                <strong>Coach:</strong> {team.coaches.join(", ")}
               </p>
               <p className="text-white text-base font-inter">
-                <strong>Age Group:</strong> {team.ageGroup}
+                <strong>Grade Level:</strong> {team.grade_level}
               </p>
             </div>
             <div className="bg-gray-900 p-6 rounded-lg shadow-md">
               <h2 className="text-white text-2xl font-rubik font-semibold mb-4 uppercase">
                 Coach Bio
               </h2>
-              <p className="text-white text-base font-inter">{team.coachBio}</p>
+              <p className="text-white text-base font-inter">
+                {team.coach_bio}
+              </p>
             </div>
           </div>
 
@@ -276,32 +233,49 @@ export default function TeamSubPage() {
               Upcoming Practices
             </h2>
             <div className="overflow-x-auto mb-8">
-              <table className="w-full text-white text-base font-inter">
+              <table className="w-full min-w-[600px] text-white text-base font-inter rounded-lg shadow-md border border-gray-700">
                 <thead>
-                  <tr className="bg-blue-600">
-                    <th className="p-4 text-left">Date</th>
-                    <th className="p-4 text-left">Start Time</th>
-                    <th className="p-4 text-left">Location</th>
+                  <tr className="bg-blue-600 rounded-t-lg">
+                    <th className="p-4 text-left font-rubik font-semibold uppercase text-sm">
+                      Date
+                    </th>
+                    <th className="p-4 text-left font-rubik font-semibold uppercase text-sm">
+                      Start Time
+                    </th>
+                    <th className="p-4 text-left font-rubik font-semibold uppercase text-sm">
+                      Location
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
                   {practices.length > 0 ? (
                     practices.map((practice, index) => (
-                      <tr key={index} className="bg-gray-900">
-                        <td className="p-4">{formatDate(practice.date)}</td>
-                        <td className="p-4">
+                      <tr
+                        key={index}
+                        className={cn(
+                          "hover:bg-gray-700 transition-colors duration-200",
+                          index % 2 === 0 ? "bg-gray-900" : "bg-gray-800"
+                        )}
+                      >
+                        <td className="p-4 text-sm">
+                          {formatDate(practice.date)}
+                        </td>
+                        <td className="p-4 text-sm">
                           {new Date(practice.date).toLocaleTimeString("en-US", {
                             hour: "numeric",
                             minute: "2-digit",
                             hour12: true,
                           })}
                         </td>
-                        <td className="p-4">{practice.location}</td>
+                        <td className="p-4 text-sm">{practice.location}</td>
                       </tr>
                     ))
                   ) : (
                     <tr>
-                      <td colSpan={3} className="p-4 text-center">
+                      <td
+                        colSpan={3}
+                        className="p-4 text-center text-gray-400 text-sm"
+                      >
                         No upcoming practices scheduled.
                       </td>
                     </tr>
@@ -314,26 +288,41 @@ export default function TeamSubPage() {
               Upcoming Games
             </h2>
             <div className="overflow-x-auto">
-              <table className="w-full text-white text-base font-inter">
+              <table className="w-full min-w-[600px] text-white text-base font-inter rounded-lg shadow-md border border-gray-700">
                 <thead>
-                  <tr className="bg-blue-600">
-                    <th className="p-4 text-left">Date</th>
-                    <th className="p-4 text-left">Opponent</th>
-                    <th className="p-4 text-left">Location</th>
+                  <tr className="bg-blue-600 rounded-t-lg">
+                    <th className="p-4 text-left font-rubik font-semibold uppercase text-sm">
+                      Date
+                    </th>
+                    <th className="p-4 text-left font-rubik font-semibold uppercase text-sm">
+                      Opponent
+                    </th>
+                    <th className="p-4 text-left font-rubik font-semibold uppercase text-sm">
+                      Location
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
                   {games.length > 0 ? (
                     games.map((game, index) => (
-                      <tr key={index} className="bg-gray-900">
-                        <td className="p-4">{formatDate(game.date)}</td>
-                        <td className="p-4">{game.opponent}</td>
-                        <td className="p-4">{game.location}</td>
+                      <tr
+                        key={index}
+                        className={cn(
+                          "hover:bg-gray-700 transition-colors duration-200",
+                          index % 2 === 0 ? "bg-gray-900" : "bg-gray-800"
+                        )}
+                      >
+                        <td className="p-4 text-sm">{formatDate(game.date)}</td>
+                        <td className="p-4 text-sm">{game.opponent}</td>
+                        <td className="p-4 text-sm">{game.location}</td>
                       </tr>
                     ))
                   ) : (
                     <tr>
-                      <td colSpan={3} className="p-4 text-center">
+                      <td
+                        colSpan={3}
+                        className="p-4 text-center text-gray-400 text-sm"
+                      >
                         No upcoming games scheduled.
                       </td>
                     </tr>
@@ -349,27 +338,33 @@ export default function TeamSubPage() {
               Gallery
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8">
-              {team.gallery.map((image, index) => (
-                <button
-                  key={index}
-                  className="relative w-full h-48 overflow-hidden rounded-lg shadow-md group"
-                  onClick={() => setSelectedImage(image)}
-                  aria-label={`View gallery image ${index + 1}`}
-                >
-                  <Image
-                    src={image}
-                    alt={`Gallery image ${index + 1}`}
-                    fill
-                    className="object-cover object-top transition-transform duration-300 group-hover:scale-105"
-                    onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
-                      console.error(`Failed to load Gallery image: ${image}`);
-                      const target = e.target as HTMLImageElement;
-                      target.src = defaultPlaceholder;
-                    }}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                </button>
-              ))}
+              {team.gallery.length > 0 ? (
+                team.gallery.map((image, index) => (
+                  <button
+                    key={index}
+                    className="relative w-full h-48 overflow-hidden rounded-lg shadow-md group"
+                    onClick={() => setSelectedImage(image)}
+                    aria-label={`View gallery image ${index + 1}`}
+                  >
+                    <Image
+                      src={image}
+                      alt={`Gallery image ${index + 1}`}
+                      fill
+                      className="object-cover object-top transition-transform duration-300 group-hover:scale-105"
+                      onError={(e) => {
+                        console.error(`Failed to load Gallery image: ${image}`);
+                        const target = e.target as HTMLImageElement;
+                        target.src = defaultPlaceholder;
+                      }}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  </button>
+                ))
+              ) : (
+                <p className="text-white text-base font-inter text-center col-span-full">
+                  No gallery images available.
+                </p>
+              )}
             </div>
           </div>
 
@@ -389,7 +384,7 @@ export default function TeamSubPage() {
                   alt={`${team.name} merchandise`}
                   fill
                   className="object-cover object-top transition-transform duration-300 group-hover:scale-105"
-                  onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
+                  onError={(e) => {
                     console.error(
                       `Failed to load Merch image: ${teamMerchImage}`
                     );
@@ -435,7 +430,7 @@ export default function TeamSubPage() {
                   width={1200}
                   height={800}
                   className="object-contain"
-                  onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
+                  onError={(e) => {
                     console.error(
                       `Failed to load Modal image: ${selectedImage}`
                     );

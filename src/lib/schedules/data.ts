@@ -3,11 +3,11 @@
 export const events = [
   {
     id: "1",
-    title: "Lightning Practice",
+    title: "WCS Warriors Practice",
     start: "2025-05-16T18:00:00",
     end: "2025-05-16T19:30:00",
     extendedProps: {
-      team: "Lightning",
+      team: "WCS Warriors",
       gender: "Boys",
       type: "Practice",
       location: "North Salina Gym",
@@ -15,11 +15,11 @@ export const events = [
   },
   {
     id: "2",
-    title: "Thunderhawks vs. Warriors (Game)",
+    title: "WCS Sharks vs. opponents (Game)",
     start: "2025-05-17T14:00:00",
     end: "2025-05-17T15:30:00",
     extendedProps: {
-      team: "Thunderhawks",
+      team: "WCS Sharks",
       gender: "Boys",
       type: "Game",
       location: "Salina Community Center",
@@ -27,11 +27,11 @@ export const events = [
   },
   {
     id: "3",
-    title: "Raptors Practice",
+    title: "WCS Blue Practice",
     start: "2025-05-19T17:00:00",
     end: "2025-05-19T18:30:00",
     extendedProps: {
-      team: "Raptors",
+      team: "WCS Blue",
       gender: "Girls",
       type: "Practice",
       location: "South Salina Court",
@@ -39,11 +39,11 @@ export const events = [
   },
   {
     id: "4",
-    title: "Vipers Practice",
+    title: "WCS Red Practice",
     start: "2025-05-19T18:30:00",
     end: "2025-05-19T20:00:00",
     extendedProps: {
-      team: "Vipers",
+      team: "WCS Red",
       gender: "Girls",
       type: "Practice",
       location: "South Salina Court",
@@ -51,11 +51,11 @@ export const events = [
   },
   {
     id: "5",
-    title: "Stingers vs. Warriors (Game)",
+    title: "WCS Legends vs. opponents (Game)",
     start: "2025-05-20T15:00:00",
     end: "2025-05-20T16:30:00",
     extendedProps: {
-      team: "Stingers",
+      team: "WCS Legends",
       gender: "Boys",
       type: "Game",
       location: "Central Salina Arena",
@@ -63,11 +63,11 @@ export const events = [
   },
   {
     id: "6",
-    title: "Firebolts Practice",
+    title: "WCS Swish Practice",
     start: "2025-05-21T17:00:00",
     end: "2025-05-21T18:30:00",
     extendedProps: {
-      team: "Firebolts",
+      team: "WCS Swish",
       gender: "Boys",
       type: "Practice",
       location: "North Salina Gym",
@@ -75,23 +75,23 @@ export const events = [
   },
   {
     id: "7",
-    title: "Lightning Practice",
+    title: "WCS Potter Practice",
     start: "2025-05-22T18:00:00",
     end: "2025-05-22T19:30:00",
     extendedProps: {
-      team: "Lightning",
-      gender: "Boys",
+      team: "WCS Potter",
+      gender: "Girls",
       type: "Practice",
       location: "North Salina Gym",
     },
   },
   {
     id: "8",
-    title: "Raptors vs. Warriors (Game)",
+    title: "WCS Dupy vs. opponents (Game)",
     start: "2025-05-23T16:00:00",
     end: "2025-05-23T17:30:00",
     extendedProps: {
-      team: "Raptors",
+      team: "WCS Dupy",
       gender: "Girls",
       type: "Game",
       location: "Salina Community Center",
@@ -99,11 +99,11 @@ export const events = [
   },
   {
     id: "9",
-    title: "Vipers vs. Warriors (Game)",
+    title: "WCS Williams vs. opponents (Game)",
     start: "2025-05-24T15:00:00",
     end: "2025-05-24T16:30:00",
     extendedProps: {
-      team: "Vipers",
+      team: "WCS Williams",
       gender: "Girls",
       type: "Game",
       location: "Salina Community Center",
@@ -111,11 +111,11 @@ export const events = [
   },
   {
     id: "10",
-    title: "Thunderhawks Practice",
+    title: "WCS Vipers Practice",
     start: "2025-05-26T16:00:00",
     end: "2025-05-26T17:30:00",
     extendedProps: {
-      team: "Thunderhawks",
+      team: "WCS Vipers",
       gender: "Boys",
       type: "Practice",
       location: "North Salina Gym",
@@ -123,11 +123,11 @@ export const events = [
   },
   {
     id: "11",
-    title: "Raptors Practice",
+    title: "WCS Blue Practice",
     start: "2025-05-26T18:00:00",
     end: "2025-05-26T19:30:00",
     extendedProps: {
-      team: "Raptors",
+      team: "WCS Blue",
       gender: "Girls",
       type: "Practice",
       location: "South Salina Court",
@@ -135,11 +135,11 @@ export const events = [
   },
   {
     id: "12",
-    title: "Firebolts Practice",
+    title: "WCS Swish Practice",
     start: "2025-05-28T17:00:00",
     end: "2025-05-28T18:30:00",
     extendedProps: {
-      team: "Firebolts",
+      team: "WCS Swish",
       gender: "Boys",
       type: "Practice",
       location: "North Salina Gym",
@@ -147,23 +147,23 @@ export const events = [
   },
   {
     id: "13",
-    title: "Lightning vs. Warriors (Game)",
+    title: "WCS Potter vs. opponents (Game)",
     start: "2025-05-29T15:00:00",
     end: "2025-05-29T16:30:00",
     extendedProps: {
-      team: "Lightning",
-      gender: "Boys",
+      team: "WCS Potter",
+      gender: "Girls",
       type: "Game",
       location: "Central Salina Arena",
     },
   },
   {
     id: "14",
-    title: "Vipers Practice",
+    title: "WCS Red Practice",
     start: "2025-05-30T18:00:00",
     end: "2025-05-30T19:30:00",
     extendedProps: {
-      team: "Vipers",
+      team: "WCS Red",
       gender: "Girls",
       type: "Practice",
       location: "South Salina Court",
@@ -171,11 +171,11 @@ export const events = [
   },
   {
     id: "15",
-    title: "Stingers vs. Warriors (Game)",
+    title: "WCS Legends vs. opponents (Game)",
     start: "2025-05-31T14:00:00",
     end: "2025-05-31T15:30:00",
     extendedProps: {
-      team: "Stingers",
+      team: "WCS Legends",
       gender: "Boys",
       type: "Game",
       location: "Salina Community Center",
@@ -183,11 +183,11 @@ export const events = [
   },
   {
     id: "16",
-    title: "Lightning vs. Warriors (Game)",
+    title: "WCS Warriors vs. opponents (Game)",
     start: "2025-06-01T14:00:00",
     end: "2025-06-01T15:30:00",
     extendedProps: {
-      team: "Lightning",
+      team: "WCS Warriors",
       gender: "Boys",
       type: "Game",
       location: "Salina Community Center",
@@ -195,11 +195,11 @@ export const events = [
   },
   {
     id: "17",
-    title: "Raptors vs. Warriors (Game)",
+    title: "WCS Blue vs. opponents (Game)",
     start: "2025-06-02T15:00:00",
     end: "2025-06-02T16:30:00",
     extendedProps: {
-      team: "Raptors",
+      team: "WCS Blue",
       gender: "Girls",
       type: "Game",
       location: "Salina Community Center",
@@ -207,23 +207,23 @@ export const events = [
   },
   {
     id: "18",
-    title: "Lightning Practice",
+    title: "WCS Potter Practice",
     start: "2025-06-03T18:00:00",
     end: "2025-06-03T19:30:00",
     extendedProps: {
-      team: "Lightning",
-      gender: "Boys",
+      team: "WCS Potter",
+      gender: "Girls",
       type: "Practice",
       location: "North Salina Gym",
     },
   },
   {
     id: "19",
-    title: "Raptors Practice",
+    title: "WCS Dupy Practice",
     start: "2025-06-04T17:00:00",
     end: "2025-06-04T18:30:00",
     extendedProps: {
-      team: "Raptors",
+      team: "WCS Dupy",
       gender: "Girls",
       type: "Practice",
       location: "North Salina Gym",
@@ -231,11 +231,11 @@ export const events = [
   },
   {
     id: "20",
-    title: "Thunderhawks Practice",
+    title: "WCS Sharks Practice",
     start: "2025-06-05T16:00:00",
     end: "2025-06-05T17:30:00",
     extendedProps: {
-      team: "Thunderhawks",
+      team: "WCS Sharks",
       gender: "Boys",
       type: "Practice",
       location: "North Salina Gym",
@@ -247,7 +247,7 @@ export const events = [
     start: "2025-06-06T09:00:00",
     end: "2025-06-08T18:00:00",
     extendedProps: {
-      team: "Lightning & Thunderhawks",
+      team: "WCS Warriors & WCS Sharks",
       gender: "Boys",
       type: "Tournament",
       location: "Salina Community Center",
@@ -255,11 +255,11 @@ export const events = [
   },
   {
     id: "22",
-    title: "Firebolts vs. Warriors (Game)",
+    title: "WCS Swish vs. opponents (Game)",
     start: "2025-06-07T10:00:00",
     end: "2025-06-07T11:30:00",
     extendedProps: {
-      team: "Firebolts",
+      team: "WCS Swish",
       gender: "Boys",
       type: "Game",
       location: "Salina Community Center",
@@ -267,11 +267,11 @@ export const events = [
   },
   {
     id: "23",
-    title: "Vipers vs. Warriors (Game)",
+    title: "WCS Williams vs. opponents (Game)",
     start: "2025-06-08T14:30:00",
     end: "2025-06-08T16:00:00",
     extendedProps: {
-      team: "Vipers",
+      team: "WCS Williams",
       gender: "Girls",
       type: "Game",
       location: "Salina Community Center",
@@ -279,11 +279,11 @@ export const events = [
   },
   {
     id: "24",
-    title: "Lightning Practice",
+    title: "WCS Vipers Practice",
     start: "2025-06-09T18:00:00",
     end: "2025-06-09T19:30:00",
     extendedProps: {
-      team: "Lightning",
+      team: "WCS Vipers",
       gender: "Boys",
       type: "Practice",
       location: "North Salina Gym",
@@ -291,23 +291,23 @@ export const events = [
   },
   {
     id: "25",
-    title: "Firebolts Practice",
+    title: "WCS Red Practice",
     start: "2025-06-10T17:00:00",
     end: "2025-06-10T18:30:00",
     extendedProps: {
-      team: "Firebolts",
-      gender: "Boys",
+      team: "WCS Red",
+      gender: "Girls",
       type: "Practice",
       location: "North Salina Gym",
     },
   },
   {
     id: "26",
-    title: "Vipers Practice",
+    title: "WCS Blue Practice",
     start: "2025-06-11T18:00:00",
     end: "2025-06-11T19:30:00",
     extendedProps: {
-      team: "Vipers",
+      team: "WCS Blue",
       gender: "Girls",
       type: "Practice",
       location: "North Salina Gym",
@@ -315,11 +315,11 @@ export const events = [
   },
   {
     id: "27",
-    title: "Raptors vs. Warriors (Game)",
+    title: "WCS Dupy vs. opponents (Game)",
     start: "2025-06-12T15:00:00",
     end: "2025-06-12T16:30:00",
     extendedProps: {
-      team: "Raptors",
+      team: "WCS Dupy",
       gender: "Girls",
       type: "Game",
       location: "Central Salina Arena",
@@ -331,7 +331,7 @@ export const events = [
     start: "2025-06-13T09:00:00",
     end: "2025-06-15T18:00:00",
     extendedProps: {
-      team: "Raptors & Vipers",
+      team: "WCS Blue & WCS Red",
       gender: "Girls",
       type: "Tournament",
       location: "South Salina Court",
@@ -339,11 +339,11 @@ export const events = [
   },
   {
     id: "29",
-    title: "Thunderhawks vs. Warriors (Game)",
+    title: "WCS Warriors vs. opponents (Game)",
     start: "2025-06-14T15:00:00",
     end: "2025-06-14T16:30:00",
     extendedProps: {
-      team: "Thunderhawks",
+      team: "WCS Warriors",
       gender: "Boys",
       type: "Game",
       location: "Salina Community Center",
@@ -351,11 +351,11 @@ export const events = [
   },
   {
     id: "30",
-    title: "Lightning vs. Warriors (Game)",
+    title: "WCS Vipers vs. opponents (Game)",
     start: "2025-06-15T13:00:00",
     end: "2025-06-15T14:30:00",
     extendedProps: {
-      team: "Lightning",
+      team: "WCS Vipers",
       gender: "Boys",
       type: "Game",
       location: "South Salina Court",
@@ -363,11 +363,11 @@ export const events = [
   },
   {
     id: "31",
-    title: "Raptors Practice",
+    title: "WCS White Practice",
     start: "2025-06-16T17:00:00",
     end: "2025-06-16T18:30:00",
     extendedProps: {
-      team: "Raptors",
+      team: "WCS White",
       gender: "Girls",
       type: "Practice",
       location: "South Salina Court",
@@ -375,11 +375,11 @@ export const events = [
   },
   {
     id: "32",
-    title: "Stingers Practice",
+    title: "WCS Legends Practice",
     start: "2025-06-17T16:00:00",
     end: "2025-06-17T17:30:00",
     extendedProps: {
-      team: "Stingers",
+      team: "WCS Legends",
       gender: "Boys",
       type: "Practice",
       location: "North Salina Gym",
@@ -387,11 +387,11 @@ export const events = [
   },
   {
     id: "33",
-    title: "Firebolts Practice",
+    title: "WCS Swish Practice",
     start: "2025-06-18T17:00:00",
     end: "2025-06-18T18:30:00",
     extendedProps: {
-      team: "Firebolts",
+      team: "WCS Swish",
       gender: "Boys",
       type: "Practice",
       location: "North Salina Gym",
@@ -399,23 +399,23 @@ export const events = [
   },
   {
     id: "34",
-    title: "Lightning Practice",
+    title: "WCS Potter Practice",
     start: "2025-06-19T18:00:00",
     end: "2025-06-19T19:30:00",
     extendedProps: {
-      team: "Lightning",
-      gender: "Boys",
+      team: "WCS Potter",
+      gender: "Girls",
       type: "Practice",
       location: "North Salina Gym",
     },
   },
   {
     id: "35",
-    title: "Vipers vs. Warriors (Game)",
+    title: "WCS Williams vs. opponents (Game)",
     start: "2025-06-20T15:00:00",
     end: "2025-06-20T16:30:00",
     extendedProps: {
-      team: "Vipers",
+      team: "WCS Williams",
       gender: "Girls",
       type: "Game",
       location: "Salina Community Center",
@@ -423,11 +423,11 @@ export const events = [
   },
   {
     id: "36",
-    title: "Stingers vs. Warriors (Game)",
+    title: "WCS Sharks vs. opponents (Game)",
     start: "2025-06-21T14:00:00",
     end: "2025-06-21T15:30:00",
     extendedProps: {
-      team: "Stingers",
+      team: "WCS Sharks",
       gender: "Boys",
       type: "Game",
       location: "Central Salina Arena",
@@ -435,11 +435,11 @@ export const events = [
   },
   {
     id: "37",
-    title: "Raptors Practice",
+    title: "WCS Blue Practice",
     start: "2025-06-23T17:00:00",
     end: "2025-06-23T18:30:00",
     extendedProps: {
-      team: "Raptors",
+      team: "WCS Blue",
       gender: "Girls",
       type: "Practice",
       location: "South Salina Court",
@@ -447,11 +447,11 @@ export const events = [
   },
   {
     id: "38",
-    title: "Vipers Practice",
+    title: "WCS Red Practice",
     start: "2025-06-24T18:00:00",
     end: "2025-06-24T19:30:00",
     extendedProps: {
-      team: "Vipers",
+      team: "WCS Red",
       gender: "Girls",
       type: "Practice",
       location: "South Salina Court",
@@ -459,11 +459,11 @@ export const events = [
   },
   {
     id: "39",
-    title: "Firebolts vs. Warriors (Game)",
+    title: "WCS Warriors vs. opponents (Game)",
     start: "2025-06-25T15:00:00",
     end: "2025-06-25T16:30:00",
     extendedProps: {
-      team: "Firebolts",
+      team: "WCS Warriors",
       gender: "Boys",
       type: "Game",
       location: "Central Salina Arena",
@@ -471,11 +471,11 @@ export const events = [
   },
   {
     id: "40",
-    title: "Lightning Practice",
+    title: "WCS Vipers Practice",
     start: "2025-06-26T18:00:00",
     end: "2025-06-26T19:30:00",
     extendedProps: {
-      team: "Lightning",
+      team: "WCS Vipers",
       gender: "Boys",
       type: "Practice",
       location: "North Salina Gym",
@@ -495,11 +495,11 @@ export const events = [
   },
   {
     id: "42",
-    title: "Raptors vs. Warriors (Game)",
+    title: "WCS Dupy vs. opponents (Game)",
     start: "2025-06-28T14:00:00",
     end: "2025-06-28T15:30:00",
     extendedProps: {
-      team: "Raptors",
+      team: "WCS Dupy",
       gender: "Girls",
       type: "Game",
       location: "Salina Community Center",
@@ -507,11 +507,11 @@ export const events = [
   },
   {
     id: "43",
-    title: "Thunderhawks vs. Warriors (Game)",
+    title: "WCS Sharks vs. opponents (Game)",
     start: "2025-06-29T13:00:00",
     end: "2025-06-29T14:30:00",
     extendedProps: {
-      team: "Thunderhawks",
+      team: "WCS Sharks",
       gender: "Boys",
       type: "Game",
       location: "Salina Community Center",
@@ -519,11 +519,11 @@ export const events = [
   },
   {
     id: "44",
-    title: "Stingers Practice",
+    title: "WCS Legends Practice",
     start: "2025-06-30T16:00:00",
     end: "2025-06-30T17:30:00",
     extendedProps: {
-      team: "Stingers",
+      team: "WCS Legends",
       gender: "Boys",
       type: "Practice",
       location: "North Salina Gym",
@@ -531,11 +531,11 @@ export const events = [
   },
   {
     id: "45",
-    title: "Vipers Practice",
+    title: "WCS White Practice",
     start: "2025-07-01T18:00:00",
     end: "2025-07-01T19:30:00",
     extendedProps: {
-      team: "Vipers",
+      team: "WCS White",
       gender: "Girls",
       type: "Practice",
       location: "South Salina Court",
@@ -543,11 +543,11 @@ export const events = [
   },
   {
     id: "46",
-    title: "Firebolts Practice",
+    title: "WCS Swish Practice",
     start: "2025-07-02T17:00:00",
     end: "2025-07-02T18:30:00",
     extendedProps: {
-      team: "Firebolts",
+      team: "WCS Swish",
       gender: "Boys",
       type: "Practice",
       location: "North Salina Gym",
@@ -555,23 +555,23 @@ export const events = [
   },
   {
     id: "47",
-    title: "Lightning Practice",
+    title: "WCS Potter Practice",
     start: "2025-07-03T18:00:00",
     end: "2025-07-03T19:30:00",
     extendedProps: {
-      team: "Lightning",
-      gender: "Boys",
+      team: "WCS Potter",
+      gender: "Girls",
       type: "Practice",
       location: "North Salina Gym",
     },
   },
   {
     id: "48",
-    title: "Raptors vs. Warriors (Game)",
+    title: "WCS Blue vs. opponents (Game)",
     start: "2025-07-04T15:00:00",
     end: "2025-07-04T16:30:00",
     extendedProps: {
-      team: "Raptors",
+      team: "WCS Blue",
       gender: "Girls",
       type: "Game",
       location: "Central Salina Arena",
@@ -579,11 +579,11 @@ export const events = [
   },
   {
     id: "49",
-    title: "Lightning vs. Warriors (Game)",
+    title: "WCS Warriors vs. opponents (Game)",
     start: "2025-07-05T16:00:00",
     end: "2025-07-05T17:30:00",
     extendedProps: {
-      team: "Lightning",
+      team: "WCS Warriors",
       gender: "Boys",
       type: "Game",
       location: "South Salina Court",
@@ -591,11 +591,11 @@ export const events = [
   },
   {
     id: "50",
-    title: "Raptors Practice",
+    title: "WCS Red Practice",
     start: "2025-07-06T18:00:00",
     end: "2025-07-06T19:30:00",
     extendedProps: {
-      team: "Raptors",
+      team: "WCS Red",
       gender: "Girls",
       type: "Practice",
       location: "South Salina Court",
@@ -603,11 +603,11 @@ export const events = [
   },
   {
     id: "51",
-    title: "Vipers Practice",
+    title: "WCS White Practice",
     start: "2025-07-07T18:00:00",
     end: "2025-07-07T19:30:00",
     extendedProps: {
-      team: "Vipers",
+      team: "WCS White",
       gender: "Girls",
       type: "Practice",
       location: "South Salina Court",
@@ -615,11 +615,11 @@ export const events = [
   },
   {
     id: "52",
-    title: "Firebolts vs. Warriors (Game)",
+    title: "WCS Vipers vs. opponents (Game)",
     start: "2025-07-08T14:00:00",
     end: "2025-07-08T15:30:00",
     extendedProps: {
-      team: "Firebolts",
+      team: "WCS Vipers",
       gender: "Boys",
       type: "Game",
       location: "Central Salina Arena",
@@ -627,11 +627,11 @@ export const events = [
   },
   {
     id: "53",
-    title: "Stingers Practice",
+    title: "WCS Legends Practice",
     start: "2025-07-09T16:00:00",
     end: "2025-07-09T17:30:00",
     extendedProps: {
-      team: "Stingers",
+      team: "WCS Legends",
       gender: "Boys",
       type: "Practice",
       location: "North Salina Gym",
@@ -643,7 +643,7 @@ export const events = [
     start: "2025-07-11T09:00:00",
     end: "2025-07-13T18:00:00",
     extendedProps: {
-      team: "Stingers & Lightning",
+      team: "WCS Sharks & WCS Warriors",
       gender: "Boys",
       type: "Tournament",
       location: "North Salina Gym",
@@ -651,11 +651,11 @@ export const events = [
   },
   {
     id: "55",
-    title: "Thunderhawks Practice",
+    title: "WCS Sharks Practice",
     start: "2025-07-12T18:00:00",
     end: "2025-07-12T19:30:00",
     extendedProps: {
-      team: "Thunderhawks",
+      team: "WCS Sharks",
       gender: "Boys",
       type: "Practice",
       location: "South Salina Court",
@@ -663,11 +663,11 @@ export const events = [
   },
   {
     id: "56",
-    title: "Vipers Practice",
+    title: "WCS Williams Practice",
     start: "2025-07-13T17:00:00",
     end: "2025-07-13T18:30:00",
     extendedProps: {
-      team: "Vipers",
+      team: "WCS Williams",
       gender: "Girls",
       type: "Practice",
       location: "South Salina Court",
@@ -675,23 +675,23 @@ export const events = [
   },
   {
     id: "57",
-    title: "Lightning Practice",
+    title: "WCS Potter Practice",
     start: "2025-07-14T18:00:00",
     end: "2025-07-14T19:30:00",
     extendedProps: {
-      team: "Lightning",
-      gender: "Boys",
+      team: "WCS Potter",
+      gender: "Girls",
       type: "Practice",
       location: "North Salina Gym",
     },
   },
   {
     id: "58",
-    title: "Raptors Practice",
+    title: "WCS Dupy Practice",
     start: "2025-07-15T17:00:00",
     end: "2025-07-15T18:30:00",
     extendedProps: {
-      team: "Raptors",
+      team: "WCS Dupy",
       gender: "Girls",
       type: "Practice",
       location: "South Salina Court",
@@ -699,11 +699,11 @@ export const events = [
   },
   {
     id: "59",
-    title: "Firebolts Practice",
+    title: "WCS Swish Practice",
     start: "2025-07-16T17:00:00",
     end: "2025-07-16T18:30:00",
     extendedProps: {
-      team: "Firebolts",
+      team: "WCS Swish",
       gender: "Boys",
       type: "Practice",
       location: "North Salina Gym",
@@ -711,11 +711,11 @@ export const events = [
   },
   {
     id: "60",
-    title: "Stingers Practice",
+    title: "WCS Legends Practice",
     start: "2025-07-17T16:00:00",
     end: "2025-07-17T17:30:00",
     extendedProps: {
-      team: "Stingers",
+      team: "WCS Legends",
       gender: "Boys",
       type: "Practice",
       location: "North Salina Gym",
@@ -723,11 +723,11 @@ export const events = [
   },
   {
     id: "61",
-    title: "Vipers vs. Warriors (Game)",
+    title: "WCS Red vs. opponents (Game)",
     start: "2025-07-18T15:00:00",
     end: "2025-07-18T16:30:00",
     extendedProps: {
-      team: "Vipers",
+      team: "WCS Red",
       gender: "Girls",
       type: "Game",
       location: "Salina Community Center",
@@ -735,11 +735,11 @@ export const events = [
   },
   {
     id: "62",
-    title: "Thunderhawks vs. Warriors (Game)",
+    title: "WCS Warriors vs. opponents (Game)",
     start: "2025-07-19T14:00:00",
     end: "2025-07-19T15:30:00",
     extendedProps: {
-      team: "Thunderhawks",
+      team: "WCS Warriors",
       gender: "Boys",
       type: "Game",
       location: "South Salina Court",
@@ -747,11 +747,11 @@ export const events = [
   },
   {
     id: "63",
-    title: "Raptors vs. Warriors (Game)",
+    title: "WCS Blue vs. opponents (Game)",
     start: "2025-07-20T16:00:00",
     end: "2025-07-20T17:30:00",
     extendedProps: {
-      team: "Raptors",
+      team: "WCS Blue",
       gender: "Girls",
       type: "Game",
       location: "Salina Community Center",
@@ -759,11 +759,11 @@ export const events = [
   },
   {
     id: "64",
-    title: "Lightning Practice",
+    title: "WCS Vipers Practice",
     start: "2025-07-21T18:00:00",
     end: "2025-07-21T19:30:00",
     extendedProps: {
-      team: "Lightning",
+      team: "WCS Vipers",
       gender: "Boys",
       type: "Practice",
       location: "North Salina Gym",
@@ -771,11 +771,11 @@ export const events = [
   },
   {
     id: "65",
-    title: "Vipers Practice",
+    title: "WCS White Practice",
     start: "2025-07-22T18:00:00",
     end: "2025-07-22T19:30:00",
     extendedProps: {
-      team: "Vipers",
+      team: "WCS White",
       gender: "Girls",
       type: "Practice",
       location: "South Salina Court",
@@ -783,11 +783,11 @@ export const events = [
   },
   {
     id: "66",
-    title: "Firebolts vs. Warriors (Game)",
+    title: "WCS Swish vs. opponents (Game)",
     start: "2025-07-23T14:00:00",
     end: "2025-07-23T15:30:00",
     extendedProps: {
-      team: "Firebolts",
+      team: "WCS Swish",
       gender: "Boys",
       type: "Game",
       location: "Central Salina Arena",
@@ -795,11 +795,11 @@ export const events = [
   },
   {
     id: "67",
-    title: "Raptors Practice",
+    title: "WCS Red Practice",
     start: "2025-07-24T17:00:00",
     end: "2025-07-24T18:30:00",
     extendedProps: {
-      team: "Raptors",
+      team: "WCS Red",
       gender: "Girls",
       type: "Practice",
       location: "South Salina Court",
@@ -819,11 +819,11 @@ export const events = [
   },
   {
     id: "69",
-    title: "Vipers vs. Warriors (Game)",
+    title: "WCS Williams vs. opponents (Game)",
     start: "2025-07-26T15:00:00",
     end: "2025-07-26T16:30:00",
     extendedProps: {
-      team: "Vipers",
+      team: "WCS Williams",
       gender: "Girls",
       type: "Game",
       location: "Salina Community Center",
@@ -831,23 +831,23 @@ export const events = [
   },
   {
     id: "70",
-    title: "Lightning vs. Warriors (Game)",
+    title: "WCS Potter vs. opponents (Game)",
     start: "2025-07-27T13:00:00",
     end: "2025-07-27T14:30:00",
     extendedProps: {
-      team: "Lightning",
-      gender: "Boys",
+      team: "WCS Potter",
+      gender: "Girls",
       type: "Game",
       location: "Salina Community Center",
     },
   },
   {
     id: "71",
-    title: "Firebolts Practice",
+    title: "WCS Swish Practice",
     start: "2025-07-28T17:00:00",
     end: "2025-07-28T18:30:00",
     extendedProps: {
-      team: "Firebolts",
+      team: "WCS Swish",
       gender: "Boys",
       type: "Practice",
       location: "North Salina Gym",
@@ -855,11 +855,11 @@ export const events = [
   },
   {
     id: "72",
-    title: "Stingers Practice",
+    title: "WCS Legends Practice",
     start: "2025-07-29T16:00:00",
     end: "2025-07-29T17:30:00",
     extendedProps: {
-      team: "Stingers",
+      team: "WCS Legends",
       gender: "Boys",
       type: "Practice",
       location: "North Salina Gym",
@@ -867,11 +867,11 @@ export const events = [
   },
   {
     id: "73",
-    title: "Vipers vs. Warriors (Game)",
+    title: "WCS Dupy vs. opponents (Game)",
     start: "2025-07-30T15:00:00",
     end: "2025-07-30T16:30:00",
     extendedProps: {
-      team: "Vipers",
+      team: "WCS Dupy",
       gender: "Girls",
       type: "Game",
       location: "South Salina Court",
@@ -879,23 +879,14 @@ export const events = [
   },
   {
     id: "74",
-    title: "Thunderhawks vs. Warriors (Game)",
+    title: "WCS Sharks vs. opponents (Game)",
     start: "2025-07-31T14:00:00",
     end: "2025-07-31T15:30:00",
     extendedProps: {
-      team: "Thunderhawks",
+      team: "WCS Sharks",
       gender: "Boys",
       type: "Game",
       location: "Central Salina Arena",
     },
   },
-];
-
-export const teams = [
-  { name: "Thunderhawks", gender: "Boys" },
-  { name: "Firebolts", gender: "Boys" },
-  { name: "Stingers", gender: "Boys" },
-  { name: "Raptors", gender: "Girls" },
-  { name: "Vipers", gender: "Girls" },
-  { name: "Lightning", gender: "Boys" },
 ];
