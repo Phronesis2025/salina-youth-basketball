@@ -92,9 +92,37 @@ h3 {
 .animate-fadeIn {
   animation: fadeIn 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
+
+@keyframes slide-in {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-out {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+.animate-slide-in {
+  animation: slide-in 0.3s ease-out forwards;
+}
+
+.animate-slide-out {
+  animation: slide-out 0.3s ease-in forwards;
+}
+
 .dialog-content .ring-offset-background {
   display: none;
 }
+
 /* Optional: Ensure bounce animation for scroll indicator is included */
 @keyframes bounce {
   0%,
@@ -191,6 +219,7 @@ h3 {
   opacity: 1;
   visibility: visible;
 }
+
 @layer utilities {
   .animate-accordion-down {
     animation: accordion-down 0.2s ease-out;

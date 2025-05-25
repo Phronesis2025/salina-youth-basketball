@@ -2,50 +2,47 @@
 
 import { useState, useEffect } from "react";
 import Navbar from "@/components/common/Navbar";
-import Footer from "@/components/common/Footer";
-
-interface CartItem {
-  productId: string;
-  variantId: string;
-  size: string;
-  color: string;
-  quantity: number;
-}
 
 export default function ClientLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  // Initialize cartItems for cartItemCount
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [cartItemCount, setCartItemCount] = useState(0);
 
-  // Load cart client-side
   useEffect(() => {
-    try {
-      const storedCart = localStorage.getItem("cart");
-      console.log("ClientLayout: Loaded cart from localStorage:", storedCart);
-      if (storedCart) {
-        setCartItems(JSON.parse(storedCart));
+    // Initialize cart count from localStorage or other storage
+    const updateCartCount = () => {
+      try {
+        const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+        const count = cart.reduce(
+          (sum: number, item: any) => sum + item.quantity,
+          0
+        );
+        setCartItemCount(count);
+      } catch (error) {
+        console.error("Error reading cart from localStorage:", error);
       }
-    } catch (error) {
-      console.error(
-        "ClientLayout: Failed to parse cart from localStorage:",
-        error
-      );
-    }
-  }, []);
+    };
 
-  // Calculate total cart item count
-  const cartItemCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+    updateCartCount();
+
+    // Listen for cart updates
+    window.addEventListener("storage", updateCartCount);
+    window.addEventListener("cartUpdated", updateCartCount);
+
+    return () => {
+      window.removeEventListener("storage", updateCartCount);
+      window.removeEventListener("cartUpdated", updateCartCount);
+    };
+  }, []);
 
   return (
     <>
       <Navbar cartItemCount={cartItemCount} />
-      <main className="flex-grow" role="main">
+      <main id="main-content" className="flex flex-col min-h-screen">
         {children}
       </main>
-      <Footer />
     </>
   );
 }

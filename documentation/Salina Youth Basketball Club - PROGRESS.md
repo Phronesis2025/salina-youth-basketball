@@ -35,12 +35,12 @@
 - **Phase 4 (Testing and Deployment)**: In Progress (deployed to Vercel, testing in progress).
 - **Phase 5 (Polish and Iteration)**: Not started.
 
-**Key Milestones**: Defined project goals, planned website structure, set up color scheme and design guidelines, prepared placeholder content (20-team dataset, Coaches Corner articles, t-shirt designs), built Homepage Hero section with functional CTAs, added News Carousel, Team Preview, Schedule Preview, Values, and Coaches Corner sections, created the Team Hub with filtering by age group, built the Team Sub-Page for detailed team information, deployed the site to Vercel, resolved build warnings and errors, fixed styling issues on Vercel, resolved permission issues during builds, added placeholder pages for routes, fixed logo and footer display issues, implemented logo shrinking on scroll, implemented the Join page with form submission, Stripe payment integration, Supabase storage, transitioned from PDF invoice generation to HTML invoice emails via Resend, completed the Schedules page with FullCalendar integration, updated Team Sub-Page with schedule tables and merchandise section, removed `animate-fadeIn` effect across all pages, built the Shop page with product listings and Stripe checkout, resolved build errors (ESLint, TypeScript, `localStorage`, `useSearchParams`), successfully deployed to Vercel, integrated Printful API for order fulfillment, tested order submission in test and live modes, resolved Printful API errors (incorrect endpoint, test mode logic), updated the Values section with a simplified carousel, text alignment, shaded box, modal outside click, and single-line mobile title, completed the Coaches Corner section with dynamic drill fetching, image handling, and accordion styling improvements, built the About page with logo, mission statement, and fictitious history, updated Navbar to include About link, deployed a working version to Vercel.
+**Key Milestones**: Defined project goals, planned website structure, set up color scheme and design guidelines, prepared placeholder content (20-team dataset, Coaches Corner articles, t-shirt designs), built Homepage Hero section with functional CTAs, added News Carousel, Team Preview, Schedule Preview, Values, and Coaches Corner sections, created the Team Hub with filtering by age group, built the Team Sub-Page for detailed team information, deployed the site to Vercel, resolved build warnings and errors, fixed styling issues on Vercel, resolved permission issues during builds, added placeholder pages for routes, fixed logo and footer display issues, implemented logo shrinking on scroll, implemented the Join page with form submission, Stripe payment integration, Supabase storage, transitioned from PDF invoice generation to HTML invoice emails via Resend, completed the Schedules page with FullCalendar integration, updated Team Sub-Page with schedule tables and merchandise section, removed `animate-fadeIn` effect across all pages, built the Shop page with product listings and Stripe checkout, resolved build errors (ESLint, TypeScript, `localStorage`, `useSearchParams`), successfully deployed to Vercel, integrated Printful API for order fulfillment, tested order submission in test and live modes, resolved Printful API errors (incorrect endpoint, test mode logic), updated the Values section with a simplified carousel, text alignment, shaded box, modal outside click, and single-line mobile title, completed the Coaches Corner section with dynamic drill fetching, image handling, and accordion styling improvements, built the About page with logo, mission statement, and fictitious history, updated Navbar to include About link, deployed a working version to Vercel, refined Navbar with black background, no Coaches Hub dropdowns, reduced height, uppercase fonts, conditional cart navigation, mobile X icon, and accessibility features.
 
 ## Files for Review
 
 - src/components/homepage/Hero.tsx (completed with video background, CTAs, and styling)
-- src/components/common/Navbar.tsx (updated with logo, right-aligned links, scroll effect, mobile menu, added About link)
+- src/components/common/Navbar.tsx (updated with black background, no Coaches Hub dropdowns, reduced height)
 - src/components/common/Footer.tsx (includes logo, navigation, newsletter signup)
 - src/components/homepage/NewsCarousel.tsx (added carousel with static data and modals)
 - src/components/homepage/TeamPreview.tsx (added team previews with links)
@@ -83,9 +83,9 @@
 
 ## Current State
 
-**Date**: May 24, 2025, 10:05 AM CDT
+**Date**: May 25, 2025, 5:36 AM CDT
 
-**Progress**: Advanced Phase 3: Build Website. Completed the About page (`/app/about/page.tsx`) with the main logo (`/images/WCS Logo-transparentBG.png`), mission statement, and a fictitious history, styled with a dark theme (`bg-[#002C51]`, `bg-gray-900` cards, `border-red-500/50`, Rubik/Inter fonts). Updated the Navbar (`/src/components/common/Navbar.tsx`) to include an About link in desktop and mobile menus. Deployed the updated site to Vercel at `https://wcs-three.vercel.app`. In progress with the Tournaments page (`/app/tournaments/page.tsx`), which includes static tournament listings, a signup form with Supabase storage, and a TourneyMachine link, with styling adjustments ongoing. Phase 4 (Testing and Deployment) is in progress, with deployment complete and initial testing of the Shop page, Values section, Coaches Corner section, and About page successful. Next tasks: Refine the Navbar, complete the Tournaments page, fix redirect error on `/join/status`, test Resend email delivery, and continue end-to-end testing of all flows (registration, schedules, purchases).
+**Progress**: Advanced Phase 3: Build Website. Completed refinements to the Navbar (`/src/components/common/Navbar.tsx`). Updated to use a black background (`bg-black`), removed "Coaches Hub" dropdowns on desktop and mobile, reduced height to 56px (`h-14`), maintained uppercase fonts (`font-inter uppercase font-light`), implemented conditional cart navigation (`/shop` or `/shop/cart`), retained mobile slide-in menu with X icon, and ensured accessibility (`aria-current`, focus trapping, skip-to-content). Changes included lighter font weight (`font-light`), null-checked `pathname`, and sub-route highlighting with `startsWith`. In progress with the Tournaments page (`/app/tournaments/page.tsx`), with static listings and signup form complete, styling adjustments ongoing. Phase 4 (Testing and Deployment) continues, with deployment complete and initial testing of Shop, Values, Coaches Corner, About, and Navbar successful. Next tasks: Update ValuesSection.tsx, complete Tournaments page, fix redirect error on `/join/status`, test Resend email delivery, and continue end-to-end testing.
 
 **Blockers**: None.
 
@@ -101,6 +101,7 @@
 - [May 22, 2025]: No errors during Values section updates. Successfully implemented simplified carousel, responsive text alignment, shaded box, modal outside click, and single-line mobile section title.
 - [May 23, 2025]: Fixed CSV import issue for `drills` table by correcting array format for `skills` and `equipment` columns, successfully loaded 26 drills into Supabase. No errors during Coaches Corner section updates (dynamic drill fetching, image handling, accordion styling).
 - [May 24, 2025]: No errors during About page implementation. Successfully created `/app/about/page.tsx` with logo, mission statement, and history, and updated `/src/components/common/Navbar.tsx` to include About link.
+- [May 25, 2025]: No errors during final Navbar refinements. Successfully updated to black background, removed Coaches Hub dropdowns, reduced height to 56px, and adjusted font weight to `font-light`. Added null check for `pathname` and sub-route highlighting with `startsWith`.
 
 **To-Do List**
 
@@ -171,6 +172,14 @@
   - [x] Style the page to match the project's design
   - [x] Add navigation links (e.g., "Back to Homepage")
   - [x] Update Navbar to include About link
+- [x] Refine Navbar
+  - [x] Apply black background (`bg-black`)
+  - [x] Remove Coaches Hub dropdowns on desktop and mobile
+  - [x] Reduce height to 56px (`h-14`)
+  - [x] Implement conditional cart navigation (`/shop` or `/shop/cart`)
+  - [x] Use uppercase fonts (`font-inter uppercase font-light`)
+  - [x] Replace mobile "Close Menu" with X icon
+  - [x] Test locally and on Vercel
 
 ## Phase 4: Testing and Deployment
 
@@ -209,6 +218,7 @@
 - Updated Values section with simplified carousel, responsive text alignment, shaded box, modal outside click, and single-line mobile title
 - Completed Coaches Corner section with dynamic drill fetching, image handling, and accordion styling improvements
 - Completed About page with logo, mission statement, history, and Navbar integration
+- Refined Navbar with black background, no Coaches Hub dropdowns, reduced height, uppercase fonts, conditional cart navigation, mobile X icon, and accessibility features
 
 ## Prompts
 
@@ -222,7 +232,7 @@ PROGRESS.md Contents:
 
 Current Task:
 
-[Insert current task here, e.g., refining the Navbar or completing the Tournaments page.]
+[Insert current task here, e.g., updating ValuesSection.tsx.]
 
 Additional Context:
 
@@ -249,15 +259,17 @@ Please provide a detailed plan for the current task, then proceed with implement
 
 ## Notes on Updates
 
-- **Phase 3 To-Do List**: Updated to mark About page tasks as completed (logo, mission statement, history, Navbar integration). Noted Tournaments page as in progress with static listings, signup form, and styling adjustments.
-- **Phase 4 To-Do List**: Noted initial testing of About page as successful, with remaining testing tasks pending.
-- **Current State**: Updated to reflect About page and Navbar update completion, Tournaments page progress, successful deployment, and testing status on May 24, 2025, 10:05 AM CDT.
-- **Errors**: Added entry for May 24, 2025, noting no errors during About page and Navbar updates.
-- **May 24, 2025 Update**:
-  - Completed About page with `/app/about/page.tsx`:
-    - Added main logo (`/images/WCS Logo-transparentBG.png`), mission statement, and fictitious history.
-    - Styled with dark theme (`bg-[#002C51]`, `bg-gray-900` cards, `border-red-500/50`, Rubik/Inter fonts).
-    - Included navigation link ("Back to Homepage").
-  - Updated Navbar with `/src/components/common/Navbar.tsx`:
-    - Added About link to desktop and mobile menus.
+- **Phase 3 To-Do List**: Updated to mark Navbar refinements as completed (black background, no Coaches Hub dropdowns, reduced height, uppercase fonts, conditional cart navigation, mobile X icon). Noted Tournaments page as in progress with static listings, signup form, and styling adjustments.
+- **Phase 4 To-Do List**: Noted initial testing of Navbar as successful, with remaining testing tasks pending.
+- **Current State**: Updated to reflect Navbar completion, Tournaments page progress, successful deployment, and testing status on May 25, 2025, 5:36 AM CDT.
+- **Errors**: Added entry for May 25, 2025, noting no errors during final Navbar refinements.
+- **May 25, 2025 Update**:
+  - Completed Navbar refinements with `/src/components/common/Navbar.tsx`:
+    - Set black background (`bg-black`).
+    - Removed "Coaches Hub" dropdowns on desktop and mobile, linking directly to `/coaches`.
+    - Reduced height to 56px (`h-14`), adjusted logo and icon sizes.
+    - Used uppercase fonts (`font-inter uppercase font-light`).
+    - Maintained conditional cart navigation (`/shop` or `/shop/cart`).
+    - Retained mobile slide-in menu with X icon.
+    - Ensured accessibility (`aria-current`, focus trapping, skip-to-content).
   - Deployed a fully working version to Vercel at `https://wcs-three.vercel.app`.
