@@ -176,7 +176,7 @@ export default function TeamSubPage() {
                 console.log(`Hero image loaded: ${heroImage}`)
               }
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-black/10"></div>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/30"></div>
             <div className="absolute bottom-6 left-6 right-6 flex flex-col items-center">
               <div className="relative w-[100px] h-[100px] rounded-full border-8 border-[#002C51] shadow-[0_5px_10px_rgba(0,0,0,0.5)] bg-black/50 mb-4">
                 <Image
@@ -232,9 +232,9 @@ export default function TeamSubPage() {
             <h2 className="text-white text-2xl font-rubik font-semibold mb-4 uppercase">
               Upcoming Practices
             </h2>
-            <div className="overflow-x-auto mb-8">
-              <table className="w-full min-w-[600px] text-white text-base font-inter rounded-lg shadow-md border border-gray-700">
-                <thead>
+            <div className="mb-8">
+              <table className="w-full text-white text-base font-inter rounded-lg shadow-md border border-gray-700">
+                <thead className="hidden sm:table-header-group">
                   <tr className="bg-blue-600 rounded-t-lg">
                     <th className="p-4 text-left font-rubik font-semibold uppercase text-sm">
                       Date
@@ -253,21 +253,33 @@ export default function TeamSubPage() {
                       <tr
                         key={index}
                         className={cn(
-                          "hover:bg-gray-700 transition-colors duration-200",
-                          index % 2 === 0 ? "bg-gray-900" : "bg-gray-800"
+                          "block sm:table-row border-b border-gray-700 sm:border-0 mb-4 sm:mb-0",
+                          index % 2 === 0 ? "bg-gray-900" : "bg-gray-800",
+                          "hover:bg-gray-700 sm:hover:bg-gray-700 transition-colors duration-200"
                         )}
                       >
-                        <td className="p-4 text-sm">
+                        <td
+                          data-label="Date"
+                          className="block sm:table-cell p-3 sm:p-4 text-sm text-left before:content-[attr(data-label)] before:font-rubik before:font-semibold before:uppercase before:mr-2 sm:before:content-none"
+                        >
                           {formatDate(practice.date)}
                         </td>
-                        <td className="p-4 text-sm">
+                        <td
+                          data-label="Start Time"
+                          className="block sm:table-cell p-3 sm:p-4 text-sm text-left before:content-[attr(data-label)] before:font-rubik before:font-semibold before:uppercase before:mr-2 sm:before:content-none"
+                        >
                           {new Date(practice.date).toLocaleTimeString("en-US", {
                             hour: "numeric",
                             minute: "2-digit",
                             hour12: true,
                           })}
                         </td>
-                        <td className="p-4 text-sm">{practice.location}</td>
+                        <td
+                          data-label="Location"
+                          className="block sm:table-cell p-3 sm:p-4 text-sm text-left before:content-[attr(data-label)] before:font-rubik before:font-semibold before:uppercase before:mr-2 sm:before:content-none"
+                        >
+                          {practice.location}
+                        </td>
                       </tr>
                     ))
                   ) : (
@@ -287,9 +299,9 @@ export default function TeamSubPage() {
             <h2 className="text-white text-2xl font-rubik font-semibold mb-4 uppercase">
               Upcoming Games
             </h2>
-            <div className="overflow-x-auto">
-              <table className="w-full min-w-[600px] text-white text-base font-inter rounded-lg shadow-md border border-gray-700">
-                <thead>
+            <div className="mb-8">
+              <table className="w-full text-white text-base font-inter rounded-lg shadow-md border border-gray-700">
+                <thead className="hidden sm:table-header-group">
                   <tr className="bg-blue-600 rounded-t-lg">
                     <th className="p-4 text-left font-rubik font-semibold uppercase text-sm">
                       Date
@@ -308,13 +320,29 @@ export default function TeamSubPage() {
                       <tr
                         key={index}
                         className={cn(
-                          "hover:bg-gray-700 transition-colors duration-200",
-                          index % 2 === 0 ? "bg-gray-900" : "bg-gray-800"
+                          "block sm:table-row border-b border-gray-700 sm:border-0 mb-4 sm:mb-0",
+                          index % 2 === 0 ? "bg-gray-900" : "bg-gray-800",
+                          "hover:bg-gray-700 sm:hover:bg-gray-700 transition-colors duration-200"
                         )}
                       >
-                        <td className="p-4 text-sm">{formatDate(game.date)}</td>
-                        <td className="p-4 text-sm">{game.opponent}</td>
-                        <td className="p-4 text-sm">{game.location}</td>
+                        <td
+                          data-label="Date"
+                          className="block sm:table-cell p-3 sm:p-4 text-sm text-left before:content-[attr(data-label)] before:font-rubik before:font-semibold before:uppercase before:mr-2 sm:before:content-none"
+                        >
+                          {formatDate(game.date)}
+                        </td>
+                        <td
+                          data-label="Opponent"
+                          className="block sm:table-cell p-3 sm:p-4 text-sm text-left before:content-[attr(data-label)] before:font-rubik before:font-semibold before:uppercase before:mr-2 sm:before:content-none"
+                        >
+                          {game.opponent}
+                        </td>
+                        <td
+                          data-label="Location"
+                          className="block sm:table-cell p-3 sm:p-4 text-sm text-left before:content-[attr(data-label)] before:font-rubik before:font-semibold before:uppercase before:mr-2 sm:before:content-none"
+                        >
+                          {game.location}
+                        </td>
                       </tr>
                     ))
                   ) : (
