@@ -35,7 +35,7 @@
 - **Phase 4 (Testing and Deployment)**: In Progress (deployed to Vercel, testing in progress).
 - **Phase 5 (Polish and Iteration)**: Not started.
 
-**Key Milestones**: Defined project goals, planned website structure, set up color scheme and design guidelines, prepared placeholder content (20-team dataset, Coaches Corner articles, t-shirt designs), built Homepage Hero section with functional CTAs, added News Carousel, Team Preview, Schedule Preview, Values, and Coaches Corner sections, created the Team Hub with filtering by age group, built the Team Sub-Page for detailed team information, deployed the site to Vercel, resolved build warnings and errors, fixed styling issues on Vercel, resolved permission issues during builds, added placeholder pages for routes, fixed logo and footer display issues, implemented logo shrinking on scroll, implemented the Join page with form submission, Stripe payment integration, Supabase storage, transitioned from PDF invoice generation to HTML invoice emails via Resend, completed the Schedules page with FullCalendar integration, updated Team Sub-Page with schedule tables and merchandise section, removed `animate-fadeIn` effect across all pages, built the Shop page with product listings and Stripe checkout, resolved build errors (ESLint, TypeScript, `localStorage`, `useSearchParams`), successfully deployed to Vercel, integrated Printful API for order fulfillment, tested order submission in test and live modes, resolved Printful API errors (incorrect endpoint, test mode logic), updated the Values section with a simplified carousel, text alignment, shaded box, modal outside click, and single-line mobile title, completed the Coaches Corner section with dynamic drill fetching, image handling, and accordion styling improvements, built the About page with logo, mission statement, and fictitious history, updated Navbar to include About link, deployed a working version to Vercel, refined Navbar with black background, no Coaches Hub dropdowns, reduced height, uppercase fonts, conditional cart navigation, mobile X icon, and accessibility features.
+**Key Milestones**: Defined project goals, planned website structure, set up color scheme and design guidelines, prepared placeholder content (20-team dataset, Coaches Corner articles, t-shirt designs), built Homepage Hero section with functional CTAs, added News Carousel, Team Preview, Schedule Preview, Values, and Coaches Corner sections, created the Team Hub with filtering by age group, built the Team Sub-Page for detailed team information, deployed the site to Vercel, resolved build warnings and errors, fixed styling issues on Vercel, resolved permission issues during builds, added placeholder pages for routes, fixed logo and footer display issues, implemented logo shrinking on scroll, implemented the Join page with form submission, Stripe payment integration, Supabase storage, transitioned from PDF invoice generation to HTML invoice emails via Resend, completed the Schedules page with FullCalendar integration, updated Team Sub-Page with schedule tables and merchandise section, removed `animate-fadeIn` effect across all pages, built the Shop page with product listings and Stripe checkout, resolved build errors (ESLint, TypeScript, `localStorage`, `useSearchParams`), successfully deployed to Vercel, integrated Printful API for order fulfillment, tested order submission in test and live modes, resolved Printful API errors (incorrect endpoint, test mode logic), updated the Values section with a simplified carousel, text alignment, shaded box, modal outside click, and single-line mobile title, completed the Coaches Corner section with dynamic drill fetching, image handling, and accordion styling improvements, built the About page with logo, mission statement, and fictitious history, updated Navbar to include About link, deployed a working version to Vercel, refined Navbar with black background, no Coaches Hub dropdowns, reduced height, uppercase fonts, conditional cart navigation, mobile X icon, and accessibility features, updated Team Sub-Page hero section (centered image, added logo overlay, darkened gradient, improved contrast) and redesigned schedule tables.
 
 ## Files for Review
 
@@ -51,7 +51,7 @@
 - src/app/about/page.tsx (completed with logo, mission statement, history, and navigation)
 - src/lib/schedules/data.ts (added to store shared events and teams data)
 - app/teams/page.tsx (added Team Hub with team list and age group filter)
-- app/teams/[id]/page.tsx (added Team Sub-Page with detailed team information, updated schedule tables, added merchandise section, removed `animate-fadeIn`)
+- app/teams/[id]/page.tsx (added Team Sub-Page with detailed team information, updated schedule tables, added merchandise section, removed `animate-fadeIn`, centered hero image, added logo overlay, darkened gradient overlay, improved team name/logo contrast)
 - app/signup/page.tsx (added placeholder page)
 - app/schedules/page.tsx (completed with FullCalendar, filters, "Today's Events" card, removed `animate-fadeIn`)
 - app/shop/page.tsx (completed with product listings, Stripe checkout, styled with dark theme, navigation links)
@@ -83,9 +83,9 @@
 
 ## Current State
 
-**Date**: May 25, 2025, 5:36 AM CDT
+**Date**: May 25, 2025, 11:44 AM CDT
 
-**Progress**: Advanced Phase 3: Build Website. Completed refinements to the Navbar (`/src/components/common/Navbar.tsx`). Updated to use a black background (`bg-black`), removed "Coaches Hub" dropdowns on desktop and mobile, reduced height to 56px (`h-14`), maintained uppercase fonts (`font-inter uppercase font-light`), implemented conditional cart navigation (`/shop` or `/shop/cart`), retained mobile slide-in menu with X icon, and ensured accessibility (`aria-current`, focus trapping, skip-to-content). Changes included lighter font weight (`font-light`), null-checked `pathname`, and sub-route highlighting with `startsWith`. In progress with the Tournaments page (`/app/tournaments/page.tsx`), with static listings and signup form complete, styling adjustments ongoing. Phase 4 (Testing and Deployment) continues, with deployment complete and initial testing of Shop, Values, Coaches Corner, About, and Navbar successful. Next tasks: Update ValuesSection.tsx, complete Tournaments page, fix redirect error on `/join/status`, test Resend email delivery, and continue end-to-end testing.
+**Progress**: Advanced Phase 3: Build Website. Completed enhancements to the Team Sub-Page (`/app/teams/[id]/page.tsx`): centered the hero image, added a logo circle overlay above the team name (matching the card style), darkened the hero image with a gradient overlay (`bg-gradient-to-t from-black/70 via-black/30 to-black/10`), improved contrast for the team name (`text-shadow-[0_2px_4px_rgba(0,0,0,0.5)]`) and logo (`bg-black/50`, increased shadow), removed grade level from the team title, and redesigned the schedule tables with rounded corners, alternating row colors, hover effects, and smaller text. In progress with the Tournaments page (`/app/tournaments/page.tsx`), with static listings and signup form complete, styling adjustments ongoing. Phase 4 (Testing and Deployment) continues, with deployment complete and initial testing of Shop, Values, Coaches Corner, About, Navbar, and Team Sub-Page successful. Next tasks: Begin working on the Coaches Hub section, complete Tournaments page, fix redirect error on `/join/status`, test Resend email delivery, and continue end-to-end testing.
 
 **Blockers**: None.
 
@@ -102,6 +102,7 @@
 - [May 23, 2025]: Fixed CSV import issue for `drills` table by correcting array format for `skills` and `equipment` columns, successfully loaded 26 drills into Supabase. No errors during Coaches Corner section updates (dynamic drill fetching, image handling, accordion styling).
 - [May 24, 2025]: No errors during About page implementation. Successfully created `/app/about/page.tsx` with logo, mission statement, and history, and updated `/src/components/common/Navbar.tsx` to include About link.
 - [May 25, 2025]: No errors during final Navbar refinements. Successfully updated to black background, removed Coaches Hub dropdowns, reduced height to 56px, and adjusted font weight to `font-light`. Added null check for `pathname` and sub-route highlighting with `startsWith`.
+- [May 25, 2025]: No errors during Team Sub-Page enhancements. Successfully centered the hero image, added logo overlay, darkened gradient overlay, improved team name/logo contrast, removed grade level from team title, and redesigned schedule tables.
 
 **To-Do List**
 
@@ -115,6 +116,7 @@
   - [x] Add Coaches Corner section with dynamic drill fetch, image handling, and updated accordion styling
 - [x] Build Team Hub
 - [x] Build Team Sub-Page
+  - [x] Center hero image, add logo overlay, darken gradient overlay, improve team name/logo contrast, remove grade level from team title, redesign schedule tables
 - [x] Build Join Page
   - [x] Create Join page with registration form
   - [x] Add payment integration with Stripe
@@ -219,6 +221,7 @@
 - Completed Coaches Corner section with dynamic drill fetching, image handling, and accordion styling improvements
 - Completed About page with logo, mission statement, history, and Navbar integration
 - Refined Navbar with black background, no Coaches Hub dropdowns, reduced height, uppercase fonts, conditional cart navigation, mobile X icon, and accessibility features
+- Enhanced Team Sub-Page with centered hero image, logo overlay, darkened gradient overlay, improved team name/logo contrast, removed grade level from team title, and redesigned schedule tables
 
 ## Prompts
 
@@ -259,17 +262,16 @@ Please provide a detailed plan for the current task, then proceed with implement
 
 ## Notes on Updates
 
-- **Phase 3 To-Do List**: Updated to mark Navbar refinements as completed (black background, no Coaches Hub dropdowns, reduced height, uppercase fonts, conditional cart navigation, mobile X icon). Noted Tournaments page as in progress with static listings, signup form, and styling adjustments.
-- **Phase 4 To-Do List**: Noted initial testing of Navbar as successful, with remaining testing tasks pending.
-- **Current State**: Updated to reflect Navbar completion, Tournaments page progress, successful deployment, and testing status on May 25, 2025, 5:36 AM CDT.
-- **Errors**: Added entry for May 25, 2025, noting no errors during final Navbar refinements.
+- **Phase 3 To-Do List**: Updated to mark Navbar refinements as completed (black background, no Coaches Hub dropdowns, reduced height, uppercase fonts, conditional cart navigation, mobile X icon). Noted Tournaments page as in progress with static listings, signup form, and styling adjustments. Updated Team Sub-Page task to include recent enhancements (centered hero image, logo overlay, darkened gradient, improved contrast, redesigned schedule tables).
+- **Phase 4 To-Do List**: Noted initial testing of Team Sub-Page as successful, with remaining testing tasks pending.
+- **Current State**: Updated to reflect Team Sub-Page enhancements, Tournaments page progress, successful deployment, and testing status on May 25, 2025, 11:44 AM CDT.
+- **Errors**: Added entry for May 25, 2025, noting no errors during Team Sub-Page enhancements.
 - **May 25, 2025 Update**:
-  - Completed Navbar refinements with `/src/components/common/Navbar.tsx`:
-    - Set black background (`bg-black`).
-    - Removed "Coaches Hub" dropdowns on desktop and mobile, linking directly to `/coaches`.
-    - Reduced height to 56px (`h-14`), adjusted logo and icon sizes.
-    - Used uppercase fonts (`font-inter uppercase font-light`).
-    - Maintained conditional cart navigation (`/shop` or `/shop/cart`).
-    - Retained mobile slide-in menu with X icon.
-    - Ensured accessibility (`aria-current`, focus trapping, skip-to-content).
-  - Deployed a fully working version to Vercel at `https://wcs-three.vercel.app`.
+  - Completed Team Sub-Page enhancements in `/app/teams/[id]/page.tsx`:
+    - Centered the hero image (`object-center`).
+    - Added a logo circle overlay above the team name, matching the card style (`w-[100px] h-[100px] rounded-full border-8 border-[#002C51] shadow-[0_5px_10px_rgba(0,0,0,0.3)]`).
+    - Darkened the hero image with a gradient overlay (`bg-gradient-to-t from-black/70 via-black/30 to-black/10`).
+    - Improved contrast for the team name with a text shadow (`text-shadow-[0_2px_4px_rgba(0,0,0,0.5)]`) and for the logo with a semi-transparent background (`bg-black/50`) and increased shadow.
+    - Removed grade level from the team title.
+    - Redesigned schedule tables with rounded corners, alternating row colors (`bg-gray-900`/`bg-gray-800`), hover effects (`hover:bg-gray-700`), smaller text (`text-sm`), and Rubik font for headers.
+  - Deployed updates to Vercel at `https://wcs-three.vercel.app`.
