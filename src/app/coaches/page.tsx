@@ -7,15 +7,8 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 
 export default function CoachesPage() {
-  // Simulated current coach and drill (to be replaced with dynamic data later)
-  const currentCoach = {
-    image: "/images/coach-placeholder.png", // From /app/coaches/highlight/page.tsx
-  };
-
-  const currentDrill = {
-    image: "/images/drill-placeholder.png", // From /app/coaches/drills/[id]/page.tsx
-  };
-
+  const currentCoach = { image: "/images/coach-placeholder.png" };
+  const currentDrill = { image: "/images/drill-placeholder.png" };
   const sections = [
     {
       title: "Coach Highlight",
@@ -28,7 +21,7 @@ export default function CoachesPage() {
       title: "AI-Generated Drills",
       description:
         "Explore weekly basketball drills, like the Lightning Pass Relay, to boost your team’s skills.",
-      link: "/coaches/drills/current", // Updated link to dynamic route
+      link: "/coaches/drills/current",
       image: currentDrill.image,
     },
     {
@@ -57,13 +50,12 @@ export default function CoachesPage() {
   return (
     <main className="bg-[#002C51] min-h-screen py-12">
       <div className="container max-w-[75rem] mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Hero Section */}
         <section
           className="mb-12 text-center"
           aria-label="Coaches Page Welcome"
         >
           <h1 className="text-white text-[clamp(2rem,4vw,2.5rem)] font-inter font-bold uppercase mb-4">
-            Coaches Corner
+            Locker Room
           </h1>
           <p className="text-gray-300 text-[clamp(1rem,2vw,1.125rem)] font-rubik mb-8 max-w-2xl mx-auto">
             Your hub for coaching resources, AI-generated drills, and league
@@ -72,7 +64,7 @@ export default function CoachesPage() {
           <div className="relative h-64 sm:h-96 mb-8">
             <Image
               src="/images/coaches-hero.png"
-              alt="Coaches Corner hero image"
+              alt="Locker Room hero image"
               fill
               className="object-cover rounded-lg"
               sizes="(max-width: 768px) 100vw, 600px"
@@ -80,7 +72,6 @@ export default function CoachesPage() {
           </div>
         </section>
 
-        {/* Sections Grid */}
         <section className="mb-12" aria-label="Coaching Resources">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {sections.map((section, index) => (
@@ -128,7 +119,6 @@ export default function CoachesPage() {
           </div>
         </section>
 
-        {/* Navigation */}
         <section className="flex justify-center" aria-label="Navigation">
           <Link href="/">
             <Button

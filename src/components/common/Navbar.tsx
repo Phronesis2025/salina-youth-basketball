@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Menu, X, ShoppingCart } from "lucide-react";
+import { supabase } from "@/lib/supabaseClient";
 
 // Fallback debounce if lodash.debounce is not installed
 const debounce = (func: Function, wait: number) => {
@@ -24,13 +25,33 @@ interface NavbarProps {
 export default function Navbar({ cartItemCount }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [user, setUser] = useState<any>(null);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
 
   // Debug log to confirm rendering
   useEffect(() => {
-    console.log("Navbar rendered", { pathname, cartItemCount });
-  }, [pathname, cartItemCount]);
+    console.log("Navbar rendered", { pathname, cartItemCount, user });
+  }, [pathname, cartItemCount, user]);
+
+  // Fetch user state and listen for auth changes
+  useEffect(() => {
+    const getUser = async () => {
+      const { data } = await supabase.auth.getUser();
+      setUser(data.user);
+    };
+    getUser();
+
+    const { data: authListener } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        setUser(session?.user ?? null);
+      }
+    );
+
+    return () => {
+      authListener.subscription.unsubscribe();
+    };
+  }, []);
 
   // Scroll handling for logo shrink
   useEffect(() => {
@@ -97,7 +118,8 @@ export default function Navbar({ cartItemCount }: NavbarProps) {
     { name: "About", href: "/about" },
     { name: "Schedules", href: "/schedules" },
     { name: "Teams", href: "/teams" },
-    { name: "Coaches Hub", href: "/coaches" },
+    // Only show "Locker Room" link when not logged in
+    ...(user ? [] : [{ name: "Locker Room", href: "/coaches/login" }]),
     { name: "Join the Team", href: "/join" },
   ];
 
@@ -107,6 +129,12 @@ export default function Navbar({ cartItemCount }: NavbarProps) {
       currentPath: window.location.pathname,
       target: e.target ? (e.target as HTMLElement).outerHTML : "no target",
     });
+  };
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    setUser(null);
+    window.location.href = "/coaches/login";
   };
 
   // Determine cart icon destination
@@ -225,6 +253,18 @@ export default function Navbar({ cartItemCount }: NavbarProps) {
               </span>
             )}
           </Link>
+          {/* Logout for Desktop (only when logged in) */}
+          {user && (
+            <button
+              onClick={handleLogout}
+              className={cn(
+                "text-white font-inter uppercase font-light hover:text-blue-400 hover:border-b-2 hover:border-[#F11A20] focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded-sm transition-all duration-300 no-underline bg-transparent border-none cursor-pointer",
+                scrolled ? "text-xs" : "text-sm"
+              )}
+            >
+              Logout
+            </button>
+          )}
         </nav>
 
         {/* Mobile Menu Button */}
@@ -328,6 +368,19 @@ export default function Navbar({ cartItemCount }: NavbarProps) {
                 >
                   Cart {cartItemCount > 0 && `(${cartItemCount})`}
                 </Link>
+                {user && (
+                  <button
+                    onClick={() => {
+                      handleLogout();
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className={cn(
+                      "text-white font-inter uppercase font-semibold hover:text-blue-400 hover:border-b-2 hover:border-[#F11A20] focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded-sm transition-all duration-300 block px-4 py-2 text-base text-left bg-transparent border-none cursor-pointer"
+                    )}
+                  >
+                    Logout
+                  </button>
+                )}
               </div>
             </div>
           </nav>
