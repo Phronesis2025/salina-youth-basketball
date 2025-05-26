@@ -12,9 +12,19 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { supabase } from "@/lib/supabaseClient";
 
 interface Player {
   id: string;
@@ -38,9 +48,17 @@ export default function CoachesPage() {
   const [players, setPlayers] = useState<Player[]>([]);
   const [events, setEvents] = useState<ScheduleEvent[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [newPlayerName, setNewPlayerName] = useState("");
+  const [newPlayerAge, setNewPlayerAge] = useState("");
+  const [deletePlayer, setDeletePlayer] = useState<Player | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchCoachData = async () => {
+      const supabase = createClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+      );
       const { data: userData, error: userError } =
         await supabase.auth.getUser();
 
@@ -54,7 +72,6 @@ export default function CoachesPage() {
       const userId = userData.user.id;
       console.log("User ID:", userId);
 
-      // Fetch coach data via API route to bypass RLS
       const coachResponse = await fetch("/api/get-coach-team", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -71,7 +88,7 @@ export default function CoachesPage() {
 
       setTeamId(coachResult.teamId);
 
-      // Fetch players via API route to bypass RLS
+      // Fetch players
       const playersResponse = await fetch("/api/get-team-players", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -88,7 +105,7 @@ export default function CoachesPage() {
 
       setPlayers(playersResult.players || []);
 
-      // Fetch schedule via API route to bypass RLS
+      // Fetch schedule
       const schedulesResponse = await fetch("/api/get-team-schedules", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -120,6 +137,70 @@ export default function CoachesPage() {
     fetchCoachData();
   }, []);
 
+  const handleAddPlayer = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError(null);
+    setSuccessMessage(null);
+
+    if (!teamId) {
+      setError("Team ID not found");
+      return;
+    }
+
+    const age = parseInt(newPlayerAge);
+    if (isNaN(age) || age < 8 || age > 14) {
+      setError("Age must be a number between 8 and 14");
+      return;
+    }
+
+    if (!newPlayerName.trim()) {
+      setError("Name is required");
+      return;
+    }
+
+    const response = await fetch("/api/coaches/roster-add", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ teamId, name: newPlayerName.trim(), age }),
+    });
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      setError(result.error || "Error adding player");
+      return;
+    }
+
+    setPlayers([...players, result.player]);
+    setNewPlayerName("");
+    setNewPlayerAge("");
+    setSuccessMessage("Player added successfully");
+  };
+
+  const handleRemovePlayer = async () => {
+    if (!deletePlayer || !teamId) return;
+
+    setError(null);
+    setSuccessMessage(null);
+
+    const response = await fetch("/api/coaches/roster-remove", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ playerId: deletePlayer.id, teamId }),
+    });
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      setError(result.error || "Error removing player");
+      return;
+    }
+
+    setPlayers(players.filter((p) => p.id !== deletePlayer.id));
+    setDeletePlayer(null);
+    setSuccessMessage("Player removed successfully");
+  };
+
   const subPages = [
     { title: "AI-Generated Drills", link: "/coaches/drills/current" },
     { title: "Video Tutorial Library", link: "/coaches/videos" },
@@ -143,10 +224,17 @@ export default function CoachesPage() {
           </p>
         </section>
 
-        {/* Error Message */}
+        {/* Error/Success Messages */}
         {error && (
           <div className="mb-8 p-4 bg-gray-900 border border-red-500/50 rounded-lg">
             <p className="text-red-500 text-sm font-rubik">{error}</p>
+          </div>
+        )}
+        {successMessage && (
+          <div className="mb-8 p-4 bg-gray-900 border border-green-500/50 rounded-lg">
+            <p className="text-green-500 text-sm font-rubik">
+              {successMessage}
+            </p>
           </div>
         )}
 
@@ -162,14 +250,100 @@ export default function CoachesPage() {
               </p>
             </CardHeader>
             <CardContent>
+              {/* Add Player Form */}
+              <form onSubmit={handleAddPlayer} className="mb-6 space-y-4">
+                <div className="flex flex-col sm:flex-row sm:space-x-4 space-y-4 sm:space-y-0">
+                  <div className="flex-1">
+                    <Label
+                      htmlFor="player-name"
+                      className="text-white font-rubik"
+                    >
+                      Player Name
+                    </Label>
+                    <Input
+                      id="player-name"
+                      value={newPlayerName}
+                      onChange={(e) => setNewPlayerName(e.target.value)}
+                      className="bg-gray-800 text-white border-gray-700 focus:ring-blue-500 h-12"
+                      placeholder="Enter player name"
+                    />
+                  </div>
+                  <div className="w-full sm:w-24">
+                    <Label
+                      htmlFor="player-age"
+                      className="text-white font-rubik"
+                    >
+                      Age
+                    </Label>
+                    <Input
+                      id="player-age"
+                      type="number"
+                      value={newPlayerAge}
+                      onChange={(e) => setNewPlayerAge(e.target.value)}
+                      className="bg-gray-800 text-white border-gray-700 focus:ring-blue-500 h-12"
+                      placeholder="8-14"
+                      min="8"
+                      max="14"
+                    />
+                  </div>
+                </div>
+                <Button
+                  type="submit"
+                  className="bg-blue-600 text-white font-inter uppercase hover:bg-blue-700 hover:scale-105 focus:ring-2 focus:ring-blue-500 transition-all duration-300 h-12"
+                >
+                  Add Player
+                </Button>
+              </form>
+
+              {/* Player List */}
               {players.length > 0 ? (
                 <ul className="space-y-2">
                   {players.map((player) => (
                     <li
                       key={player.id}
-                      className="text-gray-300 text-sm font-rubik border-b border-gray-700 pb-2"
+                      className="flex justify-between items-center text-gray-300 text-sm font-rubik border-b border-gray-700 pb-2"
                     >
-                      {player.name} (Age: {player.age})
+                      <span>
+                        {player.name} (Age: {player.age})
+                      </span>
+                      <Dialog>
+                        <DialogTrigger asChild>
+                          <Button
+                            variant="destructive"
+                            size="sm"
+                            onClick={() => setDeletePlayer(player)}
+                            className="bg-red-600 hover:bg-red-700 text-white font-inter uppercase"
+                          >
+                            Remove
+                          </Button>
+                        </DialogTrigger>
+                        <DialogContent className="bg-gray-900 text-white border border-red-500/50">
+                          <DialogHeader>
+                            <DialogTitle>Confirm Removal</DialogTitle>
+                            <DialogDescription className="text-gray-300">
+                              Are you sure you want to remove{" "}
+                              {deletePlayer?.name} from the roster? This action
+                              cannot be undone.
+                            </DialogDescription>
+                          </DialogHeader>
+                          <DialogFooter>
+                            <Button
+                              variant="outline"
+                              onClick={() => setDeletePlayer(null)}
+                              className="bg-gray-800 text-white border-gray-700 hover:bg-gray-700"
+                            >
+                              Cancel
+                            </Button>
+                            <Button
+                              variant="destructive"
+                              onClick={handleRemovePlayer}
+                              className="bg-red-600 hover:bg-red-700"
+                            >
+                              Remove
+                            </Button>
+                          </DialogFooter>
+                        </DialogContent>
+                      </Dialog>
                     </li>
                   ))}
                 </ul>
