@@ -3,8 +3,8 @@
 import { useState, useEffect, useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper/modules";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { Button } from "../ui/button";
+import { cn } from "../../lib/utils";
 import Image from "next/image";
 import "swiper/css";
 import "swiper/css/navigation";

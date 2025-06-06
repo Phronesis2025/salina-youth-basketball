@@ -3,12 +3,12 @@
 import { useState, useEffect, useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { Button } from "../ui/button";
+import { cn } from "../../lib/utils";
 import Image from "next/image";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
+// import "swiper/css";
+// import "swiper/css/navigation";
+// import "swiper/css/pagination";
 
 interface NewsItem {
   id: number;

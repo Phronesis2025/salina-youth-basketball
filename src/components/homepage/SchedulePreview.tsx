@@ -3,11 +3,11 @@
 import { useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { Button } from "../ui/button";
+import { cn } from "../../lib/utils";
 
 // Import events from shared data file
-import { events } from "@/lib/schedules/data";
+import { events } from "../../lib/schedules/data";
 
 // Define the Schedule type
 interface Schedule {

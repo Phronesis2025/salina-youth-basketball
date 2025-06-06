@@ -1,0 +1,147 @@
+salina-youth-basketball/
+│
+├── .next/
+├── node_modules/
+├── .git/
+├── .cursor/
+│   └── rules/
+├── documentation/
+│   ├── Salina Youth Basketball Club - PROGRESS.md
+│   ├── Salina Youth Basketball Club Codebase Structure.md
+│   ├── drills.csv
+│   ├── drills.json
+│   ├── Salina Youth Basketball Club - FUTURE_IMPROVEMENTS.md
+│   ├── Salina Youth Basketball Club Website Structure.md
+│   ├── Salina Youth Basketball Club Website - Phase 2 Content and Structure.md
+│   └── Salina Youth Basketball Club Website - Phase 1 Project Document.md
+├── public/
+│   ├── favicon.ico
+│   ├── window.svg
+│   ├── vercel.svg
+│   ├── next.svg
+│   ├── globe.svg
+│   ├── file.svg
+│   ├── _document.tsx
+│   ├── images/
+│   ├── fullcalendar/
+│   └── videos/
+├── pages/
+│   ├── index.tsx
+│   ├── _app.tsx
+│   ├── _document.tsx
+│   ├── hello.tsx
+│   ├── test.tsx
+│   ├── layout.tsx
+│   ├── api/
+│   │   ├── get-all-schedules.ts
+│   │   ├── printful-webhooks.ts
+│   │   ├── create-printful-order.ts
+│   │   ├── create-tournament-registration.ts
+│   │   ├── get-team-schedules.ts
+│   │   ├── get-team-players.ts
+│   │   ├── get-coach-team.ts
+│   │   ├── get-coach-role.ts
+│   │   ├── send-email.ts
+│   │   ├── stripe-payment.ts
+│   │   ├── get-join-request.ts
+│   │   ├── create-join-request.ts
+│   │   ├── update-join-request.ts
+│   │   ├── coaches/
+│   │   └── auth/
+│   ├── coaches/
+│   │   ├── index.tsx
+│   │   ├── page.tsx
+│   │   ├── videos/
+│   │   ├── rules/
+│   │   ├── resources/
+│   │   ├── login/
+│   │   ├── drills/
+│   │   └── highlight/
+│   ├── schedules/
+│   │   └── index.tsx
+│   ├── tournaments/
+│   │   └── index.tsx
+│   ├── teams/
+│   │   ├── index.tsx
+│   │   └── [id]/
+│   │       └── index.tsx
+│   ├── signup/
+│   │   └── index.tsx
+│   ├── shop/
+│   │   ├── index.tsx
+│   │   ├── checkout/
+│   │   │   └── index.tsx
+│   │   ├── [category]/
+│   │   │   └── index.tsx
+│   │   ├── confirmation/
+│   │   │   └── index.tsx
+│   │   ├── cart/
+│   │   │   └── index.tsx
+│   │   └── product/
+│   │       └── [id]/
+│   │           └── index.tsx
+│   ├── join/
+│   │   ├── index.tsx
+│   │   ├── status/
+│   │   │   └── index.tsx
+│   │   └── confirm/
+│   │       └── index.tsx
+│   └── about/
+│       └── index.tsx
+├── src/
+│   ├── styles/
+│   │   └── global.css
+│   ├── components/
+│   │   ├── layout/
+│   │   │   └── ClientLayout.tsx
+│   │   ├── shop/
+│   │   │   └── CheckoutPage.tsx
+│   │   ├── ui/
+│   │   │   ├── label.tsx
+│   │   │   ├── select.tsx
+│   │   │   ├── dropdown-menu.tsx
+│   │   │   ├── input.tsx
+│   │   │   ├── button.tsx
+│   │   │   ├── dialog.tsx
+│   │   │   ├── accordion.tsx
+│   │   │   ├── card.tsx
+│   │   │   └── form.tsx
+│   │   ├── homepage/
+│   │   │   ├── Hero.tsx
+│   │   │   ├── ValuesSection.tsx
+│   │   │   ├── SchedulePreview.tsx
+│   │   │   ├── TeamPreview.tsx
+│   │   │   ├── NewsCarousel.tsx
+│   │   │   └── CoachesCorner.tsx
+│   │   └── common/
+│   │       ├── Navbar.tsx
+│   │       └── Footer.tsx
+│   ├── lib/
+│   │   ├── supabase/
+│   │   │   ├── client.ts
+│   │   │   └── server.ts
+│   │   ├── tournaments/
+│   │   │   └── data.ts
+│   │   ├── shop/
+│   │   │   └── data.ts
+│   │   ├── schedules/
+│   │   │   └── data.ts
+│   │   ├── types/
+│   │   ├── supabaseClient.ts
+│   │   └── utils.ts
+│   └── types/
+│       └── latex.d.ts
+├── .eslintrc.json
+├── eslint.config.mjs
+├── fullcalendar-core-6.1.15.tgz
+├── next.config.js
+├── next.config.ts
+├── next-env.d.ts
+├── package.json
+├── package-lock.json
+├── postcss.config.js
+├── tailwind.config.js
+├── tsconfig.json
+├── README.md
+├── .gitignore
+├── components.json 

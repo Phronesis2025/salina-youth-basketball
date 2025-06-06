@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import { Instagram, Twitter, Mail } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn } from "../../lib/utils";
 
 export default function Footer() {
   const [email, setEmail] = useState("");

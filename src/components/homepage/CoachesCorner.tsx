@@ -1,13 +1,13 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "../ui/button";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion";
-import { supabase } from "@/lib/supabaseClient";
+} from "../ui/accordion";
+import { supabase } from "../../lib/supabaseClient";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";

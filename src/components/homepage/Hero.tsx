@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { Button } from "../ui/button";
+import { cn } from "../../lib/utils";
 import { useEffect, useRef } from "react";
 
 export default function Hero() {
@@ -59,7 +59,7 @@ export default function Hero() {
         <div className="flex flex-col items-start max-w-3xl">
           {/* Title */}
           <h1
-            className="text-white text-[clamp(5.4rem,7vw,10.5rem)] font-extrabold leading-[0.8] tracking-normal mb-4 sm:mb-2 font-rubik"
+            className="text-white text-[clamp(5.4rem,7vw,10.5rem)] font-extrabold leading-[0.8] tracking-normal mt-24 mb-4 sm:mb-2 font-rubik"
             style={{ animationDelay: "0.2s" }}
           >
             World Class Sports

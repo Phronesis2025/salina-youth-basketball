@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import axios from "axios";
-import { supabase } from "@/lib/supabaseClient";
+import { supabase } from "../../src/lib/supabaseClient";
 
 // Printful API configuration
 const printfulApiUrl = "https://api.printful.com/orders";
