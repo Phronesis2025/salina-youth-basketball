@@ -1,20 +1,20 @@
-"use client";
+'use client';
 
-import { Button } from "../../../src/components/ui/button";
-import Image from "next/image";
-import Link from "next/link";
+import { Button } from '../../../src/components/ui/button';
+import Image from 'next/image';
+import Link from 'next/link';
 
 export default function CoachHighlightPage() {
   const coach = {
-    name: "Coach Jane Smith",
-    image: "/images/coach-placeholder.png",
-    bio: "Coach Jane Smith has been with the Salina Youth Basketball Club for over 5 years, leading the U12 Thunderhawks to multiple regional championships. With a background in youth sports education, she is passionate about fostering teamwork and resilience in her players. Jane’s dedication to player development has made her a beloved figure in our community.",
+    name: 'Coach Jane Smith',
+    image: '/images/coach-placeholder.png',
+    bio: 'Coach Jane Smith has been with the Salina Youth Basketball Club for over 5 years, leading the U12 Thunderhawks to multiple regional championships. With a background in youth sports education, she is passionate about fostering teamwork and resilience in her players. Jane’s dedication to player development has made her a beloved figure in our community.',
     philosophy:
-      "I believe in building a strong foundation of skills while creating a fun, supportive environment. My goal is to help every player grow not just as an athlete, but as a teammate and leader, ready to face challenges both on and off the court.",
+      'I believe in building a strong foundation of skills while creating a fun, supportive environment. My goal is to help every player grow not just as an athlete, but as a teammate and leader, ready to face challenges both on and off the court.',
     achievements:
-      "Led the U12 Thunderhawks to the 2024 Central Kansas Championship. Named Coach of the Year in 2023 by the Kansas Youth Basketball Association. Achieved a 90% player retention rate over 3 seasons, reflecting her ability to inspire and motivate young athletes.",
+      'Led the U12 Thunderhawks to the 2024 Central Kansas Championship. Named Coach of the Year in 2023 by the Kansas Youth Basketball Association. Achieved a 90% player retention rate over 3 seasons, reflecting her ability to inspire and motivate young athletes.',
     quote:
-      "Basketball is more than a game—it’s a way to teach life skills like discipline, teamwork, and perseverance.",
+      'Basketball is more than a game—it’s a way to teach life skills like discipline, teamwork, and perseverance.',
   };
 
   return (

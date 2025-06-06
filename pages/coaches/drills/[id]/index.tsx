@@ -1,15 +1,15 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
-} from "../../../../src/components/ui/card";
-import { Button } from "../../../../src/components/ui/button";
-import Link from "next/link";
+} from '../../../../src/components/ui/card';
+import { Button } from '../../../../src/components/ui/button';
+import Link from 'next/link';
 
 interface Drill {
   id: string;
@@ -40,14 +40,14 @@ export default function DrillPage({ params }: { params: { id: string } }) {
     const fetchDrill = async () => {
       try {
         const response = await fetch(`/api/coaches/drills/${id}`, {
-          method: "GET",
+          method: 'GET',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
         });
 
         if (!response.ok) {
-          throw new Error("Failed to fetch drill");
+          throw new Error('Failed to fetch drill');
         }
 
         const data: DrillResponse = await response.json();
@@ -55,10 +55,10 @@ export default function DrillPage({ params }: { params: { id: string } }) {
         if (data && data.drill) {
           setCurrentDrill(data.drill);
         } else {
-          setError("Drill not found.");
+          setError('Drill not found.');
         }
       } catch (err) {
-        setError("Failed to load the current drill. Please try again later.");
+        setError('Failed to load the current drill. Please try again later.');
       }
     };
 
@@ -104,10 +104,10 @@ export default function DrillPage({ params }: { params: { id: string } }) {
             </CardHeader>
             <CardContent>
               <p className="text-gray-300 text-sm font-rubik mb-2">
-                <strong>Skills:</strong> {currentDrill.skills.join(", ")}
+                <strong>Skills:</strong> {currentDrill.skills.join(', ')}
               </p>
               <p className="text-gray-300 text-sm font-rubik mb-2">
-                <strong>Equipment:</strong> {currentDrill.equipment.join(", ")}
+                <strong>Equipment:</strong> {currentDrill.equipment.join(', ')}
               </p>
               <p className="text-gray-300 text-sm font-rubik mb-2">
                 <strong>Time:</strong> {currentDrill.time}

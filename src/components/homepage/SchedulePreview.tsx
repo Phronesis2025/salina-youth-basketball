@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import { useMemo } from "react";
-import Link from "next/link";
-import Image from "next/image";
-import { Button } from "../ui/button";
-import { cn } from "../../lib/utils";
+import { useMemo } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { Button } from '../ui/button';
+import { cn } from '../../lib/utils';
 
 // Import events from shared data file
-import { events } from "../../lib/schedules/data";
+import { events } from '../../lib/schedules/data';
 
 // Define the Schedule type
 interface Schedule {
@@ -21,16 +21,16 @@ interface Schedule {
 
 // Team logo mapping
 const teamLogos: { [key: string]: string } = {
-  Lightning: "/images/team-lightning.jpg",
-  Thunderhawks: "/images/team-thunderhawks.jpg",
-  Stingers: "/images/team-stingers.jpg",
-  Raptors: "/images/team-raptors.jpg",
-  Vipers: "/images/team-vipers.jpg",
-  Firebolts: "/images/team-firebolts.jpg",
+  Lightning: '/images/team-lightning.jpg',
+  Thunderhawks: '/images/team-thunderhawks.jpg',
+  Stingers: '/images/team-stingers.jpg',
+  Raptors: '/images/team-raptors.jpg',
+  Vipers: '/images/team-vipers.jpg',
+  Firebolts: '/images/team-firebolts.jpg',
 };
 
 export default function SchedulePreview() {
-  const today = new Date("2025-05-17T14:32:00-05:00"); // May 17, 2025, 02:32 PM CDT
+  const today = new Date('2025-05-17T14:32:00-05:00'); // May 17, 2025, 02:32 PM CDT
 
   // Filter and sort upcoming games (next 3 events)
   const upcomingGames = useMemo(() => {
@@ -41,21 +41,21 @@ export default function SchedulePreview() {
       .map((event) => {
         const team = event.extendedProps.team;
         let teamsDisplay = event.title; // Default to event title
-        let logo1 = teamLogos[team] || "/images/placeholder-team-default.jpg";
-        let logo2 = "/images/placeholder-team-default.jpg"; // Default for opponent
+        let logo1 = teamLogos[team] || '/images/placeholder-team-default.jpg';
+        let logo2 = '/images/placeholder-team-default.jpg'; // Default for opponent
 
         // Adjust teams display based on event type
-        if (event.extendedProps.type === "Game") {
+        if (event.extendedProps.type === 'Game') {
           // Extract opponent from title (e.g., "Thunderhawks vs. Warriors (Game)" -> "Warriors")
           const opponent = event.title
-            .replace(`${team} vs. `, "")
-            .replace(" (Game)", "");
+            .replace(`${team} vs. `, '')
+            .replace(' (Game)', '');
           teamsDisplay = `${team} vs. ${opponent}`;
-          logo2 = teamLogos[opponent] || "/images/placeholder-team-default.jpg";
-        } else if (event.extendedProps.type === "Tournament") {
+          logo2 = teamLogos[opponent] || '/images/placeholder-team-default.jpg';
+        } else if (event.extendedProps.type === 'Tournament') {
           // For tournaments, team field might be "All Teams" or a list
-          logo1 = "/images/placeholder-team-default.jpg"; // Use default for tournaments
-          logo2 = "/images/placeholder-team-default.jpg";
+          logo1 = '/images/placeholder-team-default.jpg'; // Use default for tournaments
+          logo2 = '/images/placeholder-team-default.jpg';
         }
 
         return {
@@ -71,11 +71,11 @@ export default function SchedulePreview() {
 
   // Format date (e.g., "Tue, May 20, 2025")
   const formatDate = (dateString: string) => {
-    return new Intl.DateTimeFormat("en-US", {
-      weekday: "short",
-      month: "short",
-      day: "numeric",
-      year: "numeric",
+    return new Intl.DateTimeFormat('en-US', {
+      weekday: 'short',
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
     }).format(new Date(dateString));
   };
 
@@ -91,7 +91,7 @@ export default function SchedulePreview() {
               <div
                 key={schedule.id}
                 className={cn(
-                  "bg-gray-900 rounded-lg shadow-md overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-lg"
+                  'bg-gray-900 rounded-lg shadow-md overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-lg'
                 )}
                 role="article"
                 aria-label={`Game: ${schedule.teams}`}
@@ -103,7 +103,7 @@ export default function SchedulePreview() {
                         <div className="relative w-12 h-12">
                           <Image
                             src={schedule.logo1}
-                            alt={`${schedule.teams.split(" vs ")[0]} logo`}
+                            alt={`${schedule.teams.split(' vs ')[0]} logo`}
                             fill
                             className="object-contain"
                             onError={(
@@ -111,7 +111,7 @@ export default function SchedulePreview() {
                             ) => {
                               const target = e.target as HTMLImageElement;
                               target.src =
-                                "/images/placeholder-team-default.jpg";
+                                '/images/placeholder-team-default.jpg';
                             }}
                           />
                         </div>
@@ -120,7 +120,7 @@ export default function SchedulePreview() {
                         <div className="relative w-12 h-12">
                           <Image
                             src={schedule.logo2}
-                            alt={`${schedule.teams.split(" vs ")[1] || "Opponent"} logo`}
+                            alt={`${schedule.teams.split(' vs ')[1] || 'Opponent'} logo`}
                             fill
                             className="object-contain"
                             onError={(
@@ -128,7 +128,7 @@ export default function SchedulePreview() {
                             ) => {
                               const target = e.target as HTMLImageElement;
                               target.src =
-                                "/images/placeholder-team-default.jpg";
+                                '/images/placeholder-team-default.jpg';
                             }}
                           />
                         </div>

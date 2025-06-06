@@ -1,6 +1,6 @@
 // /pages/hello.tsx
 export default function HelloPage() {
-  console.log("HelloPage component rendered"); // Debug log
+  console.log('HelloPage component rendered'); // Debug log
   return (
     <div>
       <h1>Hello Page</h1>

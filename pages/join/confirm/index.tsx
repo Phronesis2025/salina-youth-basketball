@@ -1,15 +1,15 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { loadStripe } from "@stripe/stripe-js";
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { loadStripe } from '@stripe/stripe-js';
 import {
   Elements,
   CardElement,
   useStripe,
   useElements,
-} from "@stripe/react-stripe-js";
-import { Button } from "../../../src/components/ui/button";
+} from '@stripe/react-stripe-js';
+import { Button } from '../../../src/components/ui/button';
 
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
@@ -55,35 +55,35 @@ const CheckoutForm = ({
     let joinRequestId: string | null = null;
 
     try {
-      console.log("Creating join request with formData:", formData);
-      const response = await fetch("/api/create-join-request", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      console.log('Creating join request with formData:', formData);
+      const response = await fetch('/api/create-join-request', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       });
 
       const { joinRequestId: newJoinRequestId, error: insertError } =
         await response.json();
-      console.log("Create join request response:", {
+      console.log('Create join request response:', {
         newJoinRequestId,
         insertError,
       });
 
       if (insertError || !newJoinRequestId) {
-        throw new Error(insertError || "Failed to create join request");
+        throw new Error(insertError || 'Failed to create join request');
       }
       joinRequestId = newJoinRequestId;
 
-      console.log("Creating payment intent for joinRequestId:", joinRequestId);
-      const paymentResponse = await fetch("/api/stripe-payment", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      console.log('Creating payment intent for joinRequestId:', joinRequestId);
+      const paymentResponse = await fetch('/api/stripe-payment', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          amount: formData.payment_option === "full" ? 36000 : 3000,
+          amount: formData.payment_option === 'full' ? 36000 : 3000,
           description:
-            formData.payment_option === "full"
-              ? "Full Membership Fee"
-              : "Monthly Membership Fee Installment",
+            formData.payment_option === 'full'
+              ? 'Full Membership Fee'
+              : 'Monthly Membership Fee Installment',
           metadata: { joinRequestId },
         }),
       });
@@ -92,7 +92,7 @@ const CheckoutForm = ({
         await paymentResponse.json();
       if (paymentError) throw new Error(paymentError);
 
-      console.log("Confirming payment with Stripe");
+      console.log('Confirming payment with Stripe');
       const cardElement = elements.getElement(CardElement);
       const { paymentIntent, error: stripeError } =
         await stripe.confirmCardPayment(clientSecret, {
@@ -101,14 +101,14 @@ const CheckoutForm = ({
 
       if (stripeError) throw new Error(stripeError.message);
 
-      if (paymentIntent?.status === "succeeded") {
-        console.log("Updating join request with payment status");
-        const updateResponse = await fetch("/api/update-join-request", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
+      if (paymentIntent?.status === 'succeeded') {
+        console.log('Updating join request with payment status');
+        const updateResponse = await fetch('/api/update-join-request', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             joinRequestId,
-            payment_status: "completed",
+            payment_status: 'completed',
             stripe_payment_id: paymentIntent.id,
           }),
         });
@@ -117,53 +117,53 @@ const CheckoutForm = ({
         if (updateError) throw new Error(updateError);
 
         console.log(
-          "Sending email notifications for joinRequestId:",
+          'Sending email notifications for joinRequestId:',
           joinRequestId
         );
-        const emailResponse = await fetch("/api/send-email", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
+        const emailResponse = await fetch('/api/send-email', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             formData,
-            paymentStatus: "completed",
+            paymentStatus: 'completed',
             joinRequestId,
           }),
         });
 
         const emailResult = await emailResponse.json();
-        console.log("Email send result:", emailResult);
+        console.log('Email send result:', emailResult);
         if (!emailResponse.ok)
-          throw new Error(emailResult.error || "Failed to send email");
+          throw new Error(emailResult.error || 'Failed to send email');
 
         if (joinRequestId) {
           console.log(
-            "Calling onSuccess with paymentId:",
+            'Calling onSuccess with paymentId:',
             paymentIntent.id,
-            "joinRequestId:",
+            'joinRequestId:',
             joinRequestId
           );
           onSuccess(paymentIntent.id, joinRequestId);
         } else {
-          throw new Error("Join request ID is missing");
+          throw new Error('Join request ID is missing');
         }
       } else {
-        throw new Error("Payment failed");
+        throw new Error('Payment failed');
       }
     } catch (err) {
       const errorMessage =
-        (err as Error).message || "An error occurred during payment";
-      console.error("Payment error:", errorMessage);
+        (err as Error).message || 'An error occurred during payment';
+      console.error('Payment error:', errorMessage);
       setError(errorMessage);
       onError(errorMessage);
 
       if (joinRequestId) {
-        console.log("Updating join request to failed status");
-        await fetch("/api/update-join-request", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
+        console.log('Updating join request to failed status');
+        await fetch('/api/update-join-request', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             joinRequestId,
-            payment_status: "failed",
+            payment_status: 'failed',
           }),
         });
       }
@@ -182,11 +182,11 @@ const CheckoutForm = ({
           options={{
             style: {
               base: {
-                color: "#0A0F15",
-                fontSize: "16px",
-                "::placeholder": { color: "#AAB7C4" },
+                color: '#0A0F15',
+                fontSize: '16px',
+                '::placeholder': { color: '#AAB7C4' },
               },
-              invalid: { color: "#EF4444" },
+              invalid: { color: '#EF4444' },
             },
           }}
           className="p-3 bg-[#FFFFFF] rounded-[0.25rem]"
@@ -199,7 +199,7 @@ const CheckoutForm = ({
         variant="default"
         className="w-full bg-[#FFFFFF] text-[#0A0F15] font-medium font-inter hover:bg-[#E6ECEF] rounded-[0.25rem] shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1),0_2px_4px_-1px_rgba(0,0,0,0.06)] text-sm py-[8px] px-[16px] uppercase"
       >
-        {loading ? "Processing..." : "Confirm and Pay"}
+        {loading ? 'Processing...' : 'Confirm and Pay'}
       </Button>
     </form>
   );
@@ -211,48 +211,48 @@ export default function JoinConfirm() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const storedFormData = sessionStorage.getItem("joinFormData");
+    const storedFormData = sessionStorage.getItem('joinFormData');
     if (storedFormData) {
       console.log(
-        "Form data loaded from sessionStorage:",
+        'Form data loaded from sessionStorage:',
         JSON.parse(storedFormData)
       );
       setFormData(JSON.parse(storedFormData));
     } else {
-      console.log("No formData in sessionStorage, redirecting to /join");
-      router.push("/join");
+      console.log('No formData in sessionStorage, redirecting to /join');
+      router.push('/join');
     }
   }, [router]);
 
   const handleEdit = () => {
-    console.log("Redirecting to /join for editing");
-    router.push("/join");
+    console.log('Redirecting to /join for editing');
+    router.push('/join');
   };
 
   const handlePaymentSuccess = (paymentId: string, joinRequestId: string) => {
     if (!joinRequestId) {
-      console.error("Missing joinRequestId in handlePaymentSuccess");
-      setError("Failed to process payment: Missing join request ID");
+      console.error('Missing joinRequestId in handlePaymentSuccess');
+      setError('Failed to process payment: Missing join request ID');
       return;
     }
-    console.log("Payment successful, redirecting to /join/status with:", {
+    console.log('Payment successful, redirecting to /join/status with:', {
       paymentId,
       joinRequestId,
     });
     const redirectUrl = `/join/status?status=success&paymentId=${encodeURIComponent(
       paymentId
     )}&joinRequestId=${encodeURIComponent(joinRequestId)}`;
-    console.log("Redirect URL:", redirectUrl);
+    console.log('Redirect URL:', redirectUrl);
     router.push(redirectUrl);
   };
 
   const handlePaymentError = (errorMessage: string) => {
-    console.error("Payment error:", errorMessage);
+    console.error('Payment error:', errorMessage);
     setError(errorMessage);
   };
 
   if (!formData) {
-    console.log("Rendering null due to missing formData");
+    console.log('Rendering null due to missing formData');
     return null;
   }
 
@@ -291,25 +291,25 @@ export default function JoinConfirm() {
               <strong>Parent Email:</strong> {formData.parent_email}
             </p>
             <p>
-              <strong>Emergency Contact:</strong>{" "}
+              <strong>Emergency Contact:</strong>{' '}
               {formData.emergency_contact_name}
             </p>
             <p>
-              <strong>Emergency Phone:</strong>{" "}
+              <strong>Emergency Phone:</strong>{' '}
               {formData.emergency_contact_phone}
             </p>
             <p>
               <strong>Preferred Position:</strong> {formData.preferred_position}
             </p>
             <p>
-              <strong>Prior Experience:</strong>{" "}
-              {formData.prior_experience || "None"}
+              <strong>Prior Experience:</strong>{' '}
+              {formData.prior_experience || 'None'}
             </p>
             <p>
-              <strong>Payment Option:</strong>{" "}
-              {formData.payment_option === "full"
-                ? "Pay in Full ($360.00)"
-                : "Monthly Installments ($30.00 x 12)"}
+              <strong>Payment Option:</strong>{' '}
+              {formData.payment_option === 'full'
+                ? 'Pay in Full ($360.00)'
+                : 'Monthly Installments ($30.00 x 12)'}
             </p>
           </div>
 

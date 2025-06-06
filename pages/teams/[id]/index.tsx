@@ -1,15 +1,15 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import { useParams } from "next/navigation";
-import Link from "next/link";
-import Image from "next/image";
-import { Button } from "../../../src/components/ui/button";
-import { cn } from "../../../src/lib/utils";
-import { supabase } from "../../../src/lib/supabaseClient";
+import { useState, useEffect } from 'react';
+import { useParams } from 'next/navigation';
+import Link from 'next/link';
+import Image from 'next/image';
+import { Button } from '../../../src/components/ui/button';
+import { cn } from '../../../src/lib/utils';
+import { supabase } from '../../../src/lib/supabaseClient';
 
 // Import events from shared data file
-import { events } from "../../../src/lib/schedules/data";
+import { events } from '../../../src/lib/schedules/data';
 
 interface Team {
   id: number;
@@ -35,26 +35,26 @@ export default function TeamSubPage() {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  const defaultPlaceholder = "/images/placeholder-team-default.jpg";
+  const defaultPlaceholder = '/images/placeholder-team-default.jpg';
 
   useEffect(() => {
     async function fetchTeam() {
       if (!teamId) {
-        setError("Invalid team ID.");
+        setError('Invalid team ID.');
         setLoading(false);
         return;
       }
       try {
         const { data, error } = await supabase
-          .from("teams")
-          .select("*")
-          .eq("id", teamId)
+          .from('teams')
+          .select('*')
+          .eq('id', teamId)
           .single();
         if (error) throw error;
         setTeam(data);
       } catch (err: any) {
-        setError("Team not found.");
-        console.error("Error fetching team:", err);
+        setError('Team not found.');
+        console.error('Error fetching team:', err);
       } finally {
         setLoading(false);
       }
@@ -106,36 +106,36 @@ export default function TeamSubPage() {
   }
 
   // Current date for filtering upcoming events
-  const today = new Date("2025-05-17T16:45:00-05:00"); // May 17, 2025, 04:45 PM CDT
+  const today = new Date('2025-05-17T16:45:00-05:00'); // May 17, 2025, 04:45 PM CDT
 
   // Filter and sort events for this team
   const teamEvents = events
     .filter(
       (event) =>
         event.extendedProps.team === team.name ||
-        event.extendedProps.team === "All Teams"
+        event.extendedProps.team === 'All Teams'
     )
     .filter((event) => new Date(event.start) > today)
     .sort((a, b) => new Date(a.start).getTime() - new Date(b.start).getTime());
 
   // Split events into practices and games
   const practices = teamEvents
-    .filter((event) => event.extendedProps.type === "Practice")
+    .filter((event) => event.extendedProps.type === 'Practice')
     .slice(0, 7)
     .map((event) => ({
       date: event.start,
-      opponent: "N/A",
+      opponent: 'N/A',
       location: event.extendedProps.location,
     }));
 
   const games = teamEvents
-    .filter((event) => event.extendedProps.type === "Game")
+    .filter((event) => event.extendedProps.type === 'Game')
     .slice(0, 7)
     .map((event) => ({
       date: event.start,
       opponent: event.title
-        .replace(`${team.name} vs. `, "")
-        .replace(" (Game)", ""),
+        .replace(`${team.name} vs. `, '')
+        .replace(' (Game)', ''),
       location: event.extendedProps.location,
     }));
 
@@ -145,10 +145,10 @@ export default function TeamSubPage() {
 
   // Format date (e.g., "MM/DD/YYYY")
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
+    return new Date(dateString).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
     });
   };
 
@@ -211,7 +211,7 @@ export default function TeamSubPage() {
                 Team Overview
               </h2>
               <p className="text-white text-base font-inter mb-2">
-                <strong>Coach:</strong> {team.coaches.join(", ")}
+                <strong>Coach:</strong> {team.coaches.join(', ')}
               </p>
               <p className="text-white text-base font-inter">
                 <strong>Grade Level:</strong> {team.grade_level}
@@ -253,9 +253,9 @@ export default function TeamSubPage() {
                       <tr
                         key={index}
                         className={cn(
-                          "block sm:table-row border-b border-gray-700 sm:border-0 mb-4 sm:mb-0",
-                          index % 2 === 0 ? "bg-gray-900" : "bg-gray-800",
-                          "hover:bg-gray-700 sm:hover:bg-gray-700 transition-colors duration-200"
+                          'block sm:table-row border-b border-gray-700 sm:border-0 mb-4 sm:mb-0',
+                          index % 2 === 0 ? 'bg-gray-900' : 'bg-gray-800',
+                          'hover:bg-gray-700 sm:hover:bg-gray-700 transition-colors duration-200'
                         )}
                       >
                         <td
@@ -268,9 +268,9 @@ export default function TeamSubPage() {
                           data-label="Start Time"
                           className="block sm:table-cell p-3 sm:p-4 text-sm text-left before:content-[attr(data-label)] before:font-rubik before:font-semibold before:uppercase before:mr-2 sm:before:content-none"
                         >
-                          {new Date(practice.date).toLocaleTimeString("en-US", {
-                            hour: "numeric",
-                            minute: "2-digit",
+                          {new Date(practice.date).toLocaleTimeString('en-US', {
+                            hour: 'numeric',
+                            minute: '2-digit',
                             hour12: true,
                           })}
                         </td>
@@ -320,9 +320,9 @@ export default function TeamSubPage() {
                       <tr
                         key={index}
                         className={cn(
-                          "block sm:table-row border-b border-gray-700 sm:border-0 mb-4 sm:mb-0",
-                          index % 2 === 0 ? "bg-gray-900" : "bg-gray-800",
-                          "hover:bg-gray-700 sm:hover:bg-gray-700 transition-colors duration-200"
+                          'block sm:table-row border-b border-gray-700 sm:border-0 mb-4 sm:mb-0',
+                          index % 2 === 0 ? 'bg-gray-900' : 'bg-gray-800',
+                          'hover:bg-gray-700 sm:hover:bg-gray-700 transition-colors duration-200'
                         )}
                       >
                         <td

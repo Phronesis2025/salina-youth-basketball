@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
-import Link from "next/link";
-import { Button } from "../../../src/components/ui/button";
-import { Suspense } from "react";
+import { useEffect, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
+import Link from 'next/link';
+import { Button } from '../../../src/components/ui/button';
+import { Suspense } from 'react';
 
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 
 function StatusContent() {
   const searchParams = useSearchParams();
@@ -17,33 +17,33 @@ function StatusContent() {
 
   useEffect(() => {
     console.log(
-      "JoinStatus useEffect triggered, searchParams:",
+      'JoinStatus useEffect triggered, searchParams:',
       searchParams?.toString()
     );
 
     if (!searchParams) {
-      console.log("No searchParams available");
-      setError("Missing URL parameters");
+      console.log('No searchParams available');
+      setError('Missing URL parameters');
       setLoading(false);
       return;
     }
 
-    const statusParam = searchParams.get("status");
-    const joinRequestId = searchParams.get("joinRequestId");
-    const paymentId = searchParams.get("paymentId");
+    const statusParam = searchParams.get('status');
+    const joinRequestId = searchParams.get('joinRequestId');
+    const paymentId = searchParams.get('paymentId');
 
-    console.log("URL parameters:", { statusParam, joinRequestId, paymentId });
+    console.log('URL parameters:', { statusParam, joinRequestId, paymentId });
 
     if (!statusParam) {
-      console.log("Missing status parameter");
-      setError("Missing payment status");
+      console.log('Missing status parameter');
+      setError('Missing payment status');
       setLoading(false);
       return;
     }
 
     if (!joinRequestId) {
-      console.log("Missing joinRequestId parameter");
-      setError("Missing join request ID");
+      console.log('Missing joinRequestId parameter');
+      setError('Missing join request ID');
       setLoading(false);
       return;
     }
@@ -51,15 +51,15 @@ function StatusContent() {
     setStatus(statusParam);
 
     const fetchEmail = async () => {
-      console.log("Fetching email for joinRequestId:", joinRequestId);
+      console.log('Fetching email for joinRequestId:', joinRequestId);
       try {
-        const response = await fetch("/api/get-join-request", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
+        const response = await fetch('/api/get-join-request', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ joinRequestId }),
         });
 
-        console.log("Get join request response status:", response.status);
+        console.log('Get join request response status:', response.status);
         if (!response.ok) {
           const errorText = await response.text();
           throw new Error(
@@ -68,33 +68,33 @@ function StatusContent() {
         }
 
         const { joinRequest } = await response.json();
-        console.log("Join request data:", joinRequest);
+        console.log('Join request data:', joinRequest);
 
         if (!joinRequest || !joinRequest.parent_email) {
-          throw new Error("Join request or email not found");
+          throw new Error('Join request or email not found');
         }
 
         setEmail(joinRequest.parent_email);
       } catch (err) {
-        console.error("Fetch email error:", err);
-        setError((err as Error).message || "Failed to load email data");
+        console.error('Fetch email error:', err);
+        setError((err as Error).message || 'Failed to load email data');
       } finally {
-        console.log("Fetch email complete, setting loading to false");
+        console.log('Fetch email complete, setting loading to false');
         setLoading(false);
       }
     };
 
-    if (statusParam === "success") {
-      console.log("Status is success, calling fetchEmail");
+    if (statusParam === 'success') {
+      console.log('Status is success, calling fetchEmail');
       fetchEmail();
     } else {
-      console.log("Status is not success, setting loading to false");
+      console.log('Status is not success, setting loading to false');
       setLoading(false);
     }
   }, [searchParams]);
 
   if (loading) {
-    console.log("Rendering loading state");
+    console.log('Rendering loading state');
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#1C2526]">
         <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-[#D91E18]"></div>
@@ -102,7 +102,7 @@ function StatusContent() {
     );
   }
 
-  console.log("Rendering status content", { status, error, email });
+  console.log('Rendering status content', { status, error, email });
 
   return (
     <div className="min-h-screen bg-[#1C2526] py-12 px-4 sm:px-6 lg:px-8">
@@ -125,7 +125,7 @@ function StatusContent() {
                   </div>
                 </div>
               </div>
-            ) : status === "success" && email ? (
+            ) : status === 'success' && email ? (
               <div>
                 <div className="rounded-md bg-green-900 p-4">
                   <div className="flex">

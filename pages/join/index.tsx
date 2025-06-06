@@ -1,15 +1,15 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { Button } from "../../src/components/ui/button";
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { Button } from '../../src/components/ui/button';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../../src/components/ui/select";
+} from '../../src/components/ui/select';
 
 interface FormData {
   first_name: string;
@@ -30,19 +30,19 @@ interface FormData {
 export default function Join() {
   const router = useRouter();
   const [formData, setFormData] = useState<FormData>({
-    first_name: "",
-    last_name: "",
-    age_group: "",
-    team_gender: "",
-    date_of_birth: "",
-    parent_name: "",
-    parent_phone: "",
-    parent_email: "",
-    emergency_contact_name: "",
-    emergency_contact_phone: "",
-    preferred_position: "",
-    prior_experience: "",
-    payment_option: "full",
+    first_name: '',
+    last_name: '',
+    age_group: '',
+    team_gender: '',
+    date_of_birth: '',
+    parent_name: '',
+    parent_phone: '',
+    parent_email: '',
+    emergency_contact_name: '',
+    emergency_contact_phone: '',
+    preferred_position: '',
+    prior_experience: '',
+    payment_option: 'full',
   });
   const [error, setError] = useState<string | null>(null);
 
@@ -56,38 +56,38 @@ export default function Join() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Submitting form data:", formData);
+    console.log('Submitting form data:', formData);
 
     // Basic validation
     const requiredFields: (keyof FormData)[] = [
-      "first_name",
-      "last_name",
-      "age_group",
-      "team_gender",
-      "date_of_birth",
-      "parent_name",
-      "parent_phone",
-      "parent_email",
-      "emergency_contact_name",
-      "emergency_contact_phone",
+      'first_name',
+      'last_name',
+      'age_group',
+      'team_gender',
+      'date_of_birth',
+      'parent_name',
+      'parent_phone',
+      'parent_email',
+      'emergency_contact_name',
+      'emergency_contact_phone',
     ];
     for (const field of requiredFields) {
       if (!formData[field]) {
-        setError(`Please fill in the ${field.replace("_", " ")} field`);
+        setError(`Please fill in the ${field.replace('_', ' ')} field`);
         return;
       }
     }
 
     try {
       // Save form data to sessionStorage
-      sessionStorage.setItem("joinFormData", JSON.stringify(formData));
-      console.log("Form data saved to sessionStorage:", formData);
+      sessionStorage.setItem('joinFormData', JSON.stringify(formData));
+      console.log('Form data saved to sessionStorage:', formData);
 
       // Redirect to /join/confirm
-      router.push("/join/confirm");
+      router.push('/join/confirm');
     } catch (err) {
-      console.error("Error saving form data:", err);
-      setError("An error occurred. Please try again.");
+      console.error('Error saving form data:', err);
+      setError('An error occurred. Please try again.');
     }
   };
 
@@ -143,7 +143,7 @@ export default function Join() {
               </label>
               <Select
                 onValueChange={(value) =>
-                  handleSelectChange("age_group", value)
+                  handleSelectChange('age_group', value)
                 }
                 value={formData.age_group}
               >
@@ -167,7 +167,7 @@ export default function Join() {
               </label>
               <Select
                 onValueChange={(value) =>
-                  handleSelectChange("team_gender", value)
+                  handleSelectChange('team_gender', value)
                 }
                 value={formData.team_gender}
               >
@@ -314,7 +314,7 @@ export default function Join() {
               </label>
               <Select
                 onValueChange={(value) =>
-                  handleSelectChange("payment_option", value)
+                  handleSelectChange('payment_option', value)
                 }
                 value={formData.payment_option}
               >

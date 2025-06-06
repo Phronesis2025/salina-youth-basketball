@@ -1,6 +1,6 @@
 // /pages/coaches/page.tsx
 export default function CoachesPage() {
-  console.log("CoachesPage component rendered"); // Debug log
+  console.log('CoachesPage component rendered'); // Debug log
   return (
     <div>
       <h1>Coaches Page</h1>

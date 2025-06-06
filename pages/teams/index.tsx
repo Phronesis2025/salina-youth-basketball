@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import { useState, useEffect, useMemo } from "react";
-import Link from "next/link";
-import { Button } from "../../src/components/ui/button";
-import { cn } from "../../src/lib/utils";
-import Image from "next/image";
-import { supabase } from "../../src/lib/supabaseClient";
+import { useState, useEffect, useMemo } from 'react';
+import Link from 'next/link';
+import { Button } from '../../src/components/ui/button';
+import { cn } from '../../src/lib/utils';
+import Image from 'next/image';
+import { supabase } from '../../src/lib/supabaseClient';
 
 interface Team {
   id: number;
@@ -19,30 +19,30 @@ interface Team {
 
 export default function TeamHub() {
   const [teams, setTeams] = useState<Team[]>([]);
-  const [gradeFilter, setGradeFilter] = useState<string>("All");
-  const [genderFilter, setGenderFilter] = useState<string>("All");
+  const [gradeFilter, setGradeFilter] = useState<string>('All');
+  const [genderFilter, setGenderFilter] = useState<string>('All');
   const [isInitialLoad, setIsInitialLoad] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
   const gradeOptions = [
-    "All",
-    "3rd Grade",
-    "4th Grade",
-    "5th Grade",
-    "6th Grade",
+    'All',
+    '3rd Grade',
+    '4th Grade',
+    '5th Grade',
+    '6th Grade',
   ];
-  const genderOptions = ["All", "Boys", "Girls"];
+  const genderOptions = ['All', 'Boys', 'Girls'];
 
   useEffect(() => {
     async function fetchTeams() {
       try {
-        const { data, error } = await supabase.from("teams").select("*");
+        const { data, error } = await supabase.from('teams').select('*');
         if (error) throw error;
         setTeams(data || []);
       } catch (err: any) {
-        setError("Failed to load teams. Please try again later.");
-        console.error("Error fetching teams:", err);
+        setError('Failed to load teams. Please try again later.');
+        console.error('Error fetching teams:', err);
       } finally {
         setLoading(false);
         setIsInitialLoad(false);
@@ -53,11 +53,11 @@ export default function TeamHub() {
 
   const filteredTeams = useMemo(() => {
     return teams.filter((team) => {
-      const parts = team.grade_level.trim().split(" ");
-      let grade = "Unknown";
-      let gender = "Unknown";
+      const parts = team.grade_level.trim().split(' ');
+      let grade = 'Unknown';
+      let gender = 'Unknown';
       if (parts.length >= 3) {
-        grade = parts.slice(0, 2).join(" ");
+        grade = parts.slice(0, 2).join(' ');
         gender = parts[parts.length - 1];
       } else {
         console.warn(`Unexpected grade_level format: ${team.grade_level}`);
@@ -65,8 +65,8 @@ export default function TeamHub() {
       console.log(
         `Parsing team: ${team.name}, Grade: ${grade}, Gender: ${gender}`
       );
-      const matchesGrade = gradeFilter === "All" || grade === gradeFilter;
-      const matchesGender = genderFilter === "All" || gender === genderFilter;
+      const matchesGrade = gradeFilter === 'All' || grade === gradeFilter;
+      const matchesGender = genderFilter === 'All' || gender === genderFilter;
       return matchesGrade && matchesGender;
     });
   }, [teams, gradeFilter, genderFilter]);
@@ -107,7 +107,7 @@ export default function TeamHub() {
       <div className="container max-w-[75rem] mx-auto px-4 sm:px-6 lg:px-8">
         <h1
           className="text-white text-[clamp(2.25rem,5vw,3rem)] font-bold font-rubik mt-8 mb-8 text-center uppercase"
-          style={{ animationDelay: "0.2s" }}
+          style={{ animationDelay: '0.2s' }}
         >
           Team Hub
         </h1>
@@ -115,7 +115,7 @@ export default function TeamHub() {
         {/* Filter Dropdowns */}
         <div
           className="mb-8 flex flex-col sm:flex-row justify-center gap-4"
-          style={{ animationDelay: "0.3s" }}
+          style={{ animationDelay: '0.3s' }}
           aria-label="Filter teams by grade and gender"
         >
           <div className="flex flex-col">
@@ -130,8 +130,8 @@ export default function TeamHub() {
               value={gradeFilter}
               onChange={(e) => setGradeFilter(e.target.value)}
               className={cn(
-                "bg-gray-900 text-white font-inter text-base uppercase rounded-md px-4 py-2 border border-blue-600",
-                "hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-300"
+                'bg-gray-900 text-white font-inter text-base uppercase rounded-md px-4 py-2 border border-blue-600',
+                'hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-300'
               )}
               aria-label="Filter by grade level"
             >
@@ -154,8 +154,8 @@ export default function TeamHub() {
               value={genderFilter}
               onChange={(e) => setGenderFilter(e.target.value)}
               className={cn(
-                "bg-gray-900 text-white font-inter text-base uppercase rounded-md px-4 py-2 border border-blue-600",
-                "hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-300"
+                'bg-gray-900 text-white font-inter text-base uppercase rounded-md px-4 py-2 border border-blue-600',
+                'hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-300'
               )}
               aria-label="Filter by gender"
             >
@@ -179,8 +179,8 @@ export default function TeamHub() {
               <div
                 key={team.id}
                 className={cn(
-                  "bg-black rounded-[15px] shadow-md overflow-hidden w-[300px] mx-auto flex flex-col",
-                  "transform rotate-x-[10deg] rotate-y-[10deg] drop-shadow-[0_10px_20px_rgba(0,0,0,0.5)]"
+                  'bg-black rounded-[15px] shadow-md overflow-hidden w-[300px] mx-auto flex flex-col',
+                  'transform rotate-x-[10deg] rotate-y-[10deg] drop-shadow-[0_10px_20px_rgba(0,0,0,0.5)]'
                 )}
                 style={{
                   animationDelay: isInitialLoad
@@ -197,7 +197,7 @@ export default function TeamHub() {
                     className="object-cover object-center"
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
-                      target.src = "/images/placeholder-team-default.jpg";
+                      target.src = '/images/placeholder-team-default.jpg';
                     }}
                   />
                   <div className="absolute bottom-[-50px] left-1/2 transform -translate-x-1/2 w-[100px] h-[100px] rounded-full border-8 border-[#002C51] shadow-[0_5px_10px_rgba(0,0,0,0.3)]">
@@ -208,7 +208,7 @@ export default function TeamHub() {
                       className="object-contain rounded-full"
                       onError={(e) => {
                         const target = e.target as HTMLImageElement;
-                        target.src = "/images/placeholder-team-default.jpg";
+                        target.src = '/images/placeholder-team-default.jpg';
                       }}
                     />
                   </div>
@@ -221,7 +221,7 @@ export default function TeamHub() {
                     {team.grade_level}
                   </p>
                   <p className="text-white text-xs font-inter font-normal uppercase mb-4">
-                    Coach {team.coaches.join(", ")}
+                    Coach {team.coaches.join(', ')}
                   </p>
                   <Button
                     asChild
@@ -248,7 +248,7 @@ export default function TeamHub() {
             asChild
             variant="default"
             className="bg-blue-600 text-white font-medium font-inter rounded-md hover:bg-blue-700 hover:scale-105 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-300 text-base px-6 py-3 uppercase"
-            style={{ animationDelay: "0.4s" }}
+            style={{ animationDelay: '0.4s' }}
           >
             <Link href="/" className="no-underline">
               Back to Homepage

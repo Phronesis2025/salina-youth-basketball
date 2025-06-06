@@ -1,6 +1,6 @@
 // /pages/test.tsx
 export default function TestPage() {
-  console.log("TestPage component rendered"); // Debug log
+  console.log('TestPage component rendered'); // Debug log
   return (
     <div>
       <h1>Test Page</h1>

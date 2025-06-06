@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import { useState, useEffect, useRef } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination } from "swiper/modules";
-import { Button } from "../ui/button";
-import { cn } from "../../lib/utils";
-import Image from "next/image";
+import { useState, useEffect, useRef } from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination } from 'swiper/modules';
+import { Button } from '../ui/button';
+import { cn } from '../../lib/utils';
+import Image from 'next/image';
 // import "swiper/css";
 // import "swiper/css/navigation";
 // import "swiper/css/pagination";
@@ -23,28 +23,28 @@ export default function NewsCarousel() {
   const newsItems: NewsItem[] = [
     {
       id: 1,
-      title: "Championship Victory!",
-      date: "May 10, 2025",
-      image: "/images/placeholder-news-1.png",
-      description: "Our U-14 team won the regional championship!",
+      title: 'Championship Victory!',
+      date: 'May 10, 2025',
+      image: '/images/placeholder-news-1.png',
+      description: 'Our U-14 team won the regional championship!',
       details:
         "The Salina Youth Basketball Club's U-14 team secured a stunning victory at the Central Kansas Regional Championship on May 10, 2025. With a final score of 52-48, the team showcased exceptional teamwork and skill. Coach Smith praised the players for their dedication and strategic play, especially in the final quarter where they mounted a comeback from a 10-point deficit.",
     },
     {
       id: 2,
-      title: "Summer Camp Registration Open",
-      date: "May 5, 2025",
-      image: "/images/placeholder-news-2.png",
-      description: "Join our summer basketball camp starting June 1.",
+      title: 'Summer Camp Registration Open',
+      date: 'May 5, 2025',
+      image: '/images/placeholder-news-2.png',
+      description: 'Join our summer basketball camp starting June 1.',
       details:
         "Registration is now open for the Salina Youth Basketball Club's Summer Camp, starting June 1, 2025. The camp will run for 6 weeks, offering intensive training sessions, skill workshops, and friendly matches. Open to players aged 8-16, the camp will be led by experienced coaches, including guest appearances from local pros. Sign up now to secure your spot!",
     },
     {
       id: 3,
-      title: "New Merch Drop",
-      date: "April 28, 2025",
-      image: "/images/placeholder-news-3.png",
-      description: "Check out our latest team apparel in the shop.",
+      title: 'New Merch Drop',
+      date: 'April 28, 2025',
+      image: '/images/placeholder-news-3.png',
+      description: 'Check out our latest team apparel in the shop.',
       details:
         "We've just released a new line of team apparel in the Salina Youth Basketball Club shop! From jerseys to hoodies, our latest collection features the club's navy and red colors with bold designs. Available for players, parents, and fans, these items are perfect for showing your support at games or training sessions. Visit the shop today!",
     },
@@ -65,7 +65,6 @@ export default function NewsCarousel() {
     setIsModalOpen(false);
   };
 
-  // Focus trap and ESC key handling for modal
   useEffect(() => {
     if (isModalOpen && modalRef.current && closeButtonRef.current) {
       const focusableElements = modalRef.current.querySelectorAll(
@@ -77,11 +76,11 @@ export default function NewsCarousel() {
       ] as HTMLElement;
 
       const handleKeyDown = (e: KeyboardEvent) => {
-        if (e.key === "Escape") {
+        if (e.key === 'Escape') {
           closeModal();
           return;
         }
-        if (e.key === "Tab") {
+        if (e.key === 'Tab') {
           if (e.shiftKey && document.activeElement === firstElement) {
             e.preventDefault();
             lastElement.focus();
@@ -92,11 +91,11 @@ export default function NewsCarousel() {
         }
       };
 
-      document.addEventListener("keydown", handleKeyDown);
+      document.addEventListener('keydown', handleKeyDown);
       closeButtonRef.current.focus();
 
       return () => {
-        document.removeEventListener("keydown", handleKeyDown);
+        document.removeEventListener('keydown', handleKeyDown);
       };
     }
   }, [isModalOpen]);
@@ -106,7 +105,7 @@ export default function NewsCarousel() {
       <div className="container max-w-[75rem] mx-auto px-4 sm:px-6 lg:px-8">
         <h2
           className="text-white text-[clamp(2.25rem,5vw,3rem)] font-bold font-rubik mb-8 text-center"
-          style={{ animationDelay: "0.2s" }}
+          style={{ animationDelay: '0.2s' }}
         >
           Latest News
         </h2>
@@ -129,9 +128,9 @@ export default function NewsCarousel() {
             <SwiperSlide key={item.id}>
               <div
                 className={cn(
-                  "bg-gray-900 rounded-lg shadow-md overflow-hidden w-full h-[28rem]",
-                  "transform transition-all duration-300 hover:scale-105 hover:shadow-lg",
-                  "flex flex-col min-h-0"
+                  'bg-gray-900 rounded-lg shadow-md overflow-hidden w-full h-[28rem]',
+                  'transform transition-all duration-300 hover:scale-105 hover:shadow-lg',
+                  'flex flex-col min-h-0'
                 )}
               >
                 <div className="relative w-full h-48 overflow-hidden">
@@ -139,11 +138,12 @@ export default function NewsCarousel() {
                     src={item.image}
                     alt={item.title}
                     fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     priority={item.id === 1}
                     className="object-cover object-top"
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
-                      target.src = "/images/placeholder-news.png";
+                      target.src = '/images/placeholder-news.png';
                     }}
                   />
                 </div>
@@ -172,7 +172,7 @@ export default function NewsCarousel() {
         {/* Modal */}
         {isModalOpen && selectedNews && (
           <div
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 "
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
             role="dialog"
             aria-labelledby="modal-title"
             aria-modal="true"
@@ -184,7 +184,7 @@ export default function NewsCarousel() {
               <button
                 ref={closeButtonRef}
                 onClick={closeModal}
-                onKeyDown={(e) => e.key === "Enter" && closeModal()}
+                onKeyDown={(e) => e.key === 'Enter' && closeModal()}
                 className="absolute top-4 right-4 text-white hover:text-gray-200 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded-sm transition-colors duration-300"
                 aria-label="Close modal"
               >
@@ -213,10 +213,11 @@ export default function NewsCarousel() {
                   src={selectedNews.image}
                   alt={selectedNews.title}
                   fill
+                  sizes="100vw"
                   className="object-cover object-top rounded-lg mb-4"
                   onError={(e) => {
                     const target = e.target as HTMLImageElement;
-                    target.src = "/images/placeholder-news.png";
+                    target.src = '/images/placeholder-news.png';
                   }}
                 />
               </div>

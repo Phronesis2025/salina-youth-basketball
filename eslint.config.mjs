@@ -1,67 +1,55 @@
-import globals from "globals";
-import pluginJs from "@eslint/js";
-import tseslint from "typescript-eslint";
-import pluginReact from "eslint-plugin-react";
-import nextPlugin from "@next/eslint-plugin-next";
-import reactHooks from "eslint-plugin-react-hooks";
-import reactRefresh from "eslint-plugin-react-refresh";
+import globals from 'globals';
+import pluginJs from '@eslint/js';
+import tseslint from '@typescript-eslint/eslint-plugin';
+import tsParser from '@typescript-eslint/parser';
+import pluginReact from 'eslint-plugin-react';
+import pluginPrettier from 'eslint-plugin-prettier';
+import pluginNext from 'eslint-plugin-next';
 
 export default [
   {
-    files: ["**/*.{js,mjs,cjs,ts,tsx}"],
+    files: ['**/*.{js,mjs,cjs,ts,tsx}'],
     languageOptions: {
-      globals: globals.browser,
-      parser: tseslint.parser,
+      parser: tsParser,
       parserOptions: {
-        project: "./tsconfig.json",
-        tsconfigRootDir: import.meta.dirname,
+        ecmaVersion: 'latest',
+        sourceType: 'module',
+        ecmaFeatures: { jsx: true },
+      },
+      globals: {
+        ...globals.browser,
+        ...globals.node,
+        React: 'writable', // Fix 'React' is not defined
       },
     },
     plugins: {
-      "@eslint/js": pluginJs,
-      "@typescript-eslint": tseslint,
+      '@typescript-eslint': tseslint,
       react: pluginReact,
-      "@next/next": nextPlugin,
-      "react-hooks": reactHooks,
-      "react-refresh": reactRefresh,
+      prettier: pluginPrettier,
+      next: pluginNext,
     },
     rules: {
       ...pluginJs.configs.recommended.rules,
       ...tseslint.configs.recommended.rules,
-      ...pluginReact.configs.flat.recommended.rules,
-      ...nextPlugin.configs.recommended.rules,
-      "@typescript-eslint/no-unused-vars": [
-        "error",
-        {
-          argsIgnorePattern: "^_",
-          varsIgnorePattern: "^_",
-          caughtErrorsIgnorePattern: "^_",
-        },
+      ...pluginReact.configs.recommended.rules,
+      ...pluginNext.configs.recommended.rules,
+      'prettier/prettier': ['warn'],
+      '@typescript-eslint/no-explicit-any': 'warn', // Warn instead of error
+      '@typescript-eslint/no-unused-vars': [
+        'warn',
+        { argsIgnorePattern: '^_' },
       ],
-      "react/react-in-jsx-scope": "off",
-      "@next/next/no-html-link-for-pages": "off",
-      "react-hooks/rules-of-hooks": "error",
-      "react-hooks/exhaustive-deps": "warn",
-      "react-refresh/only-export-components": [
-        "warn",
-        { allowConstantExport: true },
-      ],
+      '@typescript-eslint/no-require-imports': 'warn', // Warn for require()
+      'react/prop-types': 'off',
+      'react/react-in-jsx-scope': 'off',
+      'react/no-unescaped-entities': 'off', // Disable unescaped entities
+      'react/no-unknown-property': ['error', { ignore: ['jsx', 'global'] }], // Ignore styled-jsx props
+      '@typescript-eslint/triple-slash-reference': 'warn', // Warn for triple-slash
     },
     settings: {
       react: {
-        version: "detect",
+        version: 'detect',
       },
     },
-  },
-  {
-    ignores: [
-      "node_modules/",
-      ".next/",
-      "out/",
-      "build/",
-      "dist/",
-      "*.log",
-      "*.md",
-    ],
   },
 ];

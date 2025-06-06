@@ -1,33 +1,33 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { Button } from "../../src/components/ui/button";
+import Link from 'next/link';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { Button } from '../../src/components/ui/button';
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
-} from "../../src/components/ui/card";
-import { Input } from "../../src/components/ui/input";
+} from '../../src/components/ui/card';
+import { Input } from '../../src/components/ui/input';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../../src/components/ui/select";
-import { tournaments } from "../../src/lib/tournaments/data";
-import { cn } from "../../src/lib/utils";
+} from '../../src/components/ui/select';
+import { tournaments } from '../../src/lib/tournaments/data';
+import { cn } from '../../src/lib/utils';
 
 export default function Tournaments() {
   const [formData, setFormData] = useState({
-    teamName: "",
-    coachName: "",
-    email: "",
-    phone: "",
-    tournamentId: "",
+    teamName: '',
+    coachName: '',
+    email: '',
+    phone: '',
+    tournamentId: '',
   });
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -36,13 +36,13 @@ export default function Tournaments() {
 
   const validateForm = () => {
     const newErrors: { [key: string]: string } = {};
-    if (!formData.teamName) newErrors.teamName = "Team name is required";
-    if (!formData.coachName) newErrors.coachName = "Coach name is required";
-    if (!formData.email) newErrors.email = "Email is required";
+    if (!formData.teamName) newErrors.teamName = 'Team name is required';
+    if (!formData.coachName) newErrors.coachName = 'Coach name is required';
+    if (!formData.email) newErrors.email = 'Email is required';
     else if (!/\S+@\S+\.\S+/.test(formData.email))
-      newErrors.email = "Invalid email";
+      newErrors.email = 'Invalid email';
     if (!formData.tournamentId)
-      newErrors.tournamentId = "Please select a tournament";
+      newErrors.tournamentId = 'Please select a tournament';
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -53,25 +53,25 @@ export default function Tournaments() {
 
     setIsSubmitting(true);
     try {
-      const response = await fetch("/api/create-tournament-registration", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      const response = await fetch('/api/create-tournament-registration', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       });
 
-      if (!response.ok) throw new Error("Failed to submit registration");
+      if (!response.ok) throw new Error('Failed to submit registration');
 
       setSubmitSuccess(true);
       setFormData({
-        teamName: "",
-        coachName: "",
-        email: "",
-        phone: "",
-        tournamentId: "",
+        teamName: '',
+        coachName: '',
+        email: '',
+        phone: '',
+        tournamentId: '',
       });
       setTimeout(() => setSubmitSuccess(false), 3000);
     } catch (error) {
-      setErrors({ form: "Failed to submit registration. Please try again." });
+      setErrors({ form: 'Failed to submit registration. Please try again.' });
     } finally {
       setIsSubmitting(false);
     }
@@ -150,8 +150,8 @@ export default function Tournaments() {
                     setFormData({ ...formData, teamName: e.target.value })
                   }
                   className={cn(
-                    "bg-blue-600 text-white font-medium font-inter rounded-md text-base uppercase h-10 w-full",
-                    "focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-300"
+                    'bg-blue-600 text-white font-medium font-inter rounded-md text-base uppercase h-10 w-full',
+                    'focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-300'
                   )}
                   required
                   aria-required="true"
@@ -172,8 +172,8 @@ export default function Tournaments() {
                     setFormData({ ...formData, coachName: e.target.value })
                   }
                   className={cn(
-                    "bg-blue-600 text-white font-medium font-inter rounded-md text-base uppercase h-10 w-full",
-                    "focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-300"
+                    'bg-blue-600 text-white font-medium font-inter rounded-md text-base uppercase h-10 w-full',
+                    'focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-300'
                   )}
                   required
                   aria-required="true"
@@ -194,8 +194,8 @@ export default function Tournaments() {
                     setFormData({ ...formData, email: e.target.value })
                   }
                   className={cn(
-                    "bg-blue-600 text-white font-medium font-inter rounded-md text-base uppercase h-10 w-full",
-                    "focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-300"
+                    'bg-blue-600 text-white font-medium font-inter rounded-md text-base uppercase h-10 w-full',
+                    'focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-300'
                   )}
                   required
                   aria-required="true"
@@ -216,8 +216,8 @@ export default function Tournaments() {
                     setFormData({ ...formData, phone: e.target.value })
                   }
                   className={cn(
-                    "bg-blue-600 text-white font-medium font-inter rounded-md text-base uppercase h-10 w-full",
-                    "focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-300"
+                    'bg-blue-600 text-white font-medium font-inter rounded-md text-base uppercase h-10 w-full',
+                    'focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-300'
                   )}
                   aria-label="Phone"
                 />
@@ -231,8 +231,8 @@ export default function Tournaments() {
                 >
                   <SelectTrigger
                     className={cn(
-                      "bg-blue-600 text-white font-medium font-inter rounded-md text-base uppercase h-10 w-full",
-                      "focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-300"
+                      'bg-blue-600 text-white font-medium font-inter rounded-md text-base uppercase h-10 w-full',
+                      'focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-300'
                     )}
                   >
                     <SelectValue placeholder="Select Tournament" />
@@ -260,7 +260,7 @@ export default function Tournaments() {
                 disabled={isSubmitting}
                 className="w-full bg-blue-600 hover:bg-blue-700 font-rubik"
               >
-                {isSubmitting ? "Submitting..." : "Register Team"}
+                {isSubmitting ? 'Submitting...' : 'Register Team'}
               </Button>
             </form>
           </CardContent>

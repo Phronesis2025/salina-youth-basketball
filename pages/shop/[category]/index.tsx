@@ -1,33 +1,33 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import Link from "next/link";
-import Image from "next/image";
-import { useParams } from "next/navigation";
-import Navbar from "../../../src/components/common/Navbar";
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { useParams } from 'next/navigation';
+import Navbar from '../../../src/components/common/Navbar';
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
-} from "../../../src/components/ui/card";
-import { Button } from "../../../src/components/ui/button";
+} from '../../../src/components/ui/card';
+import { Button } from '../../../src/components/ui/button';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../../../src/components/ui/select";
+} from '../../../src/components/ui/select';
 import {
   Dialog,
   DialogContent,
   DialogTrigger,
   DialogClose,
   DialogTitle,
-} from "../../../src/components/ui/dialog";
-import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
-import { products, Product } from "../../../src/lib/shop/data";
+} from '../../../src/components/ui/dialog';
+import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
+import { products, Product } from '../../../src/lib/shop/data';
 
 interface CartItem {
   productId: string;
@@ -40,7 +40,7 @@ interface CartItem {
 export default function CategoryPage() {
   const params = useParams();
   const category = params?.category as string;
-  const validCategories = ["wcs", "boys", "girls"];
+  const validCategories = ['wcs', 'boys', 'girls'];
   if (!validCategories.includes(category)) {
     return <div className="text-white text-center py-16">Invalid category</div>;
   }
@@ -51,14 +51,14 @@ export default function CategoryPage() {
   // Load cart client-side
   useEffect(() => {
     try {
-      const storedCart = localStorage.getItem("cart");
-      console.log("CategoryPage: Loaded cart from localStorage:", storedCart);
+      const storedCart = localStorage.getItem('cart');
+      console.log('CategoryPage: Loaded cart from localStorage:', storedCart);
       if (storedCart) {
         setCartItems(JSON.parse(storedCart));
       }
     } catch (error) {
       console.error(
-        "CategoryPage: Failed to parse cart from localStorage:",
+        'CategoryPage: Failed to parse cart from localStorage:',
         error
       );
     }
@@ -66,8 +66,8 @@ export default function CategoryPage() {
 
   // Filter state
   const [sortBy, setSortBy] = useState<
-    "price-asc" | "price-desc" | "popularity"
-  >("popularity");
+    'price-asc' | 'price-desc' | 'popularity'
+  >('popularity');
 
   // Filter products by category
   const filteredProducts = products.filter(
@@ -76,8 +76,8 @@ export default function CategoryPage() {
 
   // Sort products
   const sortedProducts = [...filteredProducts].sort((a, b) => {
-    if (sortBy === "price-asc") return a.price - b.price;
-    if (sortBy === "price-desc") return b.price - a.price;
+    if (sortBy === 'price-asc') return a.price - b.price;
+    if (sortBy === 'price-desc') return b.price - a.price;
     return b.popularity - a.popularity; // Default: popularity (descending)
   });
 
@@ -102,12 +102,12 @@ export default function CategoryPage() {
             Gear Up with Team Merch!
           </h1>
           <p className="mt-4 text-lg font-inter text-gray-300">
-            Explore{" "}
-            {category === "wcs"
-              ? "WCS"
-              : category === "boys"
-                ? "Boys Teams"
-                : "Girls Teams"}{" "}
+            Explore{' '}
+            {category === 'wcs'
+              ? 'WCS'
+              : category === 'boys'
+                ? 'Boys Teams'
+                : 'Girls Teams'}{' '}
             merchandise.
           </p>
         </div>
@@ -118,15 +118,15 @@ export default function CategoryPage() {
         <div className="container max-w-[75rem] mx-auto px-4">
           <div className="flex justify-between items-center mb-8">
             <h2 className="text-3xl font-inter font-semibold uppercase">
-              {category === "wcs"
-                ? "WCS Merch"
-                : category === "boys"
-                  ? "Boys Teams"
-                  : "Girls Teams"}
+              {category === 'wcs'
+                ? 'WCS Merch'
+                : category === 'boys'
+                  ? 'Boys Teams'
+                  : 'Girls Teams'}
             </h2>
             <Select
               onValueChange={(value) =>
-                setSortBy(value as "price-asc" | "price-desc" | "popularity")
+                setSortBy(value as 'price-asc' | 'price-desc' | 'popularity')
               }
               defaultValue="popularity"
             >

@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import { Button } from "../ui/button";
-import { cn } from "../../lib/utils";
-import { useEffect, useRef } from "react";
+import Link from 'next/link';
+import { Button } from '../ui/button';
+import { cn } from '../../lib/utils';
+import { useEffect, useRef } from 'react';
 
 export default function Hero() {
   const overlayRef = useRef<HTMLDivElement>(null);
@@ -19,8 +19,8 @@ export default function Hero() {
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
@@ -41,9 +41,9 @@ export default function Hero() {
           alt="Salina Youth Basketball Club Logo"
           className="w-full h-full object-contain"
           onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
-            console.error("Failed to load Hero fallback image");
+            console.error('Failed to load Hero fallback image');
             const target = e.target as HTMLImageElement;
-            target.src = "/images/placeholder-logo.png";
+            target.src = '/images/placeholder-logo.png';
           }}
         />
       </video>
@@ -60,13 +60,13 @@ export default function Hero() {
           {/* Title */}
           <h1
             className="text-white text-[clamp(5.4rem,7vw,10.5rem)] font-extrabold leading-[0.8] tracking-normal mt-24 mb-4 sm:mb-2 font-rubik"
-            style={{ animationDelay: "0.2s" }}
+            style={{ animationDelay: '0.2s' }}
           >
             World Class Sports
           </h1>
           <h2
             className="text-white text-[clamp(1.8rem,3vw,2.5rem)] font-bold leading-tight mb-4 sm:mb-6 font-rubik"
-            style={{ animationDelay: "0.2s" }}
+            style={{ animationDelay: '0.2s' }}
           >
             Basketball training for life
           </h2>
@@ -74,7 +74,7 @@ export default function Hero() {
           {/* Subtitle */}
           <p
             className="text-white text-[clamp(1.125rem,1.5vw,1.5rem)] leading-7 mb-6 max-w-xl font-inter font-light"
-            style={{ animationDelay: "0.4s" }}
+            style={{ animationDelay: '0.4s' }}
           >
             Fostering character, confidence, and community through basketball
             excellence.
@@ -83,13 +83,13 @@ export default function Hero() {
           {/* CTA Buttons */}
           <div
             className="flex flex-row flex-wrap gap-4"
-            style={{ animationDelay: "0.3s" }}
+            style={{ animationDelay: '0.3s' }}
           >
             <Button
               asChild
               variant="default"
               className={cn(
-                "bg-blue-600 text-white font-medium text-base px-6 py-2.5 rounded-md hover:bg-blue-700 hover:scale-105 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-300 shadow-md font-rubik"
+                'bg-blue-600 text-white font-medium text-base px-6 py-2.5 rounded-md hover:bg-blue-700 hover:scale-105 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-300 shadow-md font-rubik'
               )}
             >
               <Link href="/join" className="no-underline">
@@ -100,7 +100,7 @@ export default function Hero() {
               asChild
               variant="outline"
               className={cn(
-                "bg-transparent border border-white text-white font-medium text-base px-6 py-2.5 rounded-md hover:bg-white hover:text-gray-900 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-300 font-rubik"
+                'bg-transparent border border-white text-white font-medium text-base px-6 py-2.5 rounded-md hover:bg-white hover:text-gray-900 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-300 font-rubik'
               )}
             >
               <Link href="/schedules" className="no-underline">
@@ -111,7 +111,7 @@ export default function Hero() {
               asChild
               variant="outline"
               className={cn(
-                "bg-transparent border border-white text-white font-medium text-base px-6 py-2.5 rounded-md hover:bg-white hover:text-gray-900 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-300 font-rubik"
+                'bg-transparent border border-white text-white font-medium text-base px-6 py-2.5 rounded-md hover:bg-white hover:text-gray-900 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-300 font-rubik'
               )}
             >
               <Link href="/tournaments" className="no-underline">

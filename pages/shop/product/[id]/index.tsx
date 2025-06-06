@@ -1,26 +1,26 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import { useParams } from "next/navigation";
-import Link from "next/link";
-import Image from "next/image";
-import Navbar from "../../../../src/components/common/Navbar";
+import { useState, useEffect } from 'react';
+import { useParams } from 'next/navigation';
+import Link from 'next/link';
+import Image from 'next/image';
+import Navbar from '../../../../src/components/common/Navbar';
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
-} from "../../../../src/components/ui/card";
-import { Button } from "../../../../src/components/ui/button";
+} from '../../../../src/components/ui/card';
+import { Button } from '../../../../src/components/ui/button';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../../../../src/components/ui/select";
-import { cn } from "../../../../src/lib/utils";
-import { products, Product } from "../../../../src/lib/shop/data";
+} from '../../../../src/components/ui/select';
+import { cn } from '../../../../src/lib/utils';
+import { products, Product } from '../../../../src/lib/shop/data';
 
 interface CartItem {
   productId: string;
@@ -44,12 +44,12 @@ export default function ProductPage() {
   // Initialize cartItems synchronously from localStorage
   const [cartItems, setCartItems] = useState<CartItem[]>(() => {
     try {
-      const storedCart = localStorage.getItem("cart");
-      console.log("ProductPage: Loaded cart from localStorage:", storedCart);
+      const storedCart = localStorage.getItem('cart');
+      console.log('ProductPage: Loaded cart from localStorage:', storedCart);
       return storedCart ? JSON.parse(storedCart) : [];
     } catch (error) {
       console.error(
-        "ProductPage: Failed to parse cart from localStorage:",
+        'ProductPage: Failed to parse cart from localStorage:',
         error
       );
       return [];
@@ -59,10 +59,10 @@ export default function ProductPage() {
   // Save cart to localStorage
   useEffect(() => {
     try {
-      localStorage.setItem("cart", JSON.stringify(cartItems));
-      console.log("ProductPage: Saved cart to localStorage:", cartItems);
+      localStorage.setItem('cart', JSON.stringify(cartItems));
+      console.log('ProductPage: Saved cart to localStorage:', cartItems);
     } catch (error) {
-      console.error("ProductPage: Failed to save cart to localStorage:", error);
+      console.error('ProductPage: Failed to save cart to localStorage:', error);
     }
   }, [cartItems]);
 
@@ -72,7 +72,7 @@ export default function ProductPage() {
   const [quantity, setQuantity] = useState(1);
 
   // Check if the selected variant is in the cart
-  const variantId = `${product.id}-${selectedSize}-${selectedColor.replace(" ", "-")}`;
+  const variantId = `${product.id}-${selectedSize}-${selectedColor.replace(' ', '-')}`;
   const isInCart = cartItems.some((item) => item.variantId === variantId);
 
   // Add to cart
@@ -97,11 +97,11 @@ export default function ProductPage() {
             },
           ];
       try {
-        localStorage.setItem("cart", JSON.stringify(updatedItems));
-        console.log("ProductPage: Saved cart after addToCart:", updatedItems);
+        localStorage.setItem('cart', JSON.stringify(updatedItems));
+        console.log('ProductPage: Saved cart after addToCart:', updatedItems);
       } catch (error) {
         console.error(
-          "ProductPage: Failed to save cart to localStorage:",
+          'ProductPage: Failed to save cart to localStorage:',
           error
         );
       }
@@ -114,14 +114,14 @@ export default function ProductPage() {
     setCartItems((prev) => {
       const updatedItems = prev.filter((item) => item.variantId !== variantId);
       try {
-        localStorage.setItem("cart", JSON.stringify(updatedItems));
+        localStorage.setItem('cart', JSON.stringify(updatedItems));
         console.log(
-          "ProductPage: Saved cart after removeFromCart:",
+          'ProductPage: Saved cart after removeFromCart:',
           updatedItems
         );
       } catch (error) {
         console.error(
-          "ProductPage: Failed to save cart to localStorage:",
+          'ProductPage: Failed to save cart to localStorage:',
           error
         );
       }
@@ -176,8 +176,8 @@ export default function ProductPage() {
                   <Select value={selectedSize} onValueChange={setSelectedSize}>
                     <SelectTrigger
                       className={cn(
-                        "bg-blue-600 text-white font-medium font-inter rounded-md text-base uppercase h-10 w-full",
-                        "focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-300"
+                        'bg-blue-600 text-white font-medium font-inter rounded-md text-base uppercase h-10 w-full',
+                        'focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-300'
                       )}
                     >
                       <SelectValue placeholder="Select size" />
@@ -203,8 +203,8 @@ export default function ProductPage() {
                   >
                     <SelectTrigger
                       className={cn(
-                        "bg-blue-600 text-white font-medium font-inter rounded-md text-base uppercase h-10 w-full",
-                        "focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-300"
+                        'bg-blue-600 text-white font-medium font-inter rounded-md text-base uppercase h-10 w-full',
+                        'focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-300'
                       )}
                     >
                       <SelectValue placeholder="Select color" />
@@ -287,12 +287,12 @@ export default function ProductPage() {
           <div className="mt-8 text-center">
             <Link href={`/shop/${product.category}`}>
               <Button className="bg-blue-600 hover:bg-blue-700 text-white font-inter uppercase">
-                Back to{" "}
-                {product.category === "wcs"
-                  ? "WCS"
-                  : product.category === "boys"
-                    ? "Boys Teams"
-                    : "Girls Teams"}
+                Back to{' '}
+                {product.category === 'wcs'
+                  ? 'WCS'
+                  : product.category === 'boys'
+                    ? 'Boys Teams'
+                    : 'Girls Teams'}
               </Button>
             </Link>
           </div>

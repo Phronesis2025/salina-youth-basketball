@@ -1,9 +1,11 @@
 # Salina Youth Basketball Club Website - Phase 2: Plan the Content and Structure
 
 ## Overview
+
 This phase defines the website’s sitemap, navigation, and page-specific content to ensure a seamless user experience for parents, external teams, and coaches. The structure supports a custom build using Cursor, Next.js (frontend), Tailwind CSS (styling), Supabase (database, authentication, storage), Stripe (payments), and Printful (merchandise fulfillment), with a sporty, cutting-edge, trendy, and minimalistic design. Content includes placeholder text, AI-generated assets, and dynamic data, tailored for 20+ teams in central Kansas.
 
 ## Sitemap
+
 - **Homepage**: Entry point showcasing the club and key CTAs.
 - **Team Hub**: Parent page with sub-pages for each team.
   - **Team Sub-Page**: Details for a specific team (e.g., `/teams/u12-boys`).
@@ -15,6 +17,7 @@ This phase defines the website’s sitemap, navigation, and page-specific conten
 - **News Page**: Archive of news articles.
 
 ## Navigation Menu
+
 - **Primary Menu** (Header):
   - Home
   - Teams (dropdown or filterable grid)
@@ -31,6 +34,7 @@ This phase defines the website’s sitemap, navigation, and page-specific conten
 ## Page-by-Page Content
 
 ### 1. Homepage
+
 - **Purpose**: Welcome visitors, showcase the club’s energy, and guide users to key actions (register, view schedules, shop).
 - **Content**:
   - **Hero Section**: Hype video (user-provided or AI-generated) with overlay text (“Join Salina’s Premier Youth Basketball Club”). Three CTAs: “Sign Up for a Tournament,” “Register Player,” “Register a New Player.”
@@ -49,6 +53,7 @@ This phase defines the website’s sitemap, navigation, and page-specific conten
   - Stripe for registration CTAs.
 
 ### 2. Team Hub
+
 - **Purpose**: Central hub for browsing 20+ teams.
 - **Content**:
   - **Team Grid**: Filterable grid of team cards (e.g., “U10 Boys Thunder”), each with name, age group, gender, thumbnail. Filters: grade/middle/high school, boys/girls.
@@ -59,6 +64,7 @@ This phase defines the website’s sitemap, navigation, and page-specific conten
   - Supabase table: `teams` (fields: `id`, `name`, `coach_name`, `age`, `grade_level`, `roster`).
 
 ### 3. Team Sub-Page (e.g., `/teams/u12-boys`)
+
 - **Purpose**: Detailed info for a specific team.
 - **Content**:
   - **Coach Bio**: Placeholder (e.g., “Coach John Smith, dedicated to youth development”).
@@ -73,6 +79,7 @@ This phase defines the website’s sitemap, navigation, and page-specific conten
   - Supabase Auth for coach dashboard.
 
 ### 4. Coaches Corner
+
 - **Purpose**: Provide AI-generated resources for skill development.
 - **Content**:
   - **Article List**: Blog-style grid of static articles (e.g., “5 Dribbling Drills for Kids”, “Parent Tips for Supporting Your Athlete”). Categories: Skills, Parent Tips.
@@ -82,6 +89,7 @@ This phase defines the website’s sitemap, navigation, and page-specific conten
   - Supabase table: `resources` (fields: `id`, `title`, `type`, `content`, `category`).
 
 ### 5. Tournament Registry
+
 - **Purpose**: Allow external teams to sign up via TourneyMachine.
 - **Content**:
   - **Embedded Form**: Iframe for TourneyMachine form (collects team name, coach name/email, player count, age group).
@@ -91,6 +99,7 @@ This phase defines the website’s sitemap, navigation, and page-specific conten
   - Static page with iframe.
 
 ### 6. Merch Page
+
 - **Purpose**: Sell team and tournament t-shirts.
 - **Content**:
   - **Product Grid**: 2–3 t-shirts per team and tournament (e.g., “Tournament Fireball Tee”). Includes image, description, price, “Buy Now” button.
@@ -101,6 +110,7 @@ This phase defines the website’s sitemap, navigation, and page-specific conten
   - Stripe for payments, Printful API for fulfillment.
 
 ### 7. Parent Portal
+
 - **Purpose**: Secure area for parents to view team data.
 - **Content**:
   - **Dashboard**: Team schedules (calendar), roster (player names/numbers), payment history (Stripe).
@@ -111,6 +121,7 @@ This phase defines the website’s sitemap, navigation, and page-specific conten
   - Stripe API for payment history.
 
 ### 8. About/Contact
+
 - **Purpose**: Share club info and contact options.
 - **Content**:
   - **About Section**: Placeholder mission (“Salina Youth Basketball Club fosters teamwork, discipline, and basketball excellence”).
@@ -120,6 +131,7 @@ This phase defines the website’s sitemap, navigation, and page-specific conten
   - Supabase table: `contacts` (fields: `id`, `name`, `email`, `message`).
 
 ### 9. News Page
+
 - **Purpose**: Archive all news articles.
 - **Content**:
   - **Article Grid**: Cards (image, title, date, excerpt) with modals for full text.
@@ -128,6 +140,7 @@ This phase defines the website’s sitemap, navigation, and page-specific conten
   - Supabase `news` table.
 
 ## Content Needs
+
 - **Text**:
   - Placeholder values/mission: “Teamwork, Discipline, Basketball Excellence” (Homepage, About).
   - Coach bios: Generic for 20 coaches (e.g., “Coach [Name], experienced coach”).
@@ -146,6 +159,7 @@ This phase defines the website’s sitemap, navigation, and page-specific conten
   - Photos: Placeholder gallery images (moderated).
 
 ## Technical Structure
+
 - **Frontend**: Next.js with dynamic routes, Tailwind CSS, Swiper.js (carousel), FullCalendar (schedules).
 - **Backend**: Supabase for tables (`teams`, `schedules`, `news`, `resources`, `products`, `photos`, `users`, `contacts`), storage (images, videos), and authentication.
 - **Payments**: Stripe for registrations, dues, and merch.
@@ -153,6 +167,7 @@ This phase defines the website’s sitemap, navigation, and page-specific conten
 - **Hosting**: Vercel ($20–$30/month budget).
 
 ## Navigation Flow
+
 - **Parents**: Homepage → “Register Player”/Parent Portal → Team Hub/Merch Page.
 - **External Teams**: Homepage → Tournaments → Tournament Registry.
 - **Coaches**: Login → Dashboard → Update schedules/moderate photos.

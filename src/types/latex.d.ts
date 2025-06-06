@@ -1,4 +1,4 @@
-declare module "latex" {
+declare module 'latex' {
   function latex(
     content: string,
     callback: (err: Error | null, pdf: Buffer) => void

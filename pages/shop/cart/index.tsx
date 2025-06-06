@@ -1,17 +1,17 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import Link from "next/link";
-import Image from "next/image";
-import Navbar from "../../../src/components/common/Navbar";
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import Navbar from '../../../src/components/common/Navbar';
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
-} from "../../../src/components/ui/card";
-import { Button } from "../../../src/components/ui/button";
-import { products, Product } from "../../../src/lib/shop/data";
+} from '../../../src/components/ui/card';
+import { Button } from '../../../src/components/ui/button';
+import { products, Product } from '../../../src/lib/shop/data';
 
 interface CartItem {
   productId: string;
@@ -28,13 +28,13 @@ export default function CartPage() {
   // Load cartItems from localStorage client-side
   useEffect(() => {
     try {
-      const storedCart = localStorage.getItem("cart");
-      console.log("CartPage: Loaded cart from localStorage:", storedCart);
+      const storedCart = localStorage.getItem('cart');
+      console.log('CartPage: Loaded cart from localStorage:', storedCart);
       if (storedCart) {
         setCartItems(JSON.parse(storedCart));
       }
     } catch (error) {
-      console.error("CartPage: Failed to parse cart from localStorage:", error);
+      console.error('CartPage: Failed to parse cart from localStorage:', error);
     }
   }, []);
 
@@ -46,13 +46,13 @@ export default function CartPage() {
         item.variantId === variantId ? { ...item, quantity: newQuantity } : item
       );
       try {
-        localStorage.setItem("cart", JSON.stringify(updatedItems));
+        localStorage.setItem('cart', JSON.stringify(updatedItems));
         console.log(
-          "CartPage: Saved cart to localStorage after updateQuantity:",
+          'CartPage: Saved cart to localStorage after updateQuantity:',
           updatedItems
         );
       } catch (error) {
-        console.error("CartPage: Failed to save cart to localStorage:", error);
+        console.error('CartPage: Failed to save cart to localStorage:', error);
       }
       return updatedItems;
     });
@@ -63,13 +63,13 @@ export default function CartPage() {
     setCartItems((prev) => {
       const updatedItems = prev.filter((item) => item.variantId !== variantId);
       try {
-        localStorage.setItem("cart", JSON.stringify(updatedItems));
+        localStorage.setItem('cart', JSON.stringify(updatedItems));
         console.log(
-          "CartPage: Saved cart to localStorage after removeItem:",
+          'CartPage: Saved cart to localStorage after removeItem:',
           updatedItems
         );
       } catch (error) {
-        console.error("CartPage: Failed to save cart to localStorage:", error);
+        console.error('CartPage: Failed to save cart to localStorage:', error);
       }
       return updatedItems;
     });
@@ -143,7 +143,7 @@ export default function CartPage() {
                             Size: {item.size}
                           </p>
                           <p className="text-gray-300 font-inter">
-                            Color:{" "}
+                            Color:{' '}
                             {item.color.charAt(0).toUpperCase() +
                               item.color.slice(1)}
                           </p>

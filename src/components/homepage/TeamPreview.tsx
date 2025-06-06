@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import Link from "next/link";
-import { Button } from "../ui/button";
-import { cn } from "../../lib/utils";
-import Image from "next/image";
-import { supabase } from "../../lib/supabaseClient";
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { Button } from '../ui/button';
+import { cn } from '../../lib/utils';
+import Image from 'next/image';
+import { supabase } from '../../lib/supabaseClient';
 
 interface Team {
   id: number;
@@ -25,8 +25,8 @@ export default function TeamPreview() {
     async function fetchTeams() {
       try {
         const { data, error } = await supabase
-          .from("teams")
-          .select("id, name, grade_level, image, logo, coaches");
+          .from('teams')
+          .select('id, name, grade_level, image, logo, coaches');
         if (error) throw error;
         if (data && data.length > 0) {
           const shuffled = data.sort(() => 0.5 - Math.random()); // Simple shuffle
@@ -35,17 +35,17 @@ export default function TeamPreview() {
             id: team.id,
             name: team.name,
             grade_level: team.grade_level,
-            image: team.image || "/images/placeholder-team-default.jpg", // Team photo
-            logo: team.logo || "/images/placeholder-team-default.jpg",
-            coach: team.coaches.join(" & ") || "TBD",
+            image: team.image || '/images/placeholder-team-default.jpg', // Team photo
+            logo: team.logo || '/images/placeholder-team-default.jpg',
+            coach: team.coaches.join(' & ') || 'TBD',
           }));
           setTeams(mappedTeams);
         } else {
           setTeams([]);
         }
       } catch (err: any) {
-        setError("Failed to load teams. Please try again later.");
-        console.error("Error fetching teams:", err);
+        setError('Failed to load teams. Please try again later.');
+        console.error('Error fetching teams:', err);
       } finally {
         setLoading(false);
       }
@@ -80,7 +80,7 @@ export default function TeamPreview() {
       <div className="container max-w-[75rem] mx-auto px-4 sm:px-6 lg:px-8">
         <h2
           className="text-white text-[clamp(2.25rem,5vw,3rem)] font-bold font-rubik mb-8 text-center uppercase"
-          style={{ animationDelay: "0.2s" }}
+          style={{ animationDelay: '0.2s' }}
         >
           Our Teams
         </h2>
@@ -89,8 +89,8 @@ export default function TeamPreview() {
             <div
               key={team.id}
               className={cn(
-                "bg-black rounded-[15px] shadow-md overflow-hidden w-[300px] mx-auto flex flex-col",
-                "transform rotate-x-[10deg] rotate-y-[10deg] drop-shadow-[0_10px_20px_rgba(0,0,0,0.5)]"
+                'bg-black rounded-[15px] shadow-md overflow-hidden w-[300px] mx-auto flex flex-col',
+                'transform rotate-x-[10deg] rotate-y-[10deg] drop-shadow-[0_10px_20px_rgba(0,0,0,0.5)]'
               )}
               style={{ animationDelay: `${0.3 + index * 0.1}s` }}
             >
@@ -103,7 +103,7 @@ export default function TeamPreview() {
                   className="object-cover object-center"
                   onError={(e) => {
                     const target = e.target as HTMLImageElement;
-                    target.src = "/images/placeholder-team-default.jpg";
+                    target.src = '/images/placeholder-team-default.jpg';
                   }}
                 />
                 <div className="absolute bottom-[-50px] left-1/2 transform -translate-x-1/2 w-[100px] h-[100px] rounded-full border-8 border-[#002C51] ">
@@ -114,7 +114,7 @@ export default function TeamPreview() {
                     className="object-contain rounded-full"
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
-                      target.src = "/images/placeholder-team-default.jpg";
+                      target.src = '/images/placeholder-team-default.jpg';
                     }}
                   />
                 </div>

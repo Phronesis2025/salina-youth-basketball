@@ -1,15 +1,15 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { supabase } from "../../../src/lib/supabase/client";
-import { Button } from "../../../src/components/ui/button";
-import { Input } from "../../../src/components/ui/input";
-import { Label } from "../../../src/components/ui/label";
-import { useRouter } from "next/navigation";
+import { useState } from 'react';
+import { supabase } from '../../../src/lib/supabase/client';
+import { Button } from '../../../src/components/ui/button';
+import { Input } from '../../../src/components/ui/input';
+import { Label } from '../../../src/components/ui/label';
+import { useRouter } from 'next/navigation';
 
 export default function CoachesLoginPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
 
@@ -28,7 +28,7 @@ export default function CoachesLoginPage() {
     }
 
     // Redirect to /coaches after successful login
-    router.push("/coaches");
+    router.push('/coaches');
   };
 
   return (

@@ -1,16 +1,16 @@
-"use client";
+'use client';
 
-import { Button } from "../ui/button";
+import { Button } from '../ui/button';
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "../ui/accordion";
-import { supabase } from "../../lib/supabaseClient";
-import Image from "next/image";
-import Link from "next/link";
-import { useEffect, useState } from "react";
+} from '../ui/accordion';
+import { supabase } from '../../lib/supabaseClient';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 interface Drill {
   title: string;
@@ -37,9 +37,9 @@ export default function CoachesCorner() {
 
         // Fetch the drill for the current week
         const { data, error } = await supabase
-          .from("drills")
-          .select("title, instructions")
-          .eq("week_number", weekNumber)
+          .from('drills')
+          .select('title, instructions')
+          .eq('week_number', weekNumber)
           .single();
 
         if (error) {
@@ -49,7 +49,7 @@ export default function CoachesCorner() {
         if (data) {
           const description =
             data.instructions.length > 100
-              ? data.instructions.substring(0, 100) + "..."
+              ? data.instructions.substring(0, 100) + '...'
               : data.instructions;
           setCurrentDrill({
             title: data.title,
@@ -58,7 +58,7 @@ export default function CoachesCorner() {
           });
         }
       } catch (err) {
-        setError("Failed to load the current drill. Please try again later.");
+        setError('Failed to load the current drill. Please try again later.');
       } finally {
         setLoading(false);
       }
@@ -69,22 +69,22 @@ export default function CoachesCorner() {
 
   const accordionItems = [
     {
-      title: "Coach Highlight",
-      description: "Meet our Coach of the Month and learn about their impact.",
+      title: 'Coach Highlight',
+      description: 'Meet our Coach of the Month and learn about their impact.',
     },
     {
-      title: "AI-Generated Drills",
+      title: 'AI-Generated Drills',
       description:
         currentDrill?.description ||
         "Discover weekly drills to boost your team's skills.",
     },
     {
-      title: "Rules & Policies",
+      title: 'Rules & Policies',
       description: "Understand our league's rules for fair play and safety.",
     },
     {
-      title: "Video Archive",
-      description: "Watch tutorials to enhance your coaching techniques.",
+      title: 'Video Archive',
+      description: 'Watch tutorials to enhance your coaching techniques.',
     },
   ];
 

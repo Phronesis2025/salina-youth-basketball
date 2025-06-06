@@ -1,14 +1,14 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import Image from "next/image";
-import { Button } from "../../src/components/ui/button";
+import Link from 'next/link';
+import Image from 'next/image';
+import { Button } from '../../src/components/ui/button';
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
-} from "../../src/components/ui/card";
+} from '../../src/components/ui/card';
 
 export default function About() {
   return (

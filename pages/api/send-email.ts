@@ -1,6 +1,6 @@
-import { NextApiRequest, NextApiResponse } from "next";
-import { Resend } from "resend";
-import { createClient } from "@supabase/supabase-js";
+import { NextApiRequest, NextApiResponse } from 'next';
+import { Resend } from 'resend';
+import { createClient } from '@supabase/supabase-js';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -13,8 +13,8 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ error: "Method not allowed" });
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed' });
   }
 
   const { formData, paymentStatus, joinRequestId, to, subject, html, webhook } =
@@ -24,45 +24,45 @@ export default async function handler(
     // Handle webhook email (e.g., order shipped)
     if (webhook && to && subject && html) {
       const emailResponse = await resend.emails.send({
-        from: "Salina Youth Basketball Club <no-reply@yourdomain.com>",
+        from: 'Salina Youth Basketball Club <no-reply@yourdomain.com>',
         to,
         subject,
         html,
       });
-      console.log("Webhook email sent:", emailResponse);
-      return res.status(200).json({ message: "Webhook email sent" });
+      console.log('Webhook email sent:', emailResponse);
+      return res.status(200).json({ message: 'Webhook email sent' });
     }
 
     // Handle checkout page email
     if (to && subject && html) {
       const emailResponse = await resend.emails.send({
-        from: "Salina Youth Basketball Club <no-reply@yourdomain.com>",
+        from: 'Salina Youth Basketball Club <no-reply@yourdomain.com>',
         to,
         subject,
         html,
       });
-      console.log("Checkout email sent:", emailResponse);
-      return res.status(200).json({ message: "Email sent" });
+      console.log('Checkout email sent:', emailResponse);
+      return res.status(200).json({ message: 'Email sent' });
     }
 
     // Handle join request email
     if (!formData || !paymentStatus || !joinRequestId) {
       return res
         .status(400)
-        .json({ error: "Missing required fields for join request" });
+        .json({ error: 'Missing required fields for join request' });
     }
 
     const { data: joinRequest, error } = await supabase
-      .from("join_requests")
-      .select("stripe_payment_id, created_at, payment_status")
-      .eq("id", joinRequestId)
+      .from('join_requests')
+      .select('stripe_payment_id, created_at, payment_status')
+      .eq('id', joinRequestId)
       .single();
 
     if (error || !joinRequest) {
-      throw new Error("Failed to fetch join request data");
+      throw new Error('Failed to fetch join request data');
     }
 
-    const amount = formData.payment_option === "full" ? 36000 : 3000;
+    const amount = formData.payment_option === 'full' ? 36000 : 3000;
 
     const invoiceHtml = `
       <!DOCTYPE html>
@@ -98,9 +98,9 @@ export default async function handler(
             <p><span class="label">Age Group:</span> <span class="value">${formData.age_group}</span></p>
             <p><span class="label">Team Gender:</span> <span class="value">${formData.team_gender}</span></p>
             <p><span class="label">Payment Option:</span> <span class="value">${
-              formData.payment_option === "full"
-                ? "Pay in Full ($360.00)"
-                : "Monthly Installments ($30.00 x 12)"
+              formData.payment_option === 'full'
+                ? 'Pay in Full ($360.00)'
+                : 'Monthly Installments ($30.00 x 12)'
             }</span></p>
             <p><span class="label">Amount:</span> <span class="value">$${(amount / 100).toFixed(2)}</span></p>
             <p><span class="label">Payment Status:</span> <span class="value">${
@@ -117,15 +117,15 @@ export default async function handler(
     `;
 
     const userEmailResponse = await resend.emails.send({
-      from: "Salina Youth Basketball Club <no-reply@yourdomain.com>",
+      from: 'Salina Youth Basketball Club <no-reply@yourdomain.com>',
       to: formData.parent_email,
-      subject: "Your Salina Youth Basketball Club Invoice",
+      subject: 'Your Salina Youth Basketball Club Invoice',
       html: invoiceHtml,
     });
-    console.log("User email sent:", userEmailResponse);
+    console.log('User email sent:', userEmailResponse);
 
     const adminEmailResponse = await resend.emails.send({
-      from: "Salina Youth Basketball Club <no-reply@yourdomain.com>",
+      from: 'Salina Youth Basketball Club <no-reply@yourdomain.com>',
       to: process.env.ADMIN_EMAIL!,
       subject: `New Join Request and Invoice for ${formData.first_name} ${formData.last_name}`,
       html: `
@@ -140,13 +140,13 @@ export default async function handler(
         </div>
       `,
     });
-    console.log("Admin email sent:", adminEmailResponse);
+    console.log('Admin email sent:', adminEmailResponse);
 
-    return res.status(200).json({ message: "Email notifications sent" });
+    return res.status(200).json({ message: 'Email notifications sent' });
   } catch (error) {
-    console.error("Error sending emails:", error);
+    console.error('Error sending emails:', error);
     return res
       .status(500)
-      .json({ error: "Failed to send email notifications" });
+      .json({ error: 'Failed to send email notifications' });
   }
 }

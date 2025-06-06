@@ -1,19 +1,19 @@
-"use client";
+'use client';
 
-import { useState, useEffect, Suspense } from "react";
-import { useSearchParams } from "next/navigation";
-import Link from "next/link";
-import Navbar from "../../../src/components/common/Navbar";
+import { useState, useEffect, Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
+import Link from 'next/link';
+import Navbar from '../../../src/components/common/Navbar';
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
-} from "../../../src/components/ui/card";
-import { Button } from "../../../src/components/ui/button";
+} from '../../../src/components/ui/card';
+import { Button } from '../../../src/components/ui/button';
 
 // Force dynamic rendering to avoid static generation
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 
 interface CartItem {
   productId: string;
@@ -51,23 +51,23 @@ function ConfirmationContent() {
   // Load order data from query params
   useEffect(() => {
     try {
-      const order = searchParams?.get("order");
+      const order = searchParams?.get('order');
       if (order) {
         const parsedOrder = JSON.parse(decodeURIComponent(order));
         setOrderData(parsedOrder);
-        console.log("ConfirmationPage: Loaded order data:", parsedOrder);
+        console.log('ConfirmationPage: Loaded order data:', parsedOrder);
       }
     } catch (error) {
-      console.error("ConfirmationPage: Failed to parse order data:", error);
+      console.error('ConfirmationPage: Failed to parse order data:', error);
     }
   }, [searchParams]);
 
   // Load cart client-side (for Navbar count)
   useEffect(() => {
     try {
-      const storedCart = localStorage.getItem("cart");
+      const storedCart = localStorage.getItem('cart');
       console.log(
-        "ConfirmationPage: Loaded cart from localStorage:",
+        'ConfirmationPage: Loaded cart from localStorage:',
         storedCart
       );
       if (storedCart) {
@@ -75,7 +75,7 @@ function ConfirmationContent() {
       }
     } catch (error) {
       console.error(
-        "ConfirmationPage: Failed to parse cart from localStorage:",
+        'ConfirmationPage: Failed to parse cart from localStorage:',
         error
       );
     }
@@ -130,7 +130,7 @@ function ConfirmationContent() {
                   <div className="flex-1">
                     <p className="text-white font-inter">{item.name}</p>
                     <p className="text-gray-300 font-inter text-sm">
-                      Size: {item.size}, Color:{" "}
+                      Size: {item.size}, Color:{' '}
                       {item.color.charAt(0).toUpperCase() + item.color.slice(1)}
                     </p>
                     <p className="text-gray-300 font-inter text-sm">
@@ -147,9 +147,9 @@ function ConfirmationContent() {
                   Subtotal: ${orderData.subtotal.toFixed(2)}
                 </p>
                 <p className="text-gray-300 font-inter">
-                  Shipping:{" "}
+                  Shipping:{' '}
                   {orderData.shippingCost === 0
-                    ? "Free"
+                    ? 'Free'
                     : `$${orderData.shippingCost.toFixed(2)}`}
                 </p>
                 <p className="text-white font-inter text-lg font-semibold">
@@ -165,8 +165,8 @@ function ConfirmationContent() {
                   <br />
                   {orderData.shippingAddress.street}
                   <br />
-                  {orderData.shippingAddress.city},{" "}
-                  {orderData.shippingAddress.state}{" "}
+                  {orderData.shippingAddress.city},{' '}
+                  {orderData.shippingAddress.state}{' '}
                   {orderData.shippingAddress.zip}
                   <br />
                   {orderData.shippingAddress.country}

@@ -1,5 +1,5 @@
-import { NextApiRequest, NextApiResponse } from "next";
-import { createClient } from "@supabase/supabase-js";
+import { NextApiRequest, NextApiResponse } from 'next';
+import { createClient } from '@supabase/supabase-js';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -10,17 +10,17 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ error: "Method not allowed" });
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed' });
   }
 
   const formData = req.body;
 
-  console.log("Creating join request with formData:", formData);
+  console.log('Creating join request with formData:', formData);
 
   try {
     const { data, error } = await supabase
-      .from("join_requests")
+      .from('join_requests')
       .insert({
         first_name: formData.first_name,
         last_name: formData.last_name,
@@ -35,20 +35,20 @@ export default async function handler(
         preferred_position: formData.preferred_position,
         prior_experience: formData.prior_experience,
         payment_option: formData.payment_option,
-        payment_status: "pending",
+        payment_status: 'pending',
       })
       .select()
       .single();
 
     if (error) {
-      console.error("Supabase insert error:", error);
+      console.error('Supabase insert error:', error);
       throw new Error(error.message);
     }
 
-    console.log("Join request created, id:", data.id);
+    console.log('Join request created, id:', data.id);
     return res.status(200).json({ joinRequestId: data.id });
   } catch (error) {
-    console.error("Create join request error:", error);
+    console.error('Create join request error:', error);
     return res.status(500).json({ error: (error as Error).message });
   }
 }

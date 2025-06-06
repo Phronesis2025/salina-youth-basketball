@@ -1,53 +1,53 @@
-"use client";
+'use client';
 
-import { Button } from "../../../src/components/ui/button";
-import Image from "next/image";
-import Link from "next/link";
-import { useState } from "react";
+import { Button } from '../../../src/components/ui/button';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useState } from 'react';
 
 export default function VideosPage() {
   const videos = [
     {
-      title: "Teaching Basketball Layups for Beginners",
+      title: 'Teaching Basketball Layups for Beginners',
       description:
-        "Learn the basics of teaching layups to young players with this step-by-step guide.",
-      youtubeUrl: "https://www.youtube.com/watch?v=SIq8KC_FH34",
-      videoId: "SIq8KC_FH34",
+        'Learn the basics of teaching layups to young players with this step-by-step guide.',
+      youtubeUrl: 'https://www.youtube.com/watch?v=SIq8KC_FH34',
+      videoId: 'SIq8KC_FH34',
     },
     {
-      title: "Basketball Dribbling Drills for Beginners",
+      title: 'Basketball Dribbling Drills for Beginners',
       description:
-        "Simple dribbling drills to help beginners improve their ball-handling skills.",
-      youtubeUrl: "https://www.youtube.com/watch?v=8qvCSEG0SIQ",
-      videoId: "8qvCSEG0SIQ",
+        'Simple dribbling drills to help beginners improve their ball-handling skills.',
+      youtubeUrl: 'https://www.youtube.com/watch?v=8qvCSEG0SIQ',
+      videoId: '8qvCSEG0SIQ',
     },
     {
-      title: "This 5 Minute Dribbling Workout Changes Your Game Forever",
+      title: 'This 5 Minute Dribbling Workout Changes Your Game Forever',
       description:
-        "A quick 5-minute dribbling workout to transform your players’ skills on the court.",
-      youtubeUrl: "https://www.youtube.com/watch?v=oADaM2L1YLc",
-      videoId: "oADaM2L1YLc",
+        'A quick 5-minute dribbling workout to transform your players’ skills on the court.',
+      youtubeUrl: 'https://www.youtube.com/watch?v=oADaM2L1YLc',
+      videoId: 'oADaM2L1YLc',
     },
     {
-      title: "These Mistakes Are Ruining Your Jump Shot [Easy Fix]",
+      title: 'These Mistakes Are Ruining Your Jump Shot [Easy Fix]',
       description:
-        "Identify and fix common jump shot mistakes to improve shooting accuracy.",
-      youtubeUrl: "https://www.youtube.com/watch?v=ukkRfmc4KnM",
-      videoId: "ukkRfmc4KnM",
+        'Identify and fix common jump shot mistakes to improve shooting accuracy.',
+      youtubeUrl: 'https://www.youtube.com/watch?v=ukkRfmc4KnM',
+      videoId: 'ukkRfmc4KnM',
     },
     {
-      title: "16 Ways To Be A Better Scorer",
+      title: '16 Ways To Be A Better Scorer',
       description:
-        "Discover 16 techniques to help your players become more effective scorers.",
-      youtubeUrl: "https://www.youtube.com/watch?v=2tVj331G0ik",
-      videoId: "2tVj331G0ik",
+        'Discover 16 techniques to help your players become more effective scorers.',
+      youtubeUrl: 'https://www.youtube.com/watch?v=2tVj331G0ik',
+      videoId: '2tVj331G0ik',
     },
     {
-      title: "3 Ways To Become Unguardable",
+      title: '3 Ways To Become Unguardable',
       description:
-        "Learn three strategies to make your players unguardable on the court.",
-      youtubeUrl: "https://www.youtube.com/watch?v=KGhI7K9NxHU",
-      videoId: "KGhI7K9NxHU",
+        'Learn three strategies to make your players unguardable on the court.',
+      youtubeUrl: 'https://www.youtube.com/watch?v=KGhI7K9NxHU',
+      videoId: 'KGhI7K9NxHU',
     },
   ];
 
@@ -92,7 +92,7 @@ export default function VideosPage() {
                     <Image
                       src={
                         imageErrors[video.videoId]
-                          ? "/images/video-placeholder.png"
+                          ? '/images/video-placeholder.png'
                           : `https://img.youtube.com/vi/${video.videoId}/hqdefault.jpg`
                       }
                       alt={`Thumbnail for ${video.title}`}

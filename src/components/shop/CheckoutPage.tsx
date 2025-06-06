@@ -1,17 +1,17 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import Link from "next/link";
-import Image from "next/image";
-import { useRouter, useSearchParams } from "next/navigation";
-import Navbar from "../../../src/components/common/Navbar";
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { useRouter, useSearchParams } from 'next/navigation';
+import Navbar from '../../../src/components/common/Navbar';
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
-} from "../../../src/components/ui/card";
-import { Button } from "../../../src/components/ui/button";
+} from '../../../src/components/ui/card';
+import { Button } from '../../../src/components/ui/button';
 import {
   Dialog,
   DialogContent,
@@ -19,15 +19,15 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "../../../src/components/ui/dialog";
+} from '../../../src/components/ui/dialog';
 import {
   Elements,
   CardElement,
   useStripe,
   useElements,
-} from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
-import { products, Product } from "../../../src/lib/shop/data";
+} from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
+import { products, Product } from '../../../src/lib/shop/data';
 
 // Initialize Stripe with your publishable key
 const stripeKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
@@ -55,29 +55,29 @@ interface FormData {
 // Mock data for test mode
 const mockCartItems: CartItem[] = [
   {
-    productId: "firebolts-style-1",
-    variantId: "firebolts-style-1-S-heather-gray",
-    size: "S",
-    color: "heather gray",
+    productId: 'firebolts-style-1',
+    variantId: 'firebolts-style-1-S-heather-gray',
+    size: 'S',
+    color: 'heather gray',
     quantity: 2,
   },
 ];
 
 const mockFormData: FormData = {
-  email: "test@example.com",
-  fullName: "John Doe",
-  phone: "123-456-7890",
-  street: "123 Main St",
-  city: "Salina",
-  state: "Kansas",
-  zip: "67401",
-  country: "United States",
+  email: 'test@example.com',
+  fullName: 'John Doe',
+  phone: '123-456-7890',
+  street: '123 Main St',
+  city: 'Salina',
+  state: 'Kansas',
+  zip: '67401',
+  country: 'United States',
 };
 
 export default function CheckoutPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const isTestMode = searchParams?.get("test") === "true";
+  const isTestMode = searchParams?.get('test') === 'true';
   const [cartItems, setCartItems] = useState<CartItem[]>(
     isTestMode ? mockCartItems : []
   );
@@ -85,14 +85,14 @@ export default function CheckoutPage() {
     isTestMode
       ? mockFormData
       : {
-          email: "",
-          fullName: "",
-          phone: "",
-          street: "",
-          city: "",
-          state: "",
-          zip: "",
-          country: "",
+          email: '',
+          fullName: '',
+          phone: '',
+          street: '',
+          city: '',
+          state: '',
+          zip: '',
+          country: '',
         }
   );
   const [errors, setErrors] = useState<Partial<FormData>>({});
@@ -108,14 +108,14 @@ export default function CheckoutPage() {
       return;
     }
     try {
-      const storedCart = localStorage.getItem("cart");
-      console.log("CheckoutPage: Loaded cart from localStorage:", storedCart);
+      const storedCart = localStorage.getItem('cart');
+      console.log('CheckoutPage: Loaded cart from localStorage:', storedCart);
       if (storedCart) {
         setCartItems(JSON.parse(storedCart));
       }
     } catch (error) {
       console.error(
-        "CheckoutPage: Failed to parse cart from localStorage:",
+        'CheckoutPage: Failed to parse cart from localStorage:',
         error
       );
       setCartItems([]);
@@ -124,8 +124,8 @@ export default function CheckoutPage() {
 
   // Log Stripe initialization
   useEffect(() => {
-    console.log("CheckoutPage: Stripe key:", stripeKey ? "Present" : "Missing");
-    console.log("CheckoutPage: Stripe promise initialized:", !!stripePromise);
+    console.log('CheckoutPage: Stripe key:', stripeKey ? 'Present' : 'Missing');
+    console.log('CheckoutPage: Stripe promise initialized:', !!stripePromise);
   }, []);
 
   // Calculate totals
@@ -238,14 +238,14 @@ function CheckoutForm({
   const validateForm = () => {
     const newErrors: Partial<FormData> = {};
     if (!formData.email || !/\S+@\S+\.\S+/.test(formData.email))
-      newErrors.email = "Valid email is required";
-    if (!formData.fullName) newErrors.fullName = "Full name is required";
-    if (!formData.phone) newErrors.phone = "Phone number is required";
-    if (!formData.street) newErrors.street = "Street address is required";
-    if (!formData.city) newErrors.city = "City is required";
-    if (!formData.state) newErrors.state = "State is required";
-    if (!formData.zip) newErrors.zip = "ZIP code is required";
-    if (!formData.country) newErrors.country = "Country is required";
+      newErrors.email = 'Valid email is required';
+    if (!formData.fullName) newErrors.fullName = 'Full name is required';
+    if (!formData.phone) newErrors.phone = 'Phone number is required';
+    if (!formData.street) newErrors.street = 'Street address is required';
+    if (!formData.city) newErrors.city = 'City is required';
+    if (!formData.state) newErrors.state = 'State is required';
+    if (!formData.zip) newErrors.zip = 'ZIP code is required';
+    if (!formData.country) newErrors.country = 'Country is required';
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -254,7 +254,7 @@ function CheckoutForm({
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-    setErrors((prev) => ({ ...prev, [name]: "" }));
+    setErrors((prev) => ({ ...prev, [name]: '' }));
   };
 
   // Handle checkout
@@ -269,22 +269,22 @@ function CheckoutForm({
 
     try {
       // Create payment intent
-      const response = await fetch("/api/stripe-payment", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      const response = await fetch('/api/stripe-payment', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ amount: totalPrice * 100 }), // Stripe expects cents
       });
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.error || "Failed to create payment intent");
+        throw new Error(errorData.error || 'Failed to create payment intent');
       }
 
       const { clientSecret } = await response.json();
 
       // Confirm card payment
       const cardElement = elements.getElement(CardElement);
-      if (!cardElement) throw new Error("Card element not found");
+      if (!cardElement) throw new Error('Card element not found');
 
       const paymentResult = await stripe.confirmCardPayment(clientSecret, {
         payment_method: { card: cardElement },
@@ -306,10 +306,10 @@ function CheckoutForm({
 
       // Submit order to Printful
       const printfulResponse = await fetch(
-        `/api/create-printful-order${isTestMode ? "?test=true" : ""}`,
+        `/api/create-printful-order${isTestMode ? '?test=true' : ''}`,
         {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             items: cartItems,
             shippingAddress: {
@@ -330,7 +330,7 @@ function CheckoutForm({
       if (!printfulResponse.ok) {
         const errorData = await printfulResponse.json().catch(() => ({}));
         console.error(
-          "Printful API response:",
+          'Printful API response:',
           printfulResponse.status,
           errorData
         );
@@ -343,12 +343,12 @@ function CheckoutForm({
       const printfulData = await printfulResponse.json();
 
       // Send confirmation email
-      const emailResponse = await fetch("/api/send-email", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      const emailResponse = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           to: formData.email,
-          subject: "Order Confirmation - Salina Youth Basketball Club",
+          subject: 'Order Confirmation - Salina Youth Basketball Club',
           html: `
             <div style="background-color: #002C51; color: #FFFFFF; font-family: 'Inter', sans-serif; padding: 20px; max-width: 600px; margin: 0 auto;">
               <h2 style="font-family: 'Rubik', sans-serif; color: #F11A20; text-align: center;">Thank You for Your Order!</h2>
@@ -364,9 +364,9 @@ function CheckoutForm({
                       ? `<li>${product.name} (${item.size}, ${item.color}) x${item.quantity} - $${(
                           product.price * item.quantity
                         ).toFixed(2)}</li>`
-                      : "";
+                      : '';
                   })
-                  .join("")}
+                  .join('')}
               </ul>
               <p><strong>Subtotal:</strong> $${subtotal.toFixed(2)}</p>
               <p><strong>Shipping:</strong> $${shippingCost.toFixed(2)}</p>
@@ -382,21 +382,21 @@ function CheckoutForm({
 
       if (!emailResponse.ok) {
         console.error(
-          "Failed to send confirmation email:",
+          'Failed to send confirmation email:',
           emailResponse.status
         );
       }
 
       // Clear cart
       setCartItems([]);
-      localStorage.setItem("cart", "[]");
-      console.log("CheckoutPage: Cleared cart after successful payment");
+      localStorage.setItem('cart', '[]');
+      console.log('CheckoutPage: Cleared cart after successful payment');
 
       // Set success message
       setPrintfulSuccess(
         isTestMode
           ? `Test order created successfully (Printful Order ID: ${printfulData.orderId})`
-          : "Order placed successfully!"
+          : 'Order placed successfully!'
       );
 
       // Redirect to confirmation page
@@ -406,7 +406,7 @@ function CheckoutForm({
           return {
             productId: item.productId,
             variantId: item.variantId,
-            name: product?.name || "Unknown",
+            name: product?.name || 'Unknown',
             size: item.size,
             color: item.color,
             quantity: item.quantity,
@@ -432,12 +432,12 @@ function CheckoutForm({
         `/shop/confirmation?order=${encodeURIComponent(JSON.stringify(orderData))}`
       );
     } catch (error: any) {
-      if (error.message.includes("Printful")) {
+      if (error.message.includes('Printful')) {
         setPrintfulError(error.message);
       } else {
-        setPaymentError(error.message || "Checkout failed. Please try again.");
+        setPaymentError(error.message || 'Checkout failed. Please try again.');
       }
-      console.error("CheckoutPage: Error:", error);
+      console.error('CheckoutPage: Error:', error);
     } finally {
       setIsProcessing(false);
     }
@@ -693,11 +693,11 @@ function CheckoutForm({
                         options={{
                           style: {
                             base: {
-                              color: "#FFFFFF",
-                              backgroundColor: "#002C51",
-                              "::placeholder": { color: "#D1D5DB" },
+                              color: '#FFFFFF',
+                              backgroundColor: '#002C51',
+                              '::placeholder': { color: '#D1D5DB' },
                             },
-                            invalid: { color: "#F11A20" },
+                            invalid: { color: '#F11A20' },
                           },
                         }}
                       />
@@ -712,10 +712,10 @@ function CheckoutForm({
                       disabled={isProcessing || !stripe || !elements}
                     >
                       {isProcessing
-                        ? "Processing..."
+                        ? 'Processing...'
                         : isTestMode
-                          ? "Test Order"
-                          : "Place Order"}
+                          ? 'Test Order'
+                          : 'Place Order'}
                     </Button>
                   </form>
                 </CardContent>
@@ -756,7 +756,7 @@ function CheckoutForm({
                             {product.name}
                           </p>
                           <p className="text-gray-300 font-inter text-sm">
-                            Size: {item.size}, Color:{" "}
+                            Size: {item.size}, Color:{' '}
                             {item.color.charAt(0).toUpperCase() +
                               item.color.slice(1)}
                           </p>
@@ -775,9 +775,9 @@ function CheckoutForm({
                       Subtotal: ${subtotal.toFixed(2)}
                     </p>
                     <p className="text-gray-300 font-inter">
-                      Shipping:{" "}
+                      Shipping:{' '}
                       {shippingCost === 0
-                        ? "Free"
+                        ? 'Free'
                         : `$${shippingCost.toFixed(2)}`}
                     </p>
                     <p className="text-white font-inter text-lg font-semibold">

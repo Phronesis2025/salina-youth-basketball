@@ -36,7 +36,7 @@ html {
 body {
   color: var(--project-foreground);
   background: var(--project-background);
-  font-family: "Inter", sans-serif; /* Fallback to sans-serif */
+  font-family: 'Inter', sans-serif; /* Fallback to sans-serif */
   font-size: clamp(1rem, 2vw, 1.125rem);
   font-weight: 400;
   line-height: 1.5;
@@ -50,7 +50,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Rubik", sans-serif; /* Fallback to sans-serif */
+  font-family: 'Rubik', sans-serif; /* Fallback to sans-serif */
   font-weight: 700;
   line-height: 1.15;
   letter-spacing: -1px;
@@ -69,11 +69,11 @@ h3 {
 
 /* Custom font class for Rubik */
 .font-rubik {
-  font-family: "Rubik", sans-serif; /* Fallback to sans-serif */
+  font-family: 'Rubik', sans-serif; /* Fallback to sans-serif */
 }
 
 .font-inter {
-  font-family: "Inter", sans-serif; /* Fallback to sans-serif */
+  font-family: 'Inter', sans-serif; /* Fallback to sans-serif */
 }
 
 @keyframes fadeIn {

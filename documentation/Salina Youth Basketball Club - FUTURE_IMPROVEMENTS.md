@@ -7,6 +7,7 @@ This file tracks suggested enhancements for the website’s features, processes,
 ## Ideas
 
 ### Phase 3: Build Website
+
 - **Process**: Use `pnpm` instead of `npm` for faster dependency installation.
   - **Benefit**: Reduces install time and disk space, improving setup efficiency.
   - **Cost**: Free (`npm install -g pnpm`).
@@ -29,6 +30,7 @@ This file tracks suggested enhancements for the website’s features, processes,
   - **Phase**: Phase 3 (Build).
 
 ### Phase 4: Testing and Deployment
+
 - **Process**: Add a GitHub Action for automatic linting on push.
   - **Benefit**: Ensures code consistency (e.g., ESLint rules) without manual checks.
   - **Cost**: Free (GitHub Actions free tier for public repositories).
@@ -47,6 +49,7 @@ This file tracks suggested enhancements for the website’s features, processes,
   - **Phase**: Phase 4 (Testing and Deployment).
 
 ### Phase 5: Polish and Iteration
+
 - **Feature**: Add player stats to Team Sub-Pages and Parent Portal.
   - **Benefit**: Enhances engagement by providing detailed player performance data.
   - **Cost**: Free (requires new Supabase table: `player_stats`).
@@ -65,9 +68,11 @@ This file tracks suggested enhancements for the website’s features, processes,
   - **Phase**: Phase 5 (Polish).
 
 ## Implemented Improvements
+
 - None yet (pre-coding phase).
 
 ## References
+
 - [PROGRESS.md](./PROGRESS.md)
 - [Supabase Realtime Docs](https://supabase.com/docs/guides/realtime)
 - [Next.js Image Optimization](https://nextjs.org/docs/pages/api-reference/components/image)

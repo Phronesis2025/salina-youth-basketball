@@ -1,24 +1,22 @@
-"use client";
-
-import { useState, useEffect } from "react";
-import { supabase } from "../../src/lib/supabase/client";
-import FullCalendar from "@fullcalendar/react";
-import listPlugin from "@fullcalendar/list";
+import { useState, useEffect } from 'react';
+import { supabase } from '../../src/lib/supabase/client';
+import FullCalendar from '@fullcalendar/react';
+import listPlugin from '@fullcalendar/list';
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
-} from "../../src/components/ui/card";
+} from '../../src/components/ui/card';
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "../../src/components/ui/accordion";
-import { Button } from "../../src/components/ui/button";
-import { Input } from "../../src/components/ui/input";
-import { Label } from "../../src/components/ui/label";
+} from '../../src/components/ui/accordion';
+import { Button } from '../../src/components/ui/button';
+import { Input } from '../../src/components/ui/input';
+import { Label } from '../../src/components/ui/label';
 import {
   Dialog,
   DialogContent,
@@ -27,17 +25,18 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "../../src/components/ui/dialog";
+} from '../../src/components/ui/dialog';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../../src/components/ui/select";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { cn } from "../../src/lib/utils";
+} from '../../src/components/ui/select';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { cn } from '../../src/lib/utils';
+import { EventClickArg } from '@fullcalendar/core';
 
 interface Player {
   id: string;
@@ -64,7 +63,7 @@ interface GameResult {
   opponent: string;
   score_us: number;
   score_them: number;
-  outcome: "win" | "loss" | "tie";
+  outcome: 'win' | 'loss' | 'tie';
 }
 
 interface NewsArticle {
@@ -74,7 +73,7 @@ interface NewsArticle {
   title: string;
   content: string;
   image_path: string | null;
-  status: "pending" | "approved" | "rejected";
+  status: 'pending' | 'approved' | 'rejected';
   created_at: string;
 }
 
@@ -87,39 +86,39 @@ export default function CoachesPage() {
   const [newsArticles, setNewsArticles] = useState<NewsArticle[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
-  const [newPlayerName, setNewPlayerName] = useState("");
-  const [newPlayerAge, setNewPlayerAge] = useState("");
+  const [newPlayerName, setNewPlayerName] = useState('');
+  const [newPlayerAge, setNewPlayerAge] = useState('');
   const [deletePlayer, setDeletePlayer] = useState<Player | null>(null);
   const [newEvent, setNewEvent] = useState({
-    title: "",
-    date: "",
-    type: "",
-    location: "",
-    description: "",
+    title: '',
+    date: '',
+    type: '',
+    location: '',
+    description: '',
   });
   const [editEvent, setEditEvent] = useState<ScheduleEvent | null>(null);
   const [isAddEventModalOpen, setIsAddEventModalOpen] = useState(false);
   const [addEventMessage, setAddEventMessage] = useState<{
-    type: "success" | "error";
+    type: 'success' | 'error';
     text: string;
   } | null>(null);
   const [newGameResult, setNewGameResult] = useState({
-    scheduleId: "",
-    date: "",
-    opponent: "",
-    scoreUs: "",
-    scoreThem: "",
-    outcome: "",
+    scheduleId: '',
+    date: '',
+    opponent: '',
+    scoreUs: '',
+    scoreThem: '',
+    outcome: '',
   });
   const [isAddGameResultModalOpen, setIsAddGameResultModalOpen] =
     useState(false);
   const [addGameResultMessage, setAddGameResultMessage] = useState<{
-    type: "success" | "error";
+    type: 'success' | 'error';
     text: string;
   } | null>(null);
   const [newNewsArticle, setNewNewsArticle] = useState({
-    title: "",
-    content: "",
+    title: '',
+    content: '',
     imageFile: null as File | null,
   });
   const [editNewsArticle, setEditNewsArticle] = useState<NewsArticle | null>(
@@ -130,7 +129,7 @@ export default function CoachesPage() {
     useState<NewsArticle | null>(null);
   const [isAddNewsModalOpen, setIsAddNewsModalOpen] = useState(false);
   const [addNewsMessage, setAddNewsMessage] = useState<{
-    type: "success" | "error";
+    type: 'success' | 'error';
     text: string;
   } | null>(null);
   const [isAddingNews, setIsAddingNews] = useState(false);
@@ -141,99 +140,97 @@ export default function CoachesPage() {
       const { data: userData, error: userError } =
         await supabase.auth.getUser();
 
-      console.log("User Data:", { userData, userError });
+      console.log('User Data:', { userData, userError });
 
       if (userError || !userData.user) {
-        setError("Unable to authenticate user");
-        router.push("/coaches/login");
+        setError('Unable to authenticate user');
+        router.push('/coaches/login');
         return;
       }
 
       const userId = userData.user.id;
       setUserId(userId);
-      console.log("User ID:", userId, "EASY PICKINGS");
+      console.log('User ID:', userId, 'EASY PICKINGS');
 
-      const coachResponse = await fetch("/api/get-coach-team", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      const coachResponse = await fetch('/api/get-coach-team', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ userId }),
       });
 
       const coachResult = await coachResponse.json();
-      console.log("Coach API Result:", coachResult);
+      console.log('Coach API Result:', coachResult);
 
       if (!coachResponse.ok || !coachResult.teamId) {
-        setError(coachResult.error || "Coach data not found");
+        setError(coachResult.error || 'Coach data not found');
         return;
       }
 
       setTeamId(coachResult.teamId);
 
       // Fetch players
-      const playersResponse = await fetch("/api/get-team-players", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      const playersResponse = await fetch('/api/get-team-players', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ teamId: coachResult.teamId }),
       });
 
       const playersResult = await playersResponse.json();
-      console.log("Players API Result:", playersResult);
+      console.log('Players API Result:', playersResult);
 
       if (!playersResponse.ok) {
-        setError(playersResult.error || "Error fetching players");
+        setError(playersResult.error || 'Error fetching players');
         return;
       }
 
       setPlayers(playersResult.players || []);
 
       // Fetch schedule
-      const schedulesResponse = await fetch("/api/get-team-schedules", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      const schedulesResponse = await fetch('/api/get-team-schedules', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ teamId: coachResult.teamId }),
       });
 
       const schedulesResult = await schedulesResponse.json();
-      console.log("Schedules API Result:", schedulesResult);
+      console.log('Schedules API Result:', schedulesResult);
 
       if (!schedulesResponse.ok) {
-        setError(schedulesResult.error || "Error fetching schedule");
+        setError(schedulesResult.error || 'Error fetching schedule');
         return;
       }
 
       // Fetch game results
       const gameResultsResponse = await fetch(
-        "/api/coaches/get-team-game-results",
+        '/api/coaches/get-team-game-results',
         {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ teamId: coachResult.teamId }),
         }
       );
 
       const gameResultsResult = await gameResultsResponse.json();
-      console.log("Game Results API Result:", gameResultsResult);
+      console.log('Game Results API Result:', gameResultsResult);
 
       if (!gameResultsResponse.ok) {
-        console.error("Error fetching game results:", gameResultsResult.error);
-        // Continue loading other data even if game results fail
+        console.error('Error fetching game results:', gameResultsResult.error);
       } else {
         setGameResults(gameResultsResult.gameResults || []);
       }
 
       // Fetch news articles
-      const newsResponse = await fetch("/api/coaches/get-team-news", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      const newsResponse = await fetch('/api/coaches/get-team-news', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ teamId: coachResult.teamId }),
       });
 
       const newsResult = await newsResponse.json();
-      console.log("News API Result:", newsResult);
+      console.log('News API Result:', newsResult);
 
       if (!newsResponse.ok) {
-        console.error("Error fetching news articles:", newsResult.error);
-        // Continue loading other data even if news fetch fails
+        console.error('Error fetching news articles:', newsResult.error);
       } else {
         setNewsArticles(newsResult.news || []);
       }
@@ -242,22 +239,24 @@ export default function CoachesPage() {
         (result: GameResult) => result.schedule_id
       );
 
-      const formattedEvents = schedulesResult.schedules.map((event: any) => {
-        const eventDate = new Date(event.date);
-        const formattedEvent = {
-          id: event.id,
-          title: event.title,
-          start: eventDate.toISOString(),
-          extendedProps: {
-            type: event.type,
-            location: event.location,
-            description: event.description,
-            hasResult: gameResultScheduleIds.includes(event.id),
-          },
-        };
-        console.log("Formatted Event:", formattedEvent);
-        return formattedEvent;
-      });
+      const formattedEvents = schedulesResult.schedules.map(
+        (event: ScheduleEvent) => {
+          const eventDate = new Date(event.start);
+          const formattedEvent: ScheduleEvent = {
+            id: event.id,
+            title: event.title,
+            start: eventDate.toISOString(),
+            extendedProps: {
+              type: event.extendedProps.type,
+              location: event.extendedProps.location,
+              description: event.extendedProps.description,
+              hasResult: gameResultScheduleIds.includes(event.id),
+            },
+          };
+          console.log('Formatted Event:', formattedEvent);
+          return formattedEvent;
+        }
+      );
 
       setEvents(formattedEvents);
     };
@@ -265,44 +264,44 @@ export default function CoachesPage() {
     fetchCoachData();
   }, [router]);
 
-  const handleAddPlayer = async (e: React.FormEvent) => {
+  const handleAddPlayer = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError(null);
     setSuccessMessage(null);
 
     if (!teamId) {
-      setError("Team ID not found");
+      setError('Team ID not found');
       return;
     }
 
     const age = parseInt(newPlayerAge);
     if (isNaN(age) || age < 8 || age > 14) {
-      setError("Age must be a number between 8 and 14");
+      setError('Age must be a number between 8 and 14');
       return;
     }
 
     if (!newPlayerName.trim()) {
-      setError("Name is required");
+      setError('Name is required');
       return;
     }
 
-    const response = await fetch("/api/coaches/roster-add", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+    const response = await fetch('/api/coaches/roster-add', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ teamId, name: newPlayerName.trim(), age }),
     });
 
     const result = await response.json();
 
     if (!response.ok) {
-      setError(result.error || "Error adding player");
+      setError(result.error || 'Error adding player');
       return;
     }
 
     setPlayers([...players, result.player]);
-    setNewPlayerName("");
-    setNewPlayerAge("");
-    setSuccessMessage("Player added successfully");
+    setNewPlayerName('');
+    setNewPlayerAge('');
+    setSuccessMessage('Player added successfully');
   };
 
   const handleRemovePlayer = async () => {
@@ -311,30 +310,30 @@ export default function CoachesPage() {
     setError(null);
     setSuccessMessage(null);
 
-    const response = await fetch("/api/coaches/roster-remove", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+    const response = await fetch('/api/coaches/roster-remove', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ playerId: deletePlayer.id, teamId }),
     });
 
     const result = await response.json();
 
     if (!response.ok) {
-      setError(result.error || "Error removing player");
+      setError(result.error || 'Error removing player');
       return;
     }
 
     setPlayers(players.filter((p) => p.id !== deletePlayer.id));
     setDeletePlayer(null);
-    setSuccessMessage("Player removed successfully");
+    setSuccessMessage('Player removed successfully');
   };
 
-  const handleAddEvent = async (e: React.FormEvent) => {
+  const handleAddEvent = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setAddEventMessage(null);
 
     if (!teamId) {
-      setAddEventMessage({ type: "error", text: "Team ID not found" });
+      setAddEventMessage({ type: 'error', text: 'Team ID not found' });
       return;
     }
 
@@ -342,8 +341,8 @@ export default function CoachesPage() {
 
     if (!title.trim() || !date || !type) {
       setAddEventMessage({
-        type: "error",
-        text: "Title, date, and type are required",
+        type: 'error',
+        text: 'Title, date, and type are required',
       });
       return;
     }
@@ -352,15 +351,15 @@ export default function CoachesPage() {
     const currentDate = new Date();
     if (isNaN(eventDate.getTime()) || eventDate <= currentDate) {
       setAddEventMessage({
-        type: "error",
-        text: "Date must be a valid future date",
+        type: 'error',
+        text: 'Date must be a valid future date',
       });
       return;
     }
 
-    const response = await fetch("/api/coaches/schedule-add", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+    const response = await fetch('/api/coaches/schedule-add', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         teamId,
         title,
@@ -375,13 +374,13 @@ export default function CoachesPage() {
 
     if (!response.ok) {
       setAddEventMessage({
-        type: "error",
-        text: result.error || "Error adding event",
+        type: 'error',
+        text: result.error || 'Error adding event',
       });
       return;
     }
 
-    const formattedEvent = {
+    const formattedEvent: ScheduleEvent = {
       id: result.event.id,
       title: result.event.title,
       start: result.event.date,
@@ -395,16 +394,16 @@ export default function CoachesPage() {
 
     setEvents([...events, formattedEvent]);
     setNewEvent({
-      title: "",
-      date: "",
-      type: "",
-      location: "",
-      description: "",
+      title: '',
+      date: '',
+      type: '',
+      location: '',
+      description: '',
     });
-    setAddEventMessage({ type: "success", text: "Event added successfully" });
+    setAddEventMessage({ type: 'success', text: 'Event added successfully' });
   };
 
-  const handleUpdateEvent = async (e: React.FormEvent) => {
+  const handleUpdateEvent = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError(null);
     setSuccessMessage(null);
@@ -414,20 +413,20 @@ export default function CoachesPage() {
     const { title, date, type, location, description } = newEvent;
 
     if (!title.trim() || !date || !type) {
-      setError("Title, date, and type are required");
+      setError('Title, date, and type are required');
       return;
     }
 
     const eventDate = new Date(date);
     const currentDate = new Date();
     if (isNaN(eventDate.getTime()) || eventDate <= currentDate) {
-      setError("Date must be a valid future date");
+      setError('Date must be a valid future date');
       return;
     }
 
-    const response = await fetch("/api/coaches/schedule-update", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+    const response = await fetch('/api/coaches/schedule-update', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         eventId: editEvent.id,
         teamId,
@@ -442,11 +441,11 @@ export default function CoachesPage() {
     const result = await response.json();
 
     if (!response.ok) {
-      setError(result.error || "Error updating event");
+      setError(result.error || 'Error updating event');
       return;
     }
 
-    const updatedEvent = {
+    const updatedEvent: ScheduleEvent = {
       id: result.event.id,
       title: result.event.title,
       start: result.event.date,
@@ -463,38 +462,28 @@ export default function CoachesPage() {
     );
     setEditEvent(null);
     setNewEvent({
-      title: "",
-      date: "",
-      type: "",
-      location: "",
-      description: "",
+      title: '',
+      date: '',
+      type: '',
+      location: '',
+      description: '',
     });
-    setSuccessMessage("Event updated successfully");
+    setSuccessMessage('Event updated successfully');
   };
 
-  const handleEventClick = (clickInfo: any) => {
+  const handleEventClick = (clickInfo: EventClickArg) => {
     const event = clickInfo.event;
-    setEditEvent({
-      id: event.id,
-      title: event.title,
-      start: event.startStr,
-      extendedProps: event.extendedProps,
-    });
-    setNewEvent({
-      title: event.title,
-      date: event.startStr,
-      type: event.extendedProps.type,
-      location: event.extendedProps.location || "",
-      description: event.extendedProps.description || "",
-    });
+    alert(
+      `Event: ${event.title}\nType: ${event.extendedProps.type}\nLocation: ${event.extendedProps.location}\nDescription: ${event.extendedProps.description}`
+    );
   };
 
-  const handleAddGameResult = async (e: React.FormEvent) => {
+  const handleAddGameResult = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setAddGameResultMessage(null);
 
     if (!teamId) {
-      setAddGameResultMessage({ type: "error", text: "Team ID not found" });
+      setAddGameResultMessage({ type: 'error', text: 'Team ID not found' });
       return;
     }
 
@@ -510,8 +499,8 @@ export default function CoachesPage() {
       !outcome
     ) {
       setAddGameResultMessage({
-        type: "error",
-        text: "All fields are required",
+        type: 'error',
+        text: 'All fields are required',
       });
       return;
     }
@@ -520,8 +509,8 @@ export default function CoachesPage() {
     const currentDate = new Date();
     if (isNaN(gameDate.getTime()) || gameDate > currentDate) {
       setAddGameResultMessage({
-        type: "error",
-        text: "Date must be a valid past or present date",
+        type: 'error',
+        text: 'Date must be a valid past or present date',
       });
       return;
     }
@@ -530,22 +519,22 @@ export default function CoachesPage() {
     const scoreThemNum = parseInt(scoreThem);
     if (isNaN(scoreUsNum) || scoreUsNum < 0) {
       setAddGameResultMessage({
-        type: "error",
-        text: "Our score must be a non-negative integer",
+        type: 'error',
+        text: 'Our score must be a non-negative integer',
       });
       return;
     }
     if (isNaN(scoreThemNum) || scoreThemNum < 0) {
       setAddGameResultMessage({
-        type: "error",
-        text: "Opponent score must be a non-negative integer",
+        type: 'error',
+        text: 'Opponent score must be a non-negative integer',
       });
       return;
     }
 
-    const response = await fetch("/api/coaches/game-result-add", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+    const response = await fetch('/api/coaches/game-result-add', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         teamId,
         scheduleId,
@@ -561,8 +550,8 @@ export default function CoachesPage() {
 
     if (!response.ok) {
       setAddGameResultMessage({
-        type: "error",
-        text: result.error || "Error adding game result",
+        type: 'error',
+        text: result.error || 'Error adding game result',
       });
       return;
     }
@@ -576,32 +565,32 @@ export default function CoachesPage() {
       )
     );
     setNewGameResult({
-      scheduleId: "",
-      date: "",
-      opponent: "",
-      scoreUs: "",
-      scoreThem: "",
-      outcome: "",
+      scheduleId: '',
+      date: '',
+      opponent: '',
+      scoreUs: '',
+      scoreThem: '',
+      outcome: '',
     });
     setAddGameResultMessage({
-      type: "success",
-      text: "Game result added successfully",
+      type: 'success',
+      text: 'Game result added successfully',
     });
   };
 
-  const handleAddNewsArticle = async (e: React.FormEvent) => {
+  const handleAddNewsArticle = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setAddNewsMessage(null);
     setIsAddingNews(true);
 
     if (!teamId) {
-      setAddNewsMessage({ type: "error", text: "Team ID not found" });
+      setAddNewsMessage({ type: 'error', text: 'Team ID not found' });
       setIsAddingNews(false);
       return;
     }
 
     if (!userId) {
-      setAddNewsMessage({ type: "error", text: "Coach ID not found" });
+      setAddNewsMessage({ type: 'error', text: 'Coach ID not found' });
       setIsAddingNews(false);
       return;
     }
@@ -610,8 +599,8 @@ export default function CoachesPage() {
 
     if (!title.trim() || !content.trim()) {
       setAddNewsMessage({
-        type: "error",
-        text: "Title and content are required",
+        type: 'error',
+        text: 'Title and content are required',
       });
       setIsAddingNews(false);
       return;
@@ -621,34 +610,34 @@ export default function CoachesPage() {
 
     // Upload image to Supabase Storage if provided
     if (imageFile) {
-      const fileExt = imageFile.name.split(".").pop();
+      const fileExt = imageFile.name.split('.').pop();
       const fileName = `${Date.now()}-${Math.random().toString(36).substring(2)}.${fileExt}`;
-      const { data: uploadData, error: uploadError } = await supabase.storage
-        .from("news-images")
+      const { data, error: uploadError } = await supabase.storage
+        .from('news-images')
         .upload(`public/${fileName}`, imageFile);
 
       if (uploadError) {
-        console.error("Supabase storage error:", uploadError);
+        console.error('Supabase storage error:', uploadError);
         setAddNewsMessage({
-          type: "error",
-          text: "Error uploading image",
+          type: 'error',
+          text: 'Error uploading image',
         });
         setIsAddingNews(false);
         return;
       }
 
-      // Get the public URL of the uploaded image
-      const { data: urlData } = supabase.storage
-        .from("news-images")
-        .getPublicUrl(`public/${fileName}`);
-
-      imagePath = urlData.publicUrl;
+      // Use the uploaded data to get the public URL
+      if (data) {
+        imagePath = supabase.storage
+          .from('news-images')
+          .getPublicUrl(`public/${fileName}`).data.publicUrl;
+      }
     }
 
     // Add the news article with the image path and coach_id
-    const response = await fetch("/api/coaches/news-add", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+    const response = await fetch('/api/coaches/news-add', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         teamId,
         coachId: userId,
@@ -662,23 +651,25 @@ export default function CoachesPage() {
 
     if (!response.ok) {
       setAddNewsMessage({
-        type: "error",
-        text: result.error || "Error adding news article",
+        type: 'error',
+        text: result.error || 'Error adding news article',
       });
       setIsAddingNews(false);
       return;
     }
 
     setNewsArticles([...newsArticles, result.news]);
-    setNewNewsArticle({ title: "", content: "", imageFile: null });
+    setNewNewsArticle({ title: '', content: '', imageFile: null });
     setAddNewsMessage({
-      type: "success",
-      text: "News article added successfully",
+      type: 'success',
+      text: 'News article added successfully',
     });
     setIsAddingNews(false);
   };
 
-  const handleUpdateNewsArticle = async (e: React.FormEvent) => {
+  const handleUpdateNewsArticle = async (
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
     e.preventDefault();
     setError(null);
     setSuccessMessage(null);
@@ -689,7 +680,7 @@ export default function CoachesPage() {
     let imagePath: string | null = editNewsArticle.image_path;
 
     if (!title.trim() || !content.trim()) {
-      setError("Title and content are required");
+      setError('Title and content are required');
       return;
     }
 
@@ -697,43 +688,42 @@ export default function CoachesPage() {
     if (editNewsImageFile) {
       // Delete the old image if it exists
       if (editNewsArticle.image_path) {
-        const oldFilePath = editNewsArticle.image_path.split("/").pop();
+        const oldFilePath = editNewsArticle.image_path.split('/').pop();
         if (oldFilePath) {
           const { error: deleteError } = await supabase.storage
-            .from("news-images")
+            .from('news-images')
             .remove([`public/${oldFilePath}`]);
           if (deleteError) {
-            console.error("Supabase storage delete error:", deleteError);
-            // Log the error but continue
+            console.error('Supabase storage delete error:', deleteError);
           }
         }
       }
 
       // Upload the new image
-      const fileExt = editNewsImageFile.name.split(".").pop();
+      const fileExt = editNewsImageFile.name.split('.').pop();
       const fileName = `${Date.now()}-${Math.random().toString(36).substring(2)}.${fileExt}`;
-      const { data: uploadData, error: uploadError } = await supabase.storage
-        .from("news-images")
+      const { data, error: uploadError } = await supabase.storage
+        .from('news-images')
         .upload(`public/${fileName}`, editNewsImageFile);
 
       if (uploadError) {
-        console.error("Supabase storage error:", uploadError);
-        setError("Error uploading image");
+        console.error('Supabase storage error:', uploadError);
+        setError('Error uploading image');
         return;
       }
 
-      // Get the public URL of the uploaded image
-      const { data: urlData } = supabase.storage
-        .from("news-images")
-        .getPublicUrl(`public/${fileName}`);
-
-      imagePath = urlData.publicUrl;
+      // Use the uploaded data to get the public URL
+      if (data) {
+        imagePath = supabase.storage
+          .from('news-images')
+          .getPublicUrl(`public/${fileName}`).data.publicUrl;
+      }
     }
 
     // Update the news article
-    const response = await fetch("/api/coaches/news-update", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+    const response = await fetch('/api/coaches/news-update', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         newsId: editNewsArticle.id,
         teamId,
@@ -746,7 +736,7 @@ export default function CoachesPage() {
     const result = await response.json();
 
     if (!response.ok) {
-      setError(result.error || "Error updating news article");
+      setError(result.error || 'Error updating news article');
       return;
     }
 
@@ -757,8 +747,8 @@ export default function CoachesPage() {
     );
     setEditNewsArticle(null);
     setEditNewsImageFile(null);
-    setNewNewsArticle({ title: "", content: "", imageFile: null });
-    setSuccessMessage("News article updated successfully");
+    setNewNewsArticle({ title: '', content: '', imageFile: null });
+    setSuccessMessage('News article updated successfully');
   };
 
   const handleDeleteNewsArticle = async () => {
@@ -769,21 +759,20 @@ export default function CoachesPage() {
 
     // Delete the associated image if it exists
     if (deleteNewsArticle.image_path) {
-      const filePath = deleteNewsArticle.image_path.split("/").pop();
+      const filePath = deleteNewsArticle.image_path.split('/').pop();
       if (filePath) {
         const { error: deleteError } = await supabase.storage
-          .from("news-images")
+          .from('news-images')
           .remove([`public/${filePath}`]);
         if (deleteError) {
-          console.error("Supabase storage delete error:", deleteError);
-          // Log the error but continue
+          console.error('Supabase storage delete error:', deleteError);
         }
       }
     }
 
-    const response = await fetch("/api/coaches/news-delete", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+    const response = await fetch('/api/coaches/news-delete', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         newsId: deleteNewsArticle.id,
         teamId,
@@ -793,7 +782,7 @@ export default function CoachesPage() {
     const result = await response.json();
 
     if (!response.ok) {
-      setError(result.error || "Error deleting news article");
+      setError(result.error || 'Error deleting news article');
       return;
     }
 
@@ -801,20 +790,20 @@ export default function CoachesPage() {
       newsArticles.filter((article) => article.id !== deleteNewsArticle.id)
     );
     setDeleteNewsArticle(null);
-    setSuccessMessage("News article deleted successfully");
+    setSuccessMessage('News article deleted successfully');
   };
 
   const subPages = [
-    { title: "AI-Generated Drills", link: "/coaches/drills/current" },
-    { title: "Video Tutorial Library", link: "/coaches/videos" },
-    { title: "Rules & Policies", link: "/coaches/rules" },
-    { title: "Resource Archive", link: "/coaches/resources" },
+    { title: 'AI-Generated Drills', link: '/coaches/drills/current' },
+    { title: 'Video Tutorial Library', link: '/coaches/videos' },
+    { title: 'Rules & Policies', link: '/coaches/rules' },
+    { title: 'Resource Archive', link: '/coaches/resources' },
   ];
 
   // Filter games without results for the game result form
   const availableGames = events.filter(
     (event) =>
-      event.extendedProps.type === "game" && !event.extendedProps.hasResult
+      event.extendedProps.type === 'game' && !event.extendedProps.hasResult
   );
 
   return (
@@ -933,7 +922,7 @@ export default function CoachesPage() {
                       <DialogHeader>
                         <DialogTitle>Confirm Removal</DialogTitle>
                         <DialogDescription className="text-gray-300">
-                          Are you sure you want to remove {deletePlayer?.name}{" "}
+                          Are you sure you want to remove {deletePlayer?.name}{' '}
                           from the roster? This action cannot be undone.
                         </DialogDescription>
                       </DialogHeader>
@@ -989,23 +978,23 @@ export default function CoachesPage() {
                   {addEventMessage && (
                     <div
                       className={cn(
-                        "p-4 rounded-lg mb-4",
-                        addEventMessage.type === "success"
-                          ? "bg-gray-900 border border-green-500/50"
-                          : "bg-gray-900 border border-red-500/50"
+                        'p-4 rounded-lg mb-4',
+                        addEventMessage.type === 'success'
+                          ? 'bg-gray-900 border border-green-500/50'
+                          : 'bg-gray-900 border border-red-500/50'
                       )}
                     >
                       <p
                         className={cn(
-                          "text-sm font-rubik",
-                          addEventMessage.type === "success"
-                            ? "text-green-500"
-                            : "text-red-500"
+                          'text-sm font-rubik',
+                          addEventMessage.type === 'success'
+                            ? 'text-green-500'
+                            : 'text-red-500'
                         )}
                       >
                         {addEventMessage.text}
                       </p>
-                      {addEventMessage.type === "success" && (
+                      {addEventMessage.type === 'success' && (
                         <Button
                           onClick={() => {
                             setAddEventMessage(null);
@@ -1149,25 +1138,25 @@ export default function CoachesPage() {
                 initialView="listWeek"
                 events={events}
                 headerToolbar={{
-                  left: "prev",
-                  center: "title",
-                  right: "next",
+                  left: 'prev',
+                  center: 'title',
+                  right: 'next',
                 }}
                 eventClick={handleEventClick}
-                eventContent={(eventInfo: any) => (
+                eventContent={(eventInfo) => (
                   <div className="flex flex-col p-2">
                     <p className="text-white font-rubik text-sm">
                       <span
                         className={cn(
-                          "inline-block w-3 h-3 mr-2 rounded-full",
-                          eventInfo.event.extendedProps.type === "practice" &&
-                            "bg-blue-500",
-                          eventInfo.event.extendedProps.type === "game" &&
-                            "bg-red-500",
-                          eventInfo.event.extendedProps.type === "tournament" &&
-                            "bg-purple-500",
-                          eventInfo.event.extendedProps.type === "event" &&
-                            "bg-green-500"
+                          'inline-block w-3 h-3 mr-2 rounded-full',
+                          eventInfo.event.extendedProps.type === 'practice' &&
+                            'bg-blue-500',
+                          eventInfo.event.extendedProps.type === 'game' &&
+                            'bg-red-500',
+                          eventInfo.event.extendedProps.type === 'tournament' &&
+                            'bg-purple-500',
+                          eventInfo.event.extendedProps.type === 'event' &&
+                            'bg-green-500'
                         )}
                       />
                       {eventInfo.event.title}
@@ -1348,23 +1337,23 @@ export default function CoachesPage() {
                   {addGameResultMessage && (
                     <div
                       className={cn(
-                        "p-4 rounded-lg mb-4",
-                        addGameResultMessage.type === "success"
-                          ? "bg-gray-900 border border-green-500/50"
-                          : "bg-gray-900 border border-red-500/50"
+                        'p-4 rounded-lg mb-4',
+                        addGameResultMessage.type === 'success'
+                          ? 'bg-gray-900 border border-green-500/50'
+                          : 'bg-gray-900 border border-red-500/50'
                       )}
                     >
                       <p
                         className={cn(
-                          "text-sm font-rubik",
-                          addGameResultMessage.type === "success"
-                            ? "text-green-500"
-                            : "text-red-500"
+                          'text-sm font-rubik',
+                          addGameResultMessage.type === 'success'
+                            ? 'text-green-500'
+                            : 'text-red-500'
                         )}
                       >
                         {addGameResultMessage.text}
                       </p>
-                      {addGameResultMessage.type === "success" && (
+                      {addGameResultMessage.type === 'success' && (
                         <Button
                           onClick={() => {
                             setAddGameResultMessage(null);
@@ -1395,7 +1384,7 @@ export default function CoachesPage() {
                             setNewGameResult({
                               ...newGameResult,
                               scheduleId: value,
-                              date: selectedGame?.start || "",
+                              date: selectedGame?.start || '',
                             });
                           }}
                         >
@@ -1561,7 +1550,7 @@ export default function CoachesPage() {
                       >
                         <div className="mb-2 sm:mb-0">
                           <p className="text-white font-semibold">
-                            {relatedEvent ? relatedEvent.title : "Game"} vs{" "}
+                            {relatedEvent ? relatedEvent.title : 'Game'} vs{' '}
                             {result.opponent}
                           </p>
                           <p className="text-gray-300">
@@ -1572,10 +1561,10 @@ export default function CoachesPage() {
                           </p>
                           <p
                             className={cn(
-                              "text-sm capitalize",
-                              result.outcome === "win" && "text-green-500",
-                              result.outcome === "loss" && "text-red-500",
-                              result.outcome === "tie" && "text-yellow-500"
+                              'text-sm capitalize',
+                              result.outcome === 'win' && 'text-green-500',
+                              result.outcome === 'loss' && 'text-red-500',
+                              result.outcome === 'tie' && 'text-yellow-500'
                             )}
                           >
                             {result.outcome}
@@ -1620,23 +1609,23 @@ export default function CoachesPage() {
                   {addNewsMessage && (
                     <div
                       className={cn(
-                        "p-4 rounded-lg mb-4",
-                        addNewsMessage.type === "success"
-                          ? "bg-gray-900 border border-green-500/50"
-                          : "bg-gray-900 border border-red-500/50"
+                        'p-4 rounded-lg mb-4',
+                        addNewsMessage.type === 'success'
+                          ? 'bg-gray-900 border border-green-500/50'
+                          : 'bg-gray-900 border border-red-500/50'
                       )}
                     >
                       <p
                         className={cn(
-                          "text-sm font-rubik",
-                          addNewsMessage.type === "success"
-                            ? "text-green-500"
-                            : "text-red-500"
+                          'text-sm font-rubik',
+                          addNewsMessage.type === 'success'
+                            ? 'text-green-500'
+                            : 'text-red-500'
                         )}
                       >
                         {addNewsMessage.text}
                       </p>
-                      {addNewsMessage.type === "success" && (
+                      {addNewsMessage.type === 'success' && (
                         <Button
                           onClick={() => {
                             setAddNewsMessage(null);
@@ -1781,7 +1770,7 @@ export default function CoachesPage() {
                           {article.title}
                         </p>
                         <p className="text-gray-300">
-                          Posted:{" "}
+                          Posted:{' '}
                           {new Date(article.created_at).toLocaleDateString()}
                         </p>
                         <p className="text-gray-300">{article.content}</p>
@@ -1791,16 +1780,17 @@ export default function CoachesPage() {
                             alt={article.title}
                             className="mt-2 max-w-xs rounded-lg"
                             onError={(e) => {
-                              e.currentTarget.src = "/placeholder-image.jpg"; // Fallback image if URL fails
+                              const img = e.target as HTMLImageElement;
+                              img.src = '/placeholder-image.jpg'; // Fallback image
                             }}
                           />
                         )}
                         <p
                           className={cn(
-                            "text-sm capitalize",
-                            article.status === "pending" && "text-yellow-500",
-                            article.status === "approved" && "text-green-500",
-                            article.status === "rejected" && "text-red-500"
+                            'text-sm capitalize',
+                            article.status === 'pending' && 'text-yellow-500',
+                            article.status === 'approved' && 'text-green-500',
+                            article.status === 'rejected' && 'text-red-500'
                           )}
                         >
                           Status: {article.status}
@@ -1910,7 +1900,7 @@ export default function CoachesPage() {
                       />
                       {editNewsArticle?.image_path && !editNewsImageFile && (
                         <p className="text-gray-300 text-sm mt-1">
-                          Current Image:{" "}
+                          Current Image:{' '}
                           <a
                             href={editNewsArticle.image_path}
                             target="_blank"
@@ -1952,8 +1942,9 @@ export default function CoachesPage() {
                   <DialogHeader>
                     <DialogTitle>Confirm Deletion</DialogTitle>
                     <DialogDescription className="text-gray-300">
-                      Are you sure you want to delete the news article "
-                      {deleteNewsArticle?.title}"? This action cannot be undone.
+                      Are you sure you want to delete the news article &quot;
+                      {deleteNewsArticle?.title}&quot;? This action cannot be
+                      undone.
                     </DialogDescription>
                   </DialogHeader>
                   <DialogFooter>
@@ -2007,40 +1998,6 @@ export default function CoachesPage() {
           </Link>
         </section>
       </div>
-      <style jsx global>{`
-        .fc-header-toolbar {
-          background-color: #002c51 !important; /* Navy */
-          color: #ffffff !important;
-          padding: 0.5rem 1rem;
-          border-radius: 0.5rem;
-        }
-        .fc-button {
-          background-color: #374151 !important;
-          color: #ffffff !important;
-          border: none !important;
-          font-family: "Inter", sans-serif !important;
-        }
-        .fc-button:hover {
-          background-color: #f11a20 !important; /* Red accent on hover */
-          color: #ffffff !important;
-        }
-        .fc-toolbar-title {
-          color: #ffffff !important;
-          font-family: "Rubik", sans-serif !important;
-        }
-        .fc-list-day-cushion {
-          background-color: #002c51 !important;
-        }
-        .fc-list-table {
-          background-color: #002c51 !important;
-        }
-        .fc-list-event:hover {
-          background-color: #1f2937 !important; /* Match bg-gray-800 */
-        }
-        .fc-list-event:hover td {
-          background-color: #1f2937 !important; /* Match bg-gray-800 to disable hover effect on <td> elements */
-        }
-      `}</style>
     </main>
   );
 }

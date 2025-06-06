@@ -1,26 +1,26 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import Image from "next/image";
-import { useState } from "react";
-import { Instagram, Twitter, Mail } from "lucide-react";
-import { cn } from "../../lib/utils";
+import Link from 'next/link';
+import Image from 'next/image';
+import { useState } from 'react';
+import { Instagram, Twitter, Mail } from 'lucide-react';
+import { cn } from '../../lib/utils';
 
 export default function Footer() {
-  const [email, setEmail] = useState("");
-  const [error, setError] = useState("");
+  const [email, setEmail] = useState('');
+  const [error, setError] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Basic email validation
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setError("Please enter a valid email");
+      setError('Please enter a valid email');
       return;
     }
-    setError("");
+    setError('');
     // Placeholder: Log email or integrate with API
-    console.log("Subscribed:", email);
-    setEmail("");
+    console.log('Subscribed:', email);
+    setEmail('');
   };
 
   return (
@@ -51,10 +51,10 @@ export default function Footer() {
             <h3 className="font-bebas text-xl font-bold mb-4">Navigation</h3>
             <ul className="space-y-2">
               {[
-                { name: "Teams", href: "/teams" },
-                { name: "Schedules", href: "/schedules" },
-                { name: "Shop", href: "/shop" },
-                { name: "Join the Team", href: "/join" },
+                { name: 'Teams', href: '/teams' },
+                { name: 'Schedules', href: '/schedules' },
+                { name: 'Shop', href: '/shop' },
+                { name: 'Join the Team', href: '/join' },
               ].map((item) => (
                 <li key={item.name}>
                   <Link
@@ -111,11 +111,11 @@ export default function Footer() {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter your email"
                 className={cn(
-                  "font-montserrat text-base px-4 py-2 rounded bg-white text-black w-full",
-                  error && "border-2 border-red-500"
+                  'font-montserrat text-base px-4 py-2 rounded bg-white text-black w-full',
+                  error && 'border-2 border-red-500'
                 )}
                 aria-invalid={!!error}
-                aria-describedby={error ? "email-error" : undefined}
+                aria-describedby={error ? 'email-error' : undefined}
               />
               {error && (
                 <p

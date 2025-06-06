@@ -4,15 +4,15 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: "http",
-        hostname: "localhost",
-        port: "",
-        pathname: "/**",
+        protocol: 'http',
+        hostname: 'localhost',
+        port: '',
+        pathname: '/**',
       },
       {
-        protocol: "https",
-        hostname: "img.youtube.com",
-        pathname: "/vi/**",
+        protocol: 'https',
+        hostname: 'img.youtube.com',
+        pathname: '/vi/**',
       },
     ],
   },

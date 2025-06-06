@@ -1,6 +1,7 @@
 # Salina Youth Basketball Club Website Structure
 
 ## Root
+
 - **URL**: `/`
 - **Components**:
   - **Header**: Sticky navigation bar with logo, menu (Home, Teams, Coaches Corner, Tournaments, Shop, Parent Portal, About/Contact), and login link.
@@ -9,7 +10,9 @@
 - **Purpose**: Provides consistent navigation and branding across all pages.
 
 ## Pages
+
 1. **Homepage** (`/`)
+
    - **Purpose**: Showcase the club, drive key actions (register, shop, explore).
    - **Components**:
      - Hero: Video with overlay text and CTAs (“Sign Up for Tournament,” “Register Player,” “Register a New Player”).
@@ -26,6 +29,7 @@
    - **Integrations**: Stripe for registration CTAs.
 
 2. **Team Hub** (`/teams`)
+
    - **Purpose**: Browse all 20+ teams.
    - **Components**:
      - Team Grid: Filterable cards (name, age group, gender, thumbnail).
@@ -46,6 +50,7 @@
        - **Integrations**: Stripe, Printful for shirts.
 
 3. **Coaches Corner** (`/coaches-corner`)
+
    - **Purpose**: Provide AI-generated skill-building resources.
    - **Components**:
      - Article Grid: Static articles (e.g., “5 Dribbling Drills”) with categories (Skills, Parent Tips).
@@ -54,6 +59,7 @@
    - **Dynamic Data**: Articles, videos (Supabase `resources` table).
 
 4. **Tournament Registry** (`/tournaments`)
+
    - **Purpose**: Facilitate external team signups.
    - **Components**:
      - Embedded Form: TourneyMachine iframe (collects team name, coach info, etc.).
@@ -62,6 +68,7 @@
    - **Integrations**: TourneyMachine iframe.
 
 5. **Merch Page** (`/shop`)
+
    - **Purpose**: Sell team and tournament t-shirts.
    - **Components**:
      - Product Grid: T-shirts (2–3 per team/tournament) with images, descriptions, prices.
@@ -71,6 +78,7 @@
    - **Integrations**: Stripe, Printful API.
 
 6. **Parent Portal** (`/portal`, protected)
+
    - **Purpose**: Secure area for parents.
    - **Components**:
      - Dashboard: Team schedules (calendar), roster (players/numbers), payment history.
@@ -80,6 +88,7 @@
    - **Security**: Supabase Auth for login.
 
 7. **About/Contact** (`/about`)
+
    - **Purpose**: Share club info and contact options.
    - **Components**:
      - About: Placeholder mission (“Salina Youth Basketball Club fosters teamwork...”).
@@ -95,6 +104,7 @@
    - **Dynamic Data**: News (Supabase `news` table).
 
 ## Key Features
+
 - **Navigation**: Sticky header and footer for consistent access.
 - **Dynamic Components**: News carousel, team filters, schedules, product grid.
 - **Protected Routes**: Parent Portal and coach dashboard (Supabase Auth).
@@ -107,6 +117,7 @@
 - **Accessibility**: ARIA labels, keyboard navigation.
 
 ## User Flows
+
 - **Parents**: Homepage → Register/Player Portal → Team Hub/Shop.
 - **External Teams**: Homepage → Tournaments → Registry.
 - **Coaches**: Login → Dashboard → Update schedules/photos.

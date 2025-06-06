@@ -1,9 +1,9 @@
-import Hero from "@/components/homepage/Hero";
-import ValuesSection from "@/components/homepage/ValuesSection";
-import CoachesCorner from "@/components/homepage/CoachesCorner";
-import NewsCarousel from "@/components/homepage/NewsCarousel";
-import TeamPreview from "@/components/homepage/TeamPreview";
-import SchedulePreview from "@/components/homepage/SchedulePreview";
+import Hero from '@/components/homepage/Hero';
+import ValuesSection from '@/components/homepage/ValuesSection';
+import CoachesCorner from '@/components/homepage/CoachesCorner';
+import NewsCarousel from '@/components/homepage/NewsCarousel';
+import TeamPreview from '@/components/homepage/TeamPreview';
+import SchedulePreview from '@/components/homepage/SchedulePreview';
 
 export default function Home() {
   return (

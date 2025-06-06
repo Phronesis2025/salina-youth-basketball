@@ -1,16 +1,16 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import Link from "next/link";
-import Image from "next/image";
-import Navbar from "../../src/components/common/Navbar";
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import Navbar from '../../src/components/common/Navbar';
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
-} from "../../src/components/ui/card";
-import { Button } from "../../src/components/ui/button";
+} from '../../src/components/ui/card';
+import { Button } from '../../src/components/ui/button';
 
 interface CartItem {
   productId: string;
@@ -26,13 +26,13 @@ export default function ShopPage() {
   // Load cart client-side
   useEffect(() => {
     try {
-      const storedCart = localStorage.getItem("cart");
-      console.log("ShopPage: Loaded cart from localStorage:", storedCart);
+      const storedCart = localStorage.getItem('cart');
+      console.log('ShopPage: Loaded cart from localStorage:', storedCart);
       if (storedCart) {
         setCartItems(JSON.parse(storedCart));
       }
     } catch (error) {
-      console.error("ShopPage: Failed to parse cart from localStorage:", error);
+      console.error('ShopPage: Failed to parse cart from localStorage:', error);
     }
   }, []);
 

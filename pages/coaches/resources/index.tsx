@@ -1,33 +1,33 @@
-"use client";
+'use client';
 
-import { Button } from "../../../src/components/ui/button";
-import Link from "next/link";
+import { Button } from '../../../src/components/ui/button';
+import Link from 'next/link';
 
 export default function ResourcesPage() {
   const resources = [
     {
-      title: "U12 Playbook",
+      title: 'U12 Playbook',
       description:
-        "A comprehensive playbook with offensive and defensive plays tailored for U12 teams.",
-      link: "/resources/u12-playbook.pdf",
+        'A comprehensive playbook with offensive and defensive plays tailored for U12 teams.',
+      link: '/resources/u12-playbook.pdf',
     },
     {
-      title: "Dribbling Drill Sheet",
+      title: 'Dribbling Drill Sheet',
       description:
-        "A printable sheet with 10 dribbling drills to improve ball-handling skills for all age groups.",
-      link: "/resources/dribbling-drill-sheet.pdf",
+        'A printable sheet with 10 dribbling drills to improve ball-handling skills for all age groups.',
+      link: '/resources/dribbling-drill-sheet.pdf',
     },
     {
-      title: "Coaching Guide: Motivating Young Players",
+      title: 'Coaching Guide: Motivating Young Players',
       description:
-        "A guide for coaches on motivating and inspiring young athletes to perform their best.",
-      link: "/resources/coaching-guide-motivating-players.pdf",
+        'A guide for coaches on motivating and inspiring young athletes to perform their best.',
+      link: '/resources/coaching-guide-motivating-players.pdf',
     },
     {
-      title: "Tournament Checklist",
+      title: 'Tournament Checklist',
       description:
-        "A checklist for coaches to prepare for tournaments, including equipment and travel tips.",
-      link: "/resources/tournament-checklist.pdf",
+        'A checklist for coaches to prepare for tournaments, including equipment and travel tips.',
+      link: '/resources/tournament-checklist.pdf',
     },
   ];
 

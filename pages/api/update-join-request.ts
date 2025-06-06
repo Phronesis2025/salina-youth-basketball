@@ -1,5 +1,5 @@
-import { NextApiRequest, NextApiResponse } from "next";
-import { createClient } from "@supabase/supabase-js";
+import { NextApiRequest, NextApiResponse } from 'next';
+import { createClient } from '@supabase/supabase-js';
 
 // Initialize Supabase client with service role key (server-side only)
 const supabase = createClient(
@@ -11,8 +11,8 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ error: "Method not allowed" });
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed' });
   }
 
   const { joinRequestId, payment_status, stripe_payment_id } = req.body;
@@ -24,15 +24,15 @@ export default async function handler(
     if (stripe_payment_id) updates.stripe_payment_id = stripe_payment_id;
 
     const { error } = await supabase
-      .from("join_requests")
+      .from('join_requests')
       .update(updates)
-      .eq("id", joinRequestId);
+      .eq('id', joinRequestId);
 
     if (error) throw new Error(error.message);
 
     return res
       .status(200)
-      .json({ message: "Join request updated successfully" });
+      .json({ message: 'Join request updated successfully' });
   } catch (error) {
     return res.status(500).json({ error: (error as Error).message });
   }
