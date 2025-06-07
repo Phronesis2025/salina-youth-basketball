@@ -4,7 +4,7 @@ import tseslint from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
 import pluginReact from 'eslint-plugin-react';
 import pluginPrettier from 'eslint-plugin-prettier';
-import pluginNext from 'eslint-plugin-next';
+import pluginNext from '@next/eslint-plugin-next';
 
 export default [
   {
@@ -19,7 +19,7 @@ export default [
       globals: {
         ...globals.browser,
         ...globals.node,
-        React: 'writable', // Fix 'React' is not defined
+        React: 'writable',
       },
     },
     plugins: {
@@ -34,17 +34,17 @@ export default [
       ...pluginReact.configs.recommended.rules,
       ...pluginNext.configs.recommended.rules,
       'prettier/prettier': ['warn'],
-      '@typescript-eslint/no-explicit-any': 'warn', // Warn instead of error
+      '@typescript-eslint/no-explicit-any': 'warn',
       '@typescript-eslint/no-unused-vars': [
         'warn',
         { argsIgnorePattern: '^_' },
       ],
-      '@typescript-eslint/no-require-imports': 'warn', // Warn for require()
+      '@typescript-eslint/no-require-imports': 'warn',
       'react/prop-types': 'off',
       'react/react-in-jsx-scope': 'off',
-      'react/no-unescaped-entities': 'off', // Disable unescaped entities
-      'react/no-unknown-property': ['error', { ignore: ['jsx', 'global'] }], // Ignore styled-jsx props
-      '@typescript-eslint/triple-slash-reference': 'warn', // Warn for triple-slash
+      'react/no-unescaped-entities': 'off',
+      'react/no-unknown-property': ['error', { ignore: ['jsx', 'global'] }],
+      '@typescript-eslint/triple-slash-reference': 'warn',
     },
     settings: {
       react: {

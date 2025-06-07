@@ -28,6 +28,7 @@ export default function Navbar({ cartItemCount = 0 }: NavbarProps) {
   const [user, setUser] = useState<any>(null);
   const [localCartCount, setLocalCartCount] = useState<number>(0);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
+  const hamburgerButtonRef = useRef<HTMLButtonElement>(null);
   const pathname = usePathname() ?? '';
   const router = useRouter();
 
@@ -119,19 +120,30 @@ export default function Navbar({ cartItemCount = 0 }: NavbarProps) {
     }
   }, [isMobileMenuOpen]);
 
-  // Close mobile menu on outside click
+  // Close mobile menu on outside click with debouncing to avoid race condition
   useEffect(() => {
-    const handleOutsideClick = (e: MouseEvent) => {
+    const handleOutsideClick = debounce((e: MouseEvent) => {
       if (
         isMobileMenuOpen &&
-        !mobileMenuRef.current?.contains(e.target as Node)
+        mobileMenuRef.current &&
+        !mobileMenuRef.current.contains(e.target as Node) &&
+        !hamburgerButtonRef.current?.contains(e.target as Node)
       ) {
-        console.log('Outside click detected, closing mobile menu');
+        console.log('Outside click detected, closing mobile menu', {
+          target: e.target,
+          mobileMenuContains: mobileMenuRef.current?.contains(e.target as Node),
+          hamburgerContains: hamburgerButtonRef.current?.contains(
+            e.target as Node
+          ),
+        });
         setIsMobileMenuOpen(false);
       }
-    };
+    }, 10);
+
     document.addEventListener('click', handleOutsideClick);
-    return () => document.removeEventListener('click', handleOutsideClick);
+    return () => {
+      document.removeEventListener('click', handleOutsideClick);
+    };
   }, [isMobileMenuOpen]);
 
   const navItems = [
@@ -270,17 +282,13 @@ export default function Navbar({ cartItemCount = 0 }: NavbarProps) {
             asChild
             variant="default"
             className={cn(
-              'bg-blue-600 text-white font-inter uppercase font-light rounded-md hover:bg-blue-700 hover:scale-105 transition-all duration-300 shadow-sm',
+              'bg-blue-600 text-white font-inter uppercase font-light rounded-md hover:bg-blue-700 hover:scale-105 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-300 shadow-sm',
               scrolled ? 'text-xs px-3 py-1' : 'text-sm px-4 py-1.5'
             )}
           >
             <Link
               href="/join"
-              className={cn(
-                'text-white font-inter uppercase font-light hover:text-blue-400 rounded-sm transition-all duration-300 no-underline',
-                scrolled ? 'text-xs' : 'text-sm',
-                pathname === '/join' && 'text-blue-400'
-              )}
+              className="no-underline"
               onClick={(e) => handleNavClick('/join', e)}
               aria-current={pathname === '/join' ? 'page' : undefined}
             >
@@ -313,6 +321,7 @@ export default function Navbar({ cartItemCount = 0 }: NavbarProps) {
             type="button"
             variant="ghost"
             size="icon"
+            ref={hamburgerButtonRef}
             onClick={handleToggleMobileMenu}
             aria-expanded={isMobileMenuOpen}
             aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
